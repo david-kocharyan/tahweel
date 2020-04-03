@@ -14,14 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(["prefix" => "v1"], function(){
 
-Route::prefix('auth')->group(function () {
-    Route::post('login', 'Api\AuthController@login');
-    Route::post('register', 'Api\AuthController@register');
+    Route::prefix('auth')->group(function () {
+        Route::post('login', 'Api\AuthController@login');
+        Route::post('register', 'Api\AuthController@register');
 
-    Route::group(['middleware' => 'auth:api'], function () {
-        Route::post('refresh-token', 'Api\AuthController@refreshToken');
-        Route::post('logout','Api\AuthController@logout');
-        Route::get('getUser', 'Api\AuthController@getUser');
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('refresh-token', 'Api\AuthController@refreshToken');
+            Route::post('logout','Api\AuthController@logout');
+            Route::get('get-user', 'Api\AuthController@getUser');
+        });
     });
+
 });
+
+

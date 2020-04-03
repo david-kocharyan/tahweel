@@ -8,12 +8,11 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\helpers\ResponseHelper;
 
 class AuthController extends Controller
 {
-    const OK = 200;
-    const UNAUTHORIZED = 401;
-    const Unprocessable_Entity_Explained = 422;
+
 
     /**
      * @param Request $request
@@ -23,48 +22,33 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'role' => 'required',
+                'full_name' => 'required|max:100',
+                'email' => 'required|unique:users|max:150',
+                'role' => 'required|integer|min:1|max:2',
                 'password' => 'required',
                 'confirm_password' => 'required|same:password',
             ]);
-
         if ($validator->fails()) {
-            foreach ($validator->errors()->messages() as $bin => $key) {
-                if ($bin == 0) {
-                    $message = $key;
-                } else {
-                    break;
-                }
-            }
-            return response()->json(
-                $data = array(
-                    'data' => array(),
-                    'success' => false,
-                    'msg' => $message[0],
-                ), self::UNAUTHORIZED);
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
         $user = new User;
-        $user->name = $request->name;
+        $user->full_name = $request->full_name;
         $user->email = $request->email;
         $user->role = $request->role;
-        $user->password = Hash::make($request->password);
+        $user->password = bcrypt($request->password);
         $user->save();
 
         $user->createToken('Personal Access Token')->accessToken;
         $tokens = $this->get_token($request->email, $request->password);
 
-        return response()->json(
-            $data = array(
-                'data' => array(
-                    'user' => $user,
-                    'tokens' => $tokens,
-                ),
-                'success' => true,
-                'msg' => 'Registered Successfully',
-            ), self::OK);
+        $data = array(
+            'user' => $user,
+            'tokens' => $tokens,
+        );
+
+        return ResponseHelper::success($data);
+
     }
 
 
@@ -76,24 +60,12 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'email' => 'required|email',
+                'email' => 'required|max:150',
                 'password' => 'required',
             ]);
 
         if ($validator->fails()) {
-            foreach ($validator->errors()->messages() as $bin => $key) {
-                if ($bin == 0) {
-                    $message = $key;
-                } else {
-                    break;
-                }
-            }
-            return response()->json(
-                $data = array(
-                    'data' => array(),
-                    'success' => false,
-                    'msg' => $message[0],
-                ), self::UNAUTHORIZED);
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
         $user = User::where('email', $request->email)->first();
@@ -101,34 +73,18 @@ class AuthController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
 
-                $user->createToken('AppName')->accessToken;
+                $user->createToken('Personal Access Token')->accessToken;
                 $tokens = $this->get_token($request->email, $request->password);
 
-                return response()->json(
-                    $data = array(
-                        'data' => array(
-                            'user' => $user,
-                            'tokens' => $tokens,
-                        ),
-                        'success' => true,
-                        'msg' => 'Logged Successfully',
-                    ), self::OK);
-            } else {
-                return response()->json(
-                    $data = array(
-                        'data' => array(),
-                        'success' => false,
-                        'msg' => 'Invalid Password',
-                    ), self::Unprocessable_Entity_Explained);
+                $resp = array(
+                    "user" => $user,
+                    "tokens" => $tokens
+                );
+
+                return ResponseHelper::success($resp);
             }
-        } else {
-            return response()->json(
-                $data = array(
-                    'data' => array(),
-                    'success' => false,
-                    'msg' => 'Unauthenticated',
-                ), self::Unprocessable_Entity_Explained);
         }
+        return ResponseHelper::fail("Wrong Credentials", ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
     }
 
     /**
@@ -158,11 +114,7 @@ class AuthController extends Controller
         $token = Auth::guard('api')->user()->token();
         $token->revoke();
 
-        return response()->json($data = array(
-            'data' => array(),
-            'success' => true,
-            'msg' => 'You have been successfully logged out!',
-        ), self::OK);
+        return ResponseHelper::success(array());
     }
 
     /**
@@ -171,13 +123,7 @@ class AuthController extends Controller
     public function getUser()
     {
         $user = Auth::guard('api')->user();
-        return response()->json($data = array(
-            'data' => array(
-                "user" => $user
-            ),
-            'success' => true,
-            'msg' => '',
-        ), self::OK);
+        return ResponseHelper::success($user);
     }
 
     /**
