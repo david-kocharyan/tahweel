@@ -103,7 +103,7 @@ class AuthController extends Controller
                     'client_secret' => env('PASS_GRAND_TOKEN_SECRET'),
                 ],
             ]);
-            return ResponseHelper::success($response->getBody());
+            return ResponseHelper::success(json_decode((string)$response->getBody(), true));
         } catch (\Exception $exception){
             return ResponseHelper::fail("Something Went Wrong", 422);
         }
