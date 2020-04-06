@@ -82,31 +82,42 @@
                 </li>
                 <li class="devider"></li>
                 <li>
-                    <a href="/admin/plumbers" class="waves-effect"><i class="mdi mdi-home fa-fw"></i> <span
+                    <a href="/admin/plumbers" class="waves-effect"><i class="mdi mdi-account-settings fa-fw"></i> <span
                             class="hide-menu">Plumbers</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/inspectors" class="waves-effect"><i class="mdi mdi-home fa-fw"></i> <span
+                    <a href="/admin/inspectors" class="waves-effect"><i class="mdi mdi-account-edit fa-fw"></i> <span
                             class="hide-menu">Inspectors</span>
                     </a>
                 </li>
-                <li class="devider"></li>
+
 
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-barley fa-fw"></i> <span
-                            class="hide-menu">Dropdown<span class="fa arrow"></span></span>
+                    <a href="/admin/inspection" class="waves-effect"><i class="mdi mdi-calendar-check fa-fw"></i> <span
+                            class="hide-menu">Inspections</span>
                     </a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-steam fa-fw"></i>
-                                <span class="hide-menu">A</span></a>
-                        </li>
-
-                        <li><a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-windows fa-fw"></i>
-                                <span class="hide-menu">B</span></a>
-                        </li>
-                    </ul>
                 </li>
+
+                <li>
+                    <a href="/admin/redeems" class="waves-effect"><i class="mdi mdi-share fa-fw"></i> <span
+                            class="hide-menu">Redeems</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/admin/notifications" class="waves-effect"><i class="mdi mdi-newspaper fa-fw"></i> <span
+                            class="hide-menu">Notifications</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/admin/settings" class="waves-effect"><i class="mdi mdi-settings fa-fw"></i> <span
+                            class="hide-menu">Settings</span>
+                    </a>
+                </li>
+
+
             </ul>
         </div>
     </div>

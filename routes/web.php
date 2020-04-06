@@ -27,6 +27,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::get('/', 'AdminController@index');
     Route::resource('plumbers', 'PlumberController');
     Route::resource('inspectors', 'InspectorController');
+
+//    Route::resource('inspection', 'InspectorController');
+//    Route::resource('redeems', 'InspectorController');
+//    Route::resource('notifications', 'InspectorController');
+//    Route::resource('settings', 'InspectorController');
 });
 
 //Route::get('/home', 'HomeController@index')->name('home');
