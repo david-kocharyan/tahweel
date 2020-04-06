@@ -62,7 +62,7 @@ class Handler extends ExceptionHandler
                     $data = array(
                         'data' => array(),
                         'success' => false,
-                        'msg' => 'Unauthenticated',
+                        'msg' => 'Unauthorized',
                     ), 401);
             }
         }
