@@ -94,16 +94,20 @@ class AuthController extends Controller
     public function refreshToken(Request $request)
     {
         $http = new \GuzzleHttp\Client;
-        $response = $http->post(url('oauth/token'), [
-            'form_params' => [
-                'grant_type' => 'refresh_token',
-                'refresh_token' => $request->refresh_token,
-                'client_id' => env('PASS_GRAND_TOKEN_ID'),
-                'client_secret' => env('PASS_GRAND_TOKEN_SECRET'),
-            ],
-        ]);
+        try{
+            $response = $http->post(url('oauth/token'), [
+                'form_params' => [
+                    'grant_type' => 'refresh_token',
+                    'refresh_token' => $request->refresh_token,
+                    'client_id' => env('PASS_GRAND_TOKEN_ID'),
+                    'client_secret' => env('PASS_GRAND_TOKEN_SECRET'),
+                ],
+            ]);
+            return ResponseHelper::success($response->getBody());
+        } catch (\Exception $exception){
+            return ResponseHelper::fail("Something Went Wrong", 422);
+        }
 
-        return json_decode((string)$response->getBody(), true);
     }
 
     /**

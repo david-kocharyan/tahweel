@@ -22,7 +22,7 @@ Route::group(["prefix" => "v1"], function(){
         Route::post('refresh-token', 'Api\AuthController@refreshToken');
 
         Route::group(['middleware' => 'auth:api'], function () {
-            Route::post('logout','Api\AuthController@logout');
+            Route::post('logout','Api\AuthController@logout'); // Check, if this works for ended token
             Route::get('get-user', 'Api\AuthController@getUser');
         });
     });
