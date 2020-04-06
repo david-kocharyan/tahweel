@@ -17,9 +17,6 @@
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
     <!-- This is a colors CSS -->
     <link href="{{asset('assets/css/colors/default.css')}}" id="theme" rel="stylesheet">
-    <!--This is a datatable style -->
-    <link href="{{asset('assets/plugins/datatables/media/css/dataTables.bootstrap.css')}}" rel="stylesheet"
-          type="text/css"/>
 
     @stack('head')
 </head>
@@ -84,6 +81,18 @@
                     </a>
                 </li>
                 <li class="devider"></li>
+                <li>
+                    <a href="/admin/plumbers" class="waves-effect"><i class="mdi mdi-home fa-fw"></i> <span
+                            class="hide-menu">Plumbers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/inspectors" class="waves-effect"><i class="mdi mdi-home fa-fw"></i> <span
+                            class="hide-menu">Inspectors</span>
+                    </a>
+                </li>
+                <li class="devider"></li>
+
                 <li>
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-barley fa-fw"></i> <span
                             class="hide-menu">Dropdown<span class="fa arrow"></span></span>

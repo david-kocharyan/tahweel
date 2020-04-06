@@ -11,7 +11,7 @@ class User extends Authenticatable
 
     const ROLES = [
         "plumber" => 1,
-        "myus" => 2
+        "inspector" => 2
     ];
 
     use HasApiTokens, Notifiable;

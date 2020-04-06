@@ -25,6 +25,8 @@ Auth::routes([
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth:web'], function () {
     Route::get('/', 'AdminController@index');
+    Route::resource('plumbers', 'PlumberController');
+    Route::resource('inspectors', 'InspectorController');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
