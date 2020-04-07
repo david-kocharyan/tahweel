@@ -24,7 +24,7 @@
                                 @error('email')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="email" class="form-control" id="email"
+                                <input type="email" autocomplete="off" class="form-control" id="email"
                                        placeholder="Email" name="email" value="{{old('email')}}">
                             </div>
 
@@ -33,7 +33,7 @@
                                 @error('password')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="password" class="form-control" id="password"
+                                <input type="password" autocomplete="off" class="form-control" id="password"
                                        placeholder="Password" name="password">
                                 <button type="button" class="pass btn btn-primary m-t-5">Generate Password</button>
 

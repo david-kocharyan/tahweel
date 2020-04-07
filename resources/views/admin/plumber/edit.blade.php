@@ -25,10 +25,17 @@
                                 @error('email')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="email" class="form-control" id="email"
+                                <input type="email" autocomplete="off" class="form-control" id="email"
                                        placeholder="Email" name="email" value="{{$data->email}}">
                             </div>
-
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="approved" @if($data->approved == 1) checked @endif value="1" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Approved
+                                    </label>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="email">Password</label>
                                 @error('password')

@@ -50,10 +50,10 @@ class PlumberController extends Controller
             'email' => 'required|email|unique:users,email',
             "password" => "required|min:6"
         ]);
-
         $plumber = new User;
         $plumber->full_name = $request->full_name;
         $plumber->email = $request->email;
+        $plumber->approved = 1;
         $plumber->role = User::ROLES['plumber'];
         $plumber->password = Hash::make($request->password);
         $plumber->save();
@@ -63,7 +63,11 @@ class PlumberController extends Controller
                 'title' => 'Your password in Tahweel Application',
                 'body' => "Hello dear $request->full_name. Your password is` $request->password",
             ];
-            Mail::to($request->email)->send(new PlumberMail($details));
+            try{
+                Mail::to($request->email)->send(new PlumberMail($details));
+            } catch (\Exception $e) {
+
+            }
         }
 
         return redirect(self::ROUTE);
@@ -104,10 +108,10 @@ class PlumberController extends Controller
            'full_name' => 'required|max:200',
            "email" => "required|unique:users,email," . $id,
        ]);
-
         $plumber = User::find($id);
         $plumber->full_name = $request->full_name;
         $plumber->email = $request->email;
+        $plumber->approved = $request->approved ?? 0;
         if ($request->password) $plumber->password = Hash::make($request->password);
         $plumber->save();
 
@@ -116,7 +120,11 @@ class PlumberController extends Controller
                 'title' => 'Your password in Tahweel Application',
                 'body' => "Hello dear $request->full_name. Your password is` $request->password",
             ];
-            Mail::to($request->email)->send(new PlumberMail($details));
+            try{
+                Mail::to($request->email)->send(new PlumberMail($details));
+            } catch (\Exception $exception) {
+
+            }
         }
 
         return redirect(self::ROUTE);
