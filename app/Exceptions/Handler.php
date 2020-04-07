@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\helpers\ResponseHelper;
 
 class Handler extends ExceptionHandler
 {
@@ -58,12 +59,7 @@ class Handler extends ExceptionHandler
     {
         if ($request->expectsJson()) {
             if ($request->is('api/*')) {
-                return response()->json(
-                    $data = array(
-                        'data' => array(),
-                        'success' => false,
-                        'msg' => 'Unauthorized',
-                    ), 401);
+                return ResponseHelper::fail("Unauthorized", 401);
             }
         }
         return redirect()->guest(route('login'));

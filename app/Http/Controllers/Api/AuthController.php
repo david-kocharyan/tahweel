@@ -39,7 +39,15 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return ResponseHelper::success(array());
+        $user->createToken('Personal Access Token')->accessToken;
+        $tokens = $this->get_token($request->email, $request->password);
+
+        $resp = array(
+            "user" => $user,
+            "tokens" => $tokens
+        );
+
+        return ResponseHelper::success($resp);
 
     }
 
