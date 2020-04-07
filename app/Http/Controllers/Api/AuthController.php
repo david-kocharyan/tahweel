@@ -39,15 +39,7 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        $user->createToken('Personal Access Token')->accessToken;
-        $tokens = $this->get_token($request->email, $request->password);
-
-        $data = array(
-            'user' => $user,
-            'tokens' => $tokens,
-        );
-
-        return ResponseHelper::success($data);
+        return ResponseHelper::success(array());
 
     }
 
@@ -68,7 +60,7 @@ class AuthController extends Controller
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where(['email' => $request->email, "approved" => 1])->first();
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
