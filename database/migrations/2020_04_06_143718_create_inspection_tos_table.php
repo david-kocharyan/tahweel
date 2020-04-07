@@ -13,7 +13,7 @@ class CreateInspectionTosTable extends Migration
      */
     public function up()
     {
-        Schema::create('inspection_tos', function (Blueprint $table) {
+        Schema::create('inspection_inspectors', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('inspection_id');
             $table->unsignedInteger('inspector_id');
