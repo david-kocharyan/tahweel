@@ -94,7 +94,7 @@
 
 
                 <li>
-                    <a href="/admin/inspection" class="waves-effect"><i class="mdi mdi-calendar-check fa-fw"></i> <span
+                    <a href="/admin/inspections" class="waves-effect"><i class="mdi mdi-calendar-check fa-fw"></i> <span
                             class="hide-menu">Inspections</span>
                     </a>
                 </li>

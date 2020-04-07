@@ -55,14 +55,14 @@ class InspectorController extends Controller
             "password" => "required|min:6"
         ]);
 
-        $plumber = new User;
-        $plumber->full_name = $request->full_name;
-        $plumber->email = $request->email;
-        $plumber->role = User::ROLES['inspector'];
-        $plumber->password = Hash::make($request->password);
-        $plumber->save();
+        $inspector = new User;
+        $inspector->full_name = $request->full_name;
+        $inspector->email = $request->email;
+        $inspector->role = User::ROLES['inspector'];
+        $inspector->password = Hash::make($request->password);
+        $inspector->save();
 
-        if ($plumber->id) {
+        if ($inspector->id) {
             $details = [
                 'title' => 'Your password in Tahweel Application',
                 'body' => "Hello dear $request->full_name. Your password is` $request->password",
@@ -112,11 +112,12 @@ class InspectorController extends Controller
             "email" => "required|unique:users,email," . $id,
         ]);
 
-        $plumber = User::find($id);
-        $plumber->full_name = $request->full_name;
-        $plumber->email = $request->email;
-        if ($request->password) $plumber->password = Hash::make($request->password);
-        $plumber->save();
+        $inspector = User::find($id);
+        $inspector->full_name = $request->full_name;
+        $inspector->email = $request->email;
+        $inspector->approved = $request->approved ?? 0;
+        if ($request->password) $inspector->password = Hash::make($request->password);
+        $inspector->save();
 
         if ($request->password) {
             $details = [

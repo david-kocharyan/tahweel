@@ -17,6 +17,7 @@
                             <th>Id</th>
                             <th>Full Name</th>
                             <th>Email</th>
+                            <th>Approved</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -27,6 +28,13 @@
                                 <td>{{$key + 1}}</td>
                                 <td>{{$val->full_name}}</td>
                                 <td>{{$val->email}}</td>
+                                <td>
+                                    @if($val->approved == 0)
+                                        <span class="badge badge-warning">Waiting</span>
+                                    @else
+                                        <span class="badge badge-success">Approved</span>
+                                    @endif
+                                </td>
                                 <td>
 
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"

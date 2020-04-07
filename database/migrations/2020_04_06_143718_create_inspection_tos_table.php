@@ -31,6 +31,6 @@ class CreateInspectionTosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inspection_tos');
+        Schema::dropIfExists('inspection_inspectors');
     }
 }
