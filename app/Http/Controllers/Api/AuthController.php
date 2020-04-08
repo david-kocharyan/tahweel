@@ -36,6 +36,7 @@ class AuthController extends Controller
         $user->full_name = $request->full_name;
         $user->email = $request->email;
         $user->role = $request->role;
+        $user->approved = 0;
         $user->password = bcrypt($request->password);
         $user->save();
 
@@ -68,7 +69,7 @@ class AuthController extends Controller
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
-        $user = User::where(['email' => $request->email, "approved" => 1])->first();
+        $user = User::where(['email' => $request->email])->first();
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
