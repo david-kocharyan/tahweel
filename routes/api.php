@@ -27,6 +27,8 @@ Route::group(["prefix" => "v1"], function(){
         });
     });
 
+    Route::post("send-email", "Api\AuthController@recoverPassword");
+
 });
 
 

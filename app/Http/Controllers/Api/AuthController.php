@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MailHelper;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -150,6 +151,20 @@ class AuthController extends Controller
             ],
         ]);
         return json_decode((string)$response->getBody(), true);
+    }
+
+    public function recoverPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(),
+            [
+                'email' => 'required|email',
+            ]);
+        if ($validator->fails()) {
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
+
+        MailHelper::send($request->email, "Tay Ra Ram");
+
     }
 
 }
