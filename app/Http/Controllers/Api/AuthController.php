@@ -163,8 +163,21 @@ class AuthController extends Controller
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
-        MailHelper::send($request->email, "Tay Ra Ram");
+        $user = User::where(['email' => $request->email])->first();
+        if(null == $user) {
+            return ResponseHelper::fail("Wrong email provided", 403);
+        }
+        $pass = uniqid();
+        $user->password = bcrypt($pass);
+        $user->save();
 
+        $email = MailHelper::send($request->email, "TayRaRam $pass");
+        if(!$email) {
+            return ResponseHelper::fail("Something Went Wrong", 422);
+        }
+
+        return ResponseHelper::success(array());
     }
+
 
 }

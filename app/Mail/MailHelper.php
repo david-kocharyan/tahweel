@@ -12,10 +12,14 @@ class MailHelper
             "to" => $to,
             "message" => $message
         );
-        Mail::send(['raw' => $data['message']], ["name" => "Tahweel"], function($message) use($data) {
-            $message->to($data["to"], "Tahweel Password Recover")->subject
-            ('Tahweel Recover');
-//            $message->from('info@khatchkar.com', 'mykhatchkar.com');
-        });
+        try{
+            Mail::send(['raw' => $data['message']], ["name" => "Tahweel"], function($message) use($data) {
+                $message->to($data["to"], "Tahweel Password Recover")->subject
+                ('Tahweel Recover');
+            });
+            return true;
+        }catch (\Exception $e) {
+            return false;
+        }
     }
 }
