@@ -17,8 +17,10 @@ class CreateInspectionsTable extends Migration
             $table->id();
             $table->unsignedInteger('plumber_id');
             $table->date('date');
-            $table->string('location', 191); //address
-            $table->integer('status'); //phase1 - 1, phase2-2, requested - 3
+            $table->string('address', 191); //address
+            $table->string('latitude', 191);
+            $table->string('longitude', 191);
+            $table->string('apartment', 191);
             $table->timestamps();
 
             $table->foreign('plumber_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
