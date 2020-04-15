@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect(\route('login'));
-});
+Route::get('/', 'admin\AdminController@index')->middleware("auth:web");
 
 Auth::routes([
     'register' => false, // Registration Routes...
