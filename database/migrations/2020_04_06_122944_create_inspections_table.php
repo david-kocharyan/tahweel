@@ -16,14 +16,17 @@ class CreateInspectionsTable extends Migration
         Schema::create('inspections', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('plumber_id');
-            $table->date('date');
             $table->string('address', 191); //address
             $table->string('latitude', 191);
             $table->string('longitude', 191);
-            $table->string('apartment', 191);
+            $table->string('apartment', 191)->nullable();
+            $table->unsignedTinyInteger('building_type');
+            $table->unsignedBigInteger('issue_id');
+            $table->text('comment');
             $table->timestamps();
 
             $table->foreign('plumber_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('issue_id')->references('id')->on('issues')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
