@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\MailHelper;
+use App\Model\FcmToken;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -176,6 +177,26 @@ class AuthController extends Controller
             return ResponseHelper::fail("Something Went Wrong", 422);
         }
 
+        return ResponseHelper::success(array());
+    }
+
+    public function fcmToken(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+        $data = json_decode($request->getContent(), true);
+        $validator = Validator::make($data ?? [],
+            [
+                'token' => 'required',
+            ]);
+        if ($validator->fails()) {
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
+        $fcmToken = new FcmToken();
+        $fcmToken->user_id = $user->id;
+        $fcmToken->token = $data["token"];
+        $saved = $fcmToken->save();
+
+        if(!$saved) return ResponseHelper::fail("Something Went Wrong, Please try again later", 500);
         return ResponseHelper::success(array());
     }
 

@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => "v1"], function(){
 
-    Route::prefix('user')->group(function () {
+    Route::prefix('user')->group(function ()
+    {
         Route::post('login', 'Api\AuthController@login');
         Route::post('register', 'Api\AuthController@register');
         Route::post('refresh-token', 'Api\AuthController@refreshToken');
         Route::post("reset-password", "Api\AuthController@recoverPassword");
+        Route::post("fcm-token", "Api\AuthController@fcmToken");
 
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('logout','Api\AuthController@logout'); // Check, if this works for ended token
