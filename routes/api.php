@@ -22,11 +22,11 @@ Route::group(["prefix" => "v1"], function(){
         Route::post('register', 'Api\AuthController@register');
         Route::post('refresh-token', 'Api\AuthController@refreshToken');
         Route::post("reset-password", "Api\AuthController@recoverPassword");
-        Route::post("fcm-token", "Api\AuthController@fcmToken");
 
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('logout','Api\AuthController@logout'); // Check, if this works for ended token
             Route::get('get-user', 'Api\AuthController@getUser');
+            Route::post("fcm-token", "Api\AuthController@fcmToken");
         });
     });
 
