@@ -37,6 +37,7 @@ Route::group(["prefix" => "v1"], function(){
 
         Route::prefix('inspections')->group(function () {
             Route::post('request-inspection', 'Api\InspectionController@request');
+            Route::get('get-inspection', 'Api\InspectionController@getInspections');
         });
     });
 

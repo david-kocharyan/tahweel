@@ -6,6 +6,7 @@ use App\helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Inspection;
 use App\Model\Phase;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -54,7 +55,27 @@ class InspectionController extends Controller
         return ResponseHelper::success(array());
     }
 
-    public function getInspections()
+    public function getInspections(Request $request)
+    {
+        $limit = !is_numeric($request->limit) ? 20 : $request->limit;
+        $inspections = ($request->role == User::ROLES["plumber"] ? $this->getPlumberInspections($limit) : User::ROLES["inspector"]);
+        return ResponseHelper::success($inspections, true);
+    }
+
+    private function getPlumberInspections($limit)
+    {
+//        Auth::guard('api')->user()->id
+        $inspections = DB::table("inspections")
+            ->selectRaw("inspections.id, concat('project', inspections.id) as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
+            ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
+            ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
+            ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
+            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment")
+            ->paginate($limit);
+        return $inspections;
+    }
+
+    private function getInspectorInspections()
     {
 
     }
