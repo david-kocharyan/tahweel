@@ -105,7 +105,7 @@
     <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
     <!--Select2 js-->
     <script src="{{asset('assets/plugins/select2/dist/js/select2.min.js')}}"></script>
-    <!--Select2 js-->
+    <!--Datepicker js-->
     <script src="{{asset('assets/plugins/datepicker/bootstrap-datepicker.min.js')}}"></script>
 
     <script>

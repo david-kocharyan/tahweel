@@ -10,7 +10,7 @@ class IssueCategoryController extends Controller
 {
     const FOLDER = "admin.issue.category";
     const TITLE = "Issue Category";
-    const ROUTE = "/admin/issue-category";
+    const ROUTE = "/admin/issue-categories";
 
     /**
      * Display a listing of the resource.
@@ -19,7 +19,10 @@ class IssueCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data = IssueCategory::all();
+        $title = self::TITLE;
+        $route = self::ROUTE;
+        return view(self::FOLDER.'.index', compact('title', 'route', 'data'));
     }
 
     /**
@@ -29,7 +32,9 @@ class IssueCategoryController extends Controller
      */
     public function create()
     {
-        //
+        $title = "Create ".self::TITLE;
+        $route = self::ROUTE;
+        return view(self::FOLDER.'.create', compact('title', 'route'));
     }
 
     /**
@@ -40,7 +45,15 @@ class IssueCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => "required"
+        ]);
+
+        $category = new IssueCategory;
+        $category->name = $request->name;
+        $category->save();
+
+        return redirect(self::ROUTE);
     }
 
     /**
@@ -62,7 +75,9 @@ class IssueCategoryController extends Controller
      */
     public function edit(IssueCategory $issueCategory)
     {
-        //
+        $title = "Edit ".self::TITLE;
+        $route = self::ROUTE;
+        return view(self::FOLDER.'.edit', compact('title', 'route', 'issueCategory'));
     }
 
     /**
@@ -74,7 +89,14 @@ class IssueCategoryController extends Controller
      */
     public function update(Request $request, IssueCategory $issueCategory)
     {
-        //
+        $request->validate([
+            "name" => "required"
+        ]);
+
+        $issueCategory->name = $request->name;
+        $issueCategory->save();
+
+        return redirect(self::ROUTE);
     }
 
     /**
@@ -85,6 +107,7 @@ class IssueCategoryController extends Controller
      */
     public function destroy(IssueCategory $issueCategory)
     {
-        //
+        IssueCategory::destroy($issueCategory->id);
+        return redirect(self::ROUTE);
     }
 }
