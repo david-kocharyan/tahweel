@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class InspectionImages extends Model
 {
-    //
+    protected $guarded = [];
 }
