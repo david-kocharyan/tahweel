@@ -27,8 +27,19 @@ Route::group(["prefix" => "v1"], function(){
             Route::post('logout','Api\AuthController@logout'); // Check, if this works for ended token
             Route::get('get-user', 'Api\AuthController@getUser');
             Route::post("fcm-token", "Api\AuthController@fcmToken");
+            Route::get('get-user', 'Api\AuthController@getUser');
         });
     });
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::prefix('issues')->group(function () {
+            Route::get('get-issues', 'Api\IssueController@index');
+        });
+
+        Route::prefix('inspections')->group(function () {
+            Route::post('request-inspection', 'Api\InspectionController@request');
+        });
+    });
+
 
 });
 

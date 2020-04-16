@@ -117,6 +117,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="/admin/issue-categories" class="waves-effect"><i class="mdi mdi-stop-circle fa-fw"></i> <span class="hide-menu">Issue Category</span></a>
+                </li>
+
+                <li>
+                    <a href="/admin/issues" class="waves-effect"><i class="mdi mdi-stop-circle fa-fw"></i> <span class="hide-menu">Issues</span></a>
+                </li>
 
             </ul>
         </div>
