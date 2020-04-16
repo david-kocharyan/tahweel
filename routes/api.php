@@ -30,7 +30,6 @@ Route::group(["prefix" => "v1"], function(){
             Route::get('get-user', 'Api\AuthController@getUser');
         });
     });
-    Route::post('request-inspection', 'Api\InspectionController@request');
     Route::group(['middleware' => 'auth:api'], function () {
         Route::prefix('issues')->group(function () {
             Route::get('get-issues', 'Api\IssueController@index');
