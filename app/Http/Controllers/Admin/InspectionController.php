@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\InspectionInspector;
+use App\User;
 use Illuminate\Http\Request;
 use App\Model\Inspection;
+use NunoMaduro\Collision\Adapters\Laravel\Inspector;
 
 class InspectionController extends Controller
 {
@@ -54,7 +57,11 @@ class InspectionController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Inspection::with(['plumber', 'inspector'])->where('id', $id)->get();
+        dd($datagit );
+        $title = self::TITLE;
+        $route = self::ROUTE;
+        return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
     }
 
     /**
@@ -65,7 +72,10 @@ class InspectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $inspectors = User::where('role', User::ROLES['inspector'])->get();
+        $title = self::TITLE;
+        $route = self::ROUTE;
+        return view(self::FOLDER . ".edit", compact('title', 'route', 'inspectors', 'id'));
     }
 
     /**
@@ -77,7 +87,15 @@ class InspectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'inspector' => "required",
+        ]);
+
+        $inspection_inspector = new InspectionInspector;
+        $inspection_inspector->inspection_id = $id;
+        $inspection_inspector->inspector_id = $request->inspector;
+        $inspection_inspector->save();
+        return  redirect(self::ROUTE);
     }
 
     /**

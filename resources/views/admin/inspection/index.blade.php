@@ -5,8 +5,6 @@
         <div class="col-md-12">
             <div class="white-box">
                 <h3 class="box-title">{{$title}}</h3>
-                <a href="{{$route."/create"}}" class="btn btn-success m-b-30"><i class="fas fa-plus"></i> Add
-                    Inspectors</a>
 
                 {{--table--}}
                 <div class="table-responsive">
@@ -18,7 +16,7 @@
                             <th>Plumber</th>
                             <th>Inspector</th>
                             <th>Requested Date</th>
-                            <th>Location</th>
+                            <th>Address</th>
                             <th>Status</th>
                             <th>Options</th>
                         </tr>
@@ -42,29 +40,41 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$val->plumber->full_name}}</td>
-                                <td>{{$val->inspector->full_name}}</td>
-                                <td>{{$val->date}}</td>
-                                <td>{{$val->location}}</td>
-                                <td>{{$val->status}}</td>
+                                <td>{{$val->inspector->full_name ?? "Empty"}}</td>
+                                <td>{{$val->created_at}}</td>
+                                <td>{{$val->address}}</td>
                                 <td>
-
-                                    <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
-                                       data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">
-                                        <i class="fas fa-edit"></i>
+                                    @if(isset($val->inspector->full_name))
+                                        Attached
+                                    @else
+                                        Not attached
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{$route."/".$val->id}}" data-toggle="tooltip"
+                                       data-placement="top" title="Show" class="btn btn-info btn-circle tooltip-info">
+                                        <i class="fas fa-eye"></i>
                                     </a>
 
-                                    <form
-                                        onsubmit="if(confirm('Do You Really Want To Delete The Plumber?') == false) return false;"
-                                        style="display: inline-block" action="{{ $route."/".$val->id }}" method="post">
-                                        @csrf
-                                        @method("DELETE")
-                                        <a href="javascript:void(0)">
-                                            <button data-toggle="tooltip"
-                                                    data-placement="top" title="Delete"
-                                                    class="btn btn-danger btn-circle tooltip-danger"><i
-                                                    class="fas fa-trash"></i></button>
+                                    @if(!isset($val->inspector->full_name))
+                                        <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
+                                           data-placement="top" title="Show" class="btn btn-success btn-circle tooltip-success">
+                                            <i class="fas fa-plus"></i>
                                         </a>
-                                    </form>
+                                    @endif
+
+{{--                                    <form--}}
+{{--                                        onsubmit="if(confirm('Do You Really Want To Delete The Inspection?') == false) return false;"--}}
+{{--                                        style="display: inline-block" action="{{ $route."/".$val->id }}" method="post">--}}
+{{--                                        @csrf--}}
+{{--                                        @method("DELETE")--}}
+{{--                                        <a href="javascript:void(0)">--}}
+{{--                                            <button data-toggle="tooltip"--}}
+{{--                                                    data-placement="top" title="Delete"--}}
+{{--                                                    class="btn btn-danger btn-circle tooltip-danger"><i--}}
+{{--                                                    class="fas fa-trash"></i></button>--}}
+{{--                                        </a>--}}
+{{--                                    </form>--}}
                                 </td>
                             </tr>
                         @endforeach
@@ -113,7 +123,7 @@
             var table = $('#datatable').DataTable({
                 bSort: false,
                 initComplete: function () {
-                    this.api().columns([0, 1, 2, 4, 5]).every(function (i) {
+                    this.api().columns([1, 2, 4, 5,]).every(function (i) {
                         var column = this;
                         var select = $('<select class="select2  form-control"><option value="">All</option></select>')
                             .appendTo($(column.header()).empty())
