@@ -28,7 +28,7 @@
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
                                 <input type="text" class="form-control" id="name"
-                                       placeholder="Category name" name="name" value="{{old('name')}}">
+                                       placeholder="Issue name" name="name" value="{{old('name')}}">
                             </div>
 
                             <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Save Issue

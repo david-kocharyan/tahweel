@@ -12,7 +12,9 @@ class IssueController extends Controller
 {
     public function index()
     {
-        $issues = IssueCategory::with("issues")->get();
+        $issues = IssueCategory::selectRaw("id, name")->with(["issues" => function($query) {
+            $query->selectRaw("id, category_id, name");
+        }])->get();
         $resp = array(
             "issues" => $issues
         );
