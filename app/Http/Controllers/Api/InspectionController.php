@@ -6,6 +6,7 @@ use App\helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Inspection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\helpers\FileUploadHelper;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,7 @@ class InspectionController extends Controller
                 'building_type' => 'required|max:1|integer',
                 'issue_id' => 'required|integer',
                 'comment' => 'max:3000',
-                'images' => 'required',
+                'images' => 'required|array',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
@@ -39,6 +40,7 @@ class InspectionController extends Controller
         $inspection->building_type = $request->building_type;
         $inspection->issue_id = $request->issue_id;
         $inspection->comment = $request->comment;
+        $inspection->plumber_id = Auth::guard('api')->user()->id;
         $inspection->save();
 
         $inspection->images()->createMany([$images]);
