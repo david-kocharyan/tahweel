@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Inspection;
+use App\Model\Phase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -43,7 +44,18 @@ class InspectionController extends Controller
         $inspection->plumber_id = Auth::guard('api')->user()->id;
         $inspection->save();
 
-        $inspection->images()->createMany([$images]);
+        $inspection->images()->createMany($images);
+
+        $phase = new Phase(["phase" => 1, "status" => 1]);
+        $inspection->phases()->save($phase);
+
         DB::commit();
+
+        return ResponseHelper::success(array());
+    }
+
+    public function getInspections()
+    {
+
     }
 }
