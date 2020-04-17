@@ -22,6 +22,7 @@ class InspectionController extends Controller
                 'address' => 'required|max:191',
                 'latitude' => 'required|max:191',
                 'longitude' => 'required|max:191',
+                'floor' => 'max:191',
                 'apartment' => 'max:191',
                 'building_type' => 'required|max:1|integer',
                 'issue_id' => 'required|integer',
@@ -38,6 +39,7 @@ class InspectionController extends Controller
         $inspection->address = $request->address;
         $inspection->latitude = $request->latitude;
         $inspection->longitude = $request->longitude;
+        $inspection->floor = $request->floor;
         $inspection->apartment = $request->apartment;
         $inspection->building_type = $request->building_type;
         $inspection->issue_id = $request->issue_id;
