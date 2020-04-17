@@ -52,11 +52,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($request->expectsJson()) {
-            if ($request->is('api/*')) {
-                return ResponseHelper::fail("Server Error", 500);
-            }
-        }
+//        if ($request->expectsJson()) {
+//            if ($request->is('api/*')) {
+//                return ResponseHelper::fail("Server Error", 500);
+//            }
+//        }
         return parent::render($request, $exception);
     }
 
