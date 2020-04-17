@@ -58,25 +58,38 @@ class InspectionController extends Controller
     public function getInspections(Request $request)
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
-        $inspections = ($request->role == User::ROLES["plumber"] ? $this->getPlumberInspections($limit) : User::ROLES["inspector"]);
+        $status = !is_numeric($request->status) ? null : $request->status;
+        $inspections = ($request->role == User::ROLES["plumber"] ? $this->getPlumberInspections($limit, $status) : $this->getInspectorInspections($limit, $status));
         return ResponseHelper::success($inspections, true);
     }
 
-    private function getPlumberInspections($limit)
+    private function getPlumberInspections($limit, $status = null)
     {
-//        Auth::guard('api')->user()->id
         $inspections = DB::table("inspections")
             ->selectRaw("inspections.id, concat('project', inspections.id) as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
-            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment")
-            ->paginate($limit);
-        return $inspections;
+            ->where(["users.role" => User::ROLES["plumber"], "users.id" => Auth::guard('api')->user()->id])
+            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment");
+        if(null != $status) {
+            $inspections->where("phases.status", $status);
+        }
+        return $inspections->paginate($limit);
     }
 
-    private function getInspectorInspections()
+    private function getInspectorInspections($limit, $status = null)
     {
-
+        $inspections = DB::table("inspections")
+            ->selectRaw("inspections.id, concat('project', inspections.id) as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
+            ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
+            ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
+            ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
+            ->where(["users.role" => User::ROLES["inspector"], "users.id" => Auth::guard('api')->user()->id])
+            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment");
+        if(null != $status) {
+            $inspections->where("phases.status", $status);
+        }
+        return $inspections->paginate($limit);
     }
 }
