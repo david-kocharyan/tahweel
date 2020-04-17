@@ -81,10 +81,10 @@ class InspectionController extends Controller
     private function getInspectorInspections($limit, $status = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
+            ->selectRaw("inspections.id, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id) - 1) FROM phases WHERE phases.inspection_id = inspections.id ) as repeatCount")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
-            ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
+            ->leftJoin("users", "users.id", "=", "inspections.plumber_id")
             ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id])
             ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment");
         if(null != $status) {
