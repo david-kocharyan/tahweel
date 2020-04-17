@@ -85,7 +85,7 @@ class InspectionController extends Controller
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
-            ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id])
+            ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id])
             ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment");
         if(null != $status) {
             $inspections->where("phases.status", $status);
