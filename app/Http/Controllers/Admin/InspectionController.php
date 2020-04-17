@@ -57,11 +57,10 @@ class InspectionController extends Controller
      */
     public function show($id)
     {
-        $data = Inspection::with(['plumber', 'inspector'])->where('id', $id)->get();
-        dd($datagit );
+        $data = Inspection::with(['plumber', 'inspector', 'images', 'issue'])->where('id', $id)->first();
         $title = self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
+        return view(self::FOLDER . ".show", compact('title', 'route', 'data'));
     }
 
     /**
