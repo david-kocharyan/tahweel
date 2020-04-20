@@ -93,7 +93,7 @@ class InspectionController extends Controller
     private function getInspectorInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, '".$this->base_url."' || '/uploads/' || inspection_images.image as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id) - 1) FROM phases WHERE phases.inspection_id = inspections.id ) as repeatCount")
+            ->selectRaw("inspections.id, '".$this->base_url."' || '/uploads/' || inspection_images.image as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = ".Phase::REJECTED." ) as repeatCount")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspections.plumber_id")
