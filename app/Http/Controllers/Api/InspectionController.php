@@ -76,7 +76,7 @@ class InspectionController extends Controller
     private function getPlumberInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, concat('".$this->base_url.", /, inspection_images.image') as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
+            ->selectRaw("inspections.id, concat('".$this->base_url."', /, inspection_images.image) as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
