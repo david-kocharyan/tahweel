@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Inspection;
 use App\Model\Phase;
 use App\User;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +16,12 @@ use Illuminate\Support\Facades\DB;
 
 class InspectionController extends Controller
 {
+    private $base_url;
+    public function __construct()
+    {
+        $this->base_url = URL::to('/');
+    }
+
     public function request(Request $request)
     {
         $validator = Validator::make($request->all(),
@@ -69,13 +76,14 @@ class InspectionController extends Controller
     private function getPlumberInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
+            ->selectRaw("inspections.id, concat('".$this->base_url.", /, inspection_images.image') as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
+            ->leftJoin("inspection_images", "inspection_images.inspection_id", "=", "inspections.id")
             ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id])
             ->where(["phases.phase" => $phase])
-            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment");
+            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment", "inspection_images.image");
         if(null != $status) {
             $inspections->where("phases.status", $status);
         }
