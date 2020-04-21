@@ -144,6 +144,7 @@ class InspectionController extends Controller
 
         if($role == User::ROLES["plumber"]){
             $name = "inspector";
+            $inspection->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id");
             $inspection->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id");
         } else {
             $name = "plumber";
