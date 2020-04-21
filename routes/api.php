@@ -35,13 +35,13 @@ Route::group(["prefix" => "v1"], function(){
             Route::get('get-issues', 'Api\IssueController@index');
         });
 
+        Route::prefix('inspections')->group(function () {
+            Route::post('request-inspection', 'Api\InspectionController@request');
+            Route::get('get-inspection', 'Api\InspectionController@getInspections');
+            Route::get('get-inspection-details', 'Api\InspectionController@getInspectionDetails');
+        });
+    });
 
-    });
-    Route::prefix('inspections')->group(function () {
-        Route::post('request-inspection', 'Api\InspectionController@request');
-        Route::get('get-inspection', 'Api\InspectionController@getInspections');
-        Route::get('get-inspection-details', 'Api\InspectionController@getInspectionDetails');
-    });
 
 });
 
