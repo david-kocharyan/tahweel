@@ -22,6 +22,10 @@ class InspectionController extends Controller
         $this->base_url = URL::to('/');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function request(Request $request)
     {
         $validator = Validator::make($request->all(),
@@ -64,6 +68,10 @@ class InspectionController extends Controller
         return ResponseHelper::success(array());
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getInspections(Request $request)
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
@@ -73,6 +81,12 @@ class InspectionController extends Controller
         return ResponseHelper::success($inspections, true);
     }
 
+    /**
+     * @param      $limit
+     * @param null $status
+     * @param null $phase
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     private function getPlumberInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
@@ -90,6 +104,12 @@ class InspectionController extends Controller
         return $inspections->paginate($limit);
     }
 
+    /**
+     * @param      $limit
+     * @param null $status
+     * @param null $phase
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     private function getInspectorInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
@@ -106,4 +126,15 @@ class InspectionController extends Controller
         }
         return $inspections->paginate($limit);
     }
+
+
+    public function getInspectionDetails(Request $request)
+    {
+        $inspection = Inspection::with(['images', 'phases', 'issue'])
+            ->where('id', $request->inspection)
+            ->first();
+
+        return ResponseHelper::success($inspection);
+    }
+
 }
