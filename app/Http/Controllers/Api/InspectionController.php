@@ -143,7 +143,7 @@ class InspectionController extends Controller
             }
         ])
             ->where('id', $inspection_id)
-            ->leftJoin("issues", "issues.inspection_id", "=", "inspections.id");
+            ->leftJoin("issues", "issues.id", "=", "inspections.issue_id");
 
         if($role == User::ROLES["plumber"]){
             $name = "inspector";
