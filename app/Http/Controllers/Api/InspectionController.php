@@ -128,7 +128,7 @@ class InspectionController extends Controller
         return $inspections->paginate($limit);
     }
 
-    public function getInspectionDetails(Request $request)
+    public function getInspectionDetails($inspection_id)
     {
         $inspection = Inspection::with([
             'images' => function ($query) {
@@ -138,7 +138,7 @@ class InspectionController extends Controller
                 $query->selectRaw("id, inspection_id, phase, status, created_at");
             },
         ])
-            ->where('id', $request->inspection)
+            ->where('id', $inspection_id)
             ->selectRaw('id, address, latitude, longitude, apartment, building_type, floor')
             ->first();
 
