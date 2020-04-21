@@ -135,7 +135,7 @@ class InspectionController extends Controller
                 $query->selectRaw("id, inspection_id, '" . $this->base_url . "' || '/uploads/' || image as image ");
             },
             'phases' => function ($query) {
-                $query->selectRaw("id, inspection_id, phase, status, created_at");
+                $query->selectRaw("id, inspection_id, phase, status, extract(EPOCH from created_at)");
             },
         ])
             ->where('id', $inspection_id)
