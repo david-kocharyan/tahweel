@@ -154,9 +154,8 @@ class InspectionController extends Controller
         }
 
         $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, 'project' as project, users.full_name as $name, issues.name as issue");
-        $inspection->first();
 
-        $data['inspection'] = $inspection;
+        $data['inspection'] = $inspection->first();
         return ResponseHelper::success($data);
     }
 
