@@ -153,7 +153,7 @@ class InspectionController extends Controller
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
         }
 
-        $inspection->selectRaw("id, address, latitude, longitude, apartment, building_type, floor, 'project' as project, users.full_name as $name, issues.name as issue");
+        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, 'project' as project, users.full_name as $name, issues.name as issue");
         $inspection->first();
 
         $data['inspection'] = $inspection;
