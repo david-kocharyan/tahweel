@@ -139,7 +139,7 @@ class InspectionController extends Controller
                 $query->selectRaw("id, inspection_id, phase, status, extract(EPOCH from created_at) as date");
             },
             'issue' => function($query) {
-                $query->selectRaw("id, inspection_id, name");
+//                $query->selectRaw("id, inspection_id, name");
             }
         ])
             ->where('inspections.id', $inspection_id)
