@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Inspection extends Model
 {
@@ -36,11 +35,6 @@ class Inspection extends Model
     public function currentPhase()
     {
         return $this->hasOne("App\Model\Phase", "inspection_id", "id")->latest();
-    }
-
-    public function getCreatedAtAttribute($date)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d');
     }
 
 }
