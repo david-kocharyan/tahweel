@@ -142,7 +142,7 @@ class InspectionController extends Controller
                 $query->selectRaw("id, inspection_id, name");
             }
         ])
-            ->where('id', $inspection_id)
+            ->where('inspections.id', $inspection_id)
             ->leftJoin("issues", "issues.id", "=", "inspections.issue_id");
 
         if($role == User::ROLES["plumber"]){
