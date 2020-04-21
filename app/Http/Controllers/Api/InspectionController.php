@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 class InspectionController extends Controller
 {
     private $base_url;
+
     public function __construct()
     {
         $this->base_url = URL::to('/');
@@ -90,7 +91,7 @@ class InspectionController extends Controller
     private function getPlumberInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, '".$this->base_url."' || '/uploads/' || inspection_images.image as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
+            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_images.image as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
@@ -98,7 +99,7 @@ class InspectionController extends Controller
             ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id])
             ->where(["phases.phase" => $phase])
             ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment", "inspection_images.image");
-        if(null != $status) {
+        if (null != $status) {
             $inspections->where("phases.status", $status);
         }
         return $inspections->paginate($limit);
@@ -113,7 +114,7 @@ class InspectionController extends Controller
     private function getInspectorInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, '".$this->base_url."' || '/uploads/' || inspection_images.image as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = ".Phase::REJECTED." ) as repeatCount")
+            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_images.image as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = " . Phase::REJECTED . " ) as repeatCount")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspections.plumber_id")
@@ -121,20 +122,28 @@ class InspectionController extends Controller
             ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id])
             ->where(["phases.phase" => $phase])
             ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment", "inspection_images.image");
-        if(null != $status) {
+        if (null != $status) {
             $inspections->where("phases.status", $status);
         }
         return $inspections->paginate($limit);
     }
 
-
     public function getInspectionDetails(Request $request)
     {
-        $inspection = Inspection::with(['images', 'phases', 'issue'])
+        $inspection = Inspection::with([
+            'images' => function ($query) {
+                $query->selectRaw("id, inspection_id, '" . $this->base_url . "' || '/uploads/' || image as image ");
+            },
+            'phases' => function ($query) {
+                $query->selectRaw("id, inspection_id, phase, status, created_at");
+            },
+        ])
             ->where('id', $request->inspection)
+            ->selectRaw('id, address, latitude, longitude, apartment, building_type, floor')
             ->first();
 
-        return ResponseHelper::success($inspection);
+        $data['inspection'] = $inspection;
+        return ResponseHelper::success($data);
     }
 
 }
