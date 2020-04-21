@@ -12,5 +12,7 @@ class Phase extends Model
 
     const COMPLETED = 2;
 
+    const REPEATED  = 3;
+
     protected $guarded = [];
 }

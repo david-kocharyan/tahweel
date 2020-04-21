@@ -130,6 +130,7 @@ class InspectionController extends Controller
 
     public function getInspectionDetails($inspection_id)
     {
+        $role = Auth::guard('api')->user()->role;
         $inspection = Inspection::with([
             'images' => function ($query) {
                 $query->selectRaw("id, inspection_id, '" . $this->base_url . "' || '/uploads/' || image as image ");
@@ -137,10 +138,23 @@ class InspectionController extends Controller
             'phases' => function ($query) {
                 $query->selectRaw("id, inspection_id, phase, status, extract(EPOCH from created_at) as date");
             },
+            'issue' => function($query) {
+                $query->selectRaw("id, inspection_id, name");
+            }
         ])
             ->where('id', $inspection_id)
-            ->selectRaw('id, address, latitude, longitude, apartment, building_type, floor')
-            ->first();
+            ->leftJoin("issues", "issues.inspection_id", "=", "inspections.id");
+
+        if($role == User::ROLES["plumber"]){
+            $name = "inspector";
+            $inspection->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id");
+        } else {
+            $name = "plumber";
+            $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
+        }
+
+        $inspection->selectRaw("id, address, latitude, longitude, apartment, building_type, floor, 'project' as project, users.full_name as $name, issues.name as issue");
+        $inspection->first();
 
         $data['inspection'] = $inspection;
         return ResponseHelper::success($data);
