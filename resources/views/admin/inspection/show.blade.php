@@ -71,8 +71,8 @@
                                     <td> {{$data->building_type}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Issue</td>
-                                    <td> {{$data->issue->name}}</td>
+                                    <td>Project</td>
+                                    <td> {{$data->project}}</td>
                                 </tr>
                                 <tr>
                                     <td>Created Date</td>

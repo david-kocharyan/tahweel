@@ -20,13 +20,12 @@ class CreateInspectionsTable extends Migration
             $table->string('latitude', 191);
             $table->string('longitude', 191);
             $table->string('apartment', 191)->nullable();
+            $table->string('project', 191);
             $table->unsignedTinyInteger('building_type');
-            $table->unsignedBigInteger('issue_id');
             $table->text('comment');
             $table->timestamps();
 
             $table->foreign('plumber_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('issue_id')->references('id')->on('issues')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

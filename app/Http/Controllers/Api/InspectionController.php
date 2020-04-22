@@ -37,7 +37,7 @@ class InspectionController extends Controller
                 'floor' => 'max:191',
                 'apartment' => 'max:191',
                 'building_type' => 'required|max:1|integer',
-                'issue_id' => 'required|integer',
+                'project' => 'required',
                 'comment' => 'max:3000',
                 'images' => 'required|array',
             ]);
@@ -54,7 +54,7 @@ class InspectionController extends Controller
         $inspection->floor = $request->floor;
         $inspection->apartment = $request->apartment;
         $inspection->building_type = $request->building_type;
-        $inspection->issue_id = $request->issue_id;
+        $inspection->project = $request->project;
         $inspection->comment = $request->comment;
         $inspection->plumber_id = Auth::guard('api')->user()->id;
         $inspection->save();
@@ -91,7 +91,7 @@ class InspectionController extends Controller
     private function getPlumberInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_images.image as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
+            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_images.image as image, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
@@ -114,7 +114,7 @@ class InspectionController extends Controller
     private function getInspectorInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_images.image as image, 'project_name' as project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = " . Phase::REJECTED . " ) as repeatCount")
+            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_images.image as image, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = " . Phase::REJECTED . " ) as repeatCount")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspections.plumber_id")
@@ -151,7 +151,7 @@ class InspectionController extends Controller
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
         }
 
-        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, 'project' as project, users.full_name as $name, issues.name as issue");
+        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, users.full_name as $name, issues.name as issue");
 
         $data['inspection'] = $inspection->first();
         return ResponseHelper::success($data);

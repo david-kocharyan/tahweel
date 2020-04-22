@@ -117,23 +117,6 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-auto-fix fa-fw"></i>
-                        <span class="hide-menu">Issue<span class="fa arrow"></span></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="/admin/issue-categories" class="waves-effect"><i
-                                    class="mdi fa-fw">C</i>
-                                <span class="hide-menu">Issue Category</span></a>
-                        </li>
-
-                        <li>
-                            <a href="/admin/issues" class="waves-effect"><i class="mdi fa-fw">I</i>
-                                <span class="hide-menu">Issues</span></a>
-                        </li>
-                    </ul>
-                </li>
-
             </ul>
         </div>
     </div>

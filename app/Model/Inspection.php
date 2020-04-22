@@ -22,11 +22,6 @@ class Inspection extends Model
         return $this->hasMany("App\Model\InspectionImages", "inspection_id", "id");
     }
 
-    public function issue()
-    {
-        return $this->belongsTo("App\Model\Issue", "issue_id", "id");
-    }
-
     public function phases()
     {
         return $this->hasMany("App\Model\Phase", "inspection_id", "id");
