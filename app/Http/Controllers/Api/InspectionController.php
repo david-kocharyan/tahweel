@@ -139,8 +139,7 @@ class InspectionController extends Controller
                 $query->selectRaw("id, inspection_id, phase, status, extract(EPOCH from created_at) as date");
             },
         ])
-            ->where('inspections.id', $inspection_id)
-            ->leftJoin("issues", "issues.id", "=", "inspections.issue_id");
+            ->where('inspections.id', $inspection_id);
 
         if($role == User::ROLES["plumber"]){
             $name = "inspector";
@@ -151,7 +150,7 @@ class InspectionController extends Controller
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
         }
 
-        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, users.full_name as $name, issues.name as issue");
+        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, users.full_name as $name");
 
         $data['inspection'] = $inspection->first();
         return ResponseHelper::success($data);
