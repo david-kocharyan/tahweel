@@ -98,7 +98,7 @@ class InspectionController extends Controller
             ->leftJoin("inspection_images", "inspection_images.inspection_id", "=", "inspections.id")
             ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id])
             ->where(["phases.phase" => $phase])
-            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment", "inspection_images.image");
+            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "project", "address", "apartment", "inspection_images.image");
         if (null != $status) {
             $inspections->where("phases.status", $status);
         }
@@ -121,7 +121,7 @@ class InspectionController extends Controller
             ->leftJoin("inspection_images", "inspection_images.inspection_id", "=", "inspections.id")
             ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id])
             ->where(["phases.phase" => $phase])
-            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment", "inspection_images.image");
+            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "project", "address", "apartment", "inspection_images.image");
         if (null != $status) {
             $inspections->where("phases.status", $status);
         }
