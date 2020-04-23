@@ -91,14 +91,14 @@ class InspectionController extends Controller
     private function getPlumberInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_images.image as image, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
+            ->distinct("inspections.id")
+            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_image.image as image, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
-            ->leftJoin("inspection_images", "inspection_images.inspection_id", "=", "inspections.id")
+            ->leftJoin(DB::raw("( SELECT * FROM inspection_images ) as inspection_image"), "inspection_image.inspection_id", "=", "inspections.id" )
             ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id])
-            ->where(["phases.phase" => $phase])
-            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment", "inspection_images.image");
+            ->where(["phases.phase" => $phase]);
         if (null != $status) {
             $inspections->where("phases.status", $status);
         }
@@ -114,14 +114,14 @@ class InspectionController extends Controller
     private function getInspectorInspections($limit, $status = null, $phase = null)
     {
         $inspections = DB::table("inspections")
-            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_images.image as image, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = " . Phase::REJECTED . " ) as repeatCount")
+            ->distinct("inspections.id")
+            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_image.image as image, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = " . Phase::REJECTED . " ) as repeatCount")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspections.plumber_id")
-            ->leftJoin("inspection_images", "inspection_images.inspection_id", "=", "inspections.id")
+            ->leftJoin(DB::raw("( SELECT * FROM inspection_images ) as inspection_image"), "inspection_image.inspection_id", "=", "inspections.id" )
             ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id])
-            ->where(["phases.phase" => $phase])
-            ->groupBy("inspections.id", "phases.phase", "phases.status", "users.full_name", "address", "apartment", "inspection_images.image");
+            ->where(["phases.phase" => $phase]);
         if (null != $status) {
             $inspections->where("phases.status", $status);
         }
