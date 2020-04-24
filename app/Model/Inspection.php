@@ -17,11 +17,6 @@ class Inspection extends Model
         return $this->hasOneThrough(  'App\User', 'App\Model\InspectionInspector',  'inspection_id', 'id', 'id', 'inspector_id');
     }
 
-    public function images()
-    {
-        return $this->hasMany("App\Model\InspectionImages", "inspection_id", "id");
-    }
-
     public function phases()
     {
         return $this->hasMany("App\Model\Phase", "inspection_id", "id");

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\helpers\FileUploadHelper;
 use Illuminate\Support\Facades\DB;
 
 class InspectionController extends Controller
@@ -39,12 +38,10 @@ class InspectionController extends Controller
                 'building_type' => 'required|max:1|integer',
                 'project' => 'required',
                 'comment' => 'max:3000',
-                'images' => 'required|array',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
-        $images = FileUploadHelper::upload($request->images, ["*"], "inspections");
 
         DB::beginTransaction();
         $inspection = new Inspection();
@@ -58,8 +55,6 @@ class InspectionController extends Controller
         $inspection->comment = $request->comment;
         $inspection->plumber_id = Auth::guard('api')->user()->id;
         $inspection->save();
-
-        $inspection->images()->createMany($images);
 
         $phase = new Phase(["phase" => 1, "status" => 1]);
         $inspection->phases()->save($phase);
@@ -92,11 +87,10 @@ class InspectionController extends Controller
     {
         $inspections = DB::table("inspections")
             ->distinct("inspections.id")
-            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_image.image as image, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
+            ->selectRaw("inspections.id, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
-            ->leftJoin(DB::raw("( SELECT * FROM inspection_images ) as inspection_image"), "inspection_image.inspection_id", "=", "inspections.id" )
             ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id])
             ->where(["phases.phase" => $phase]);
         if (null != $status) {
@@ -115,11 +109,10 @@ class InspectionController extends Controller
     {
         $inspections = DB::table("inspections")
             ->distinct("inspections.id")
-            ->selectRaw("inspections.id, '" . $this->base_url . "' || '/uploads/' || inspection_image.image as image, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = " . Phase::REJECTED . " ) as repeatCount")
+            ->selectRaw("inspections.id, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = " . Phase::REJECTED . " ) as repeatCount")
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspections.plumber_id")
-            ->leftJoin(DB::raw("( SELECT * FROM inspection_images ) as inspection_image"), "inspection_image.inspection_id", "=", "inspections.id" )
             ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id])
             ->where(["phases.phase" => $phase]);
         if (null != $status) {
@@ -132,9 +125,6 @@ class InspectionController extends Controller
     {
         $role = Auth::guard('api')->user()->role;
         $inspection = Inspection::with([
-            'images' => function ($query) {
-                $query->selectRaw("id, inspection_id, '" . $this->base_url . "' || '/uploads/' || image as image ");
-            },
             'phases' => function ($query) {
                 $query->selectRaw("id, inspection_id, phase, status, extract(EPOCH from created_at) as date");
             },
