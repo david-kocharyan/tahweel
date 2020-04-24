@@ -70,7 +70,7 @@ class InspectionController extends Controller
     public function getInspections(Request $request)
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
-        $status = !is_numeric($request->status) ? null : $request->status;
+        $status = $this->getStatus($request);
         $phase = !is_numeric($request->phase) ? 1 : $request->phase;
         $inspections = ($request->role == User::ROLES["plumber"] ? $this->getPlumberInspections($limit, $status, $phase) : $this->getInspectorInspections($limit, $status, $phase));
         return ResponseHelper::success($inspections, true);
@@ -93,7 +93,7 @@ class InspectionController extends Controller
             ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id])
             ->where(["phases.phase" => $phase]);
         if (null != $status) {
-            $inspections->where("phases.status", $status);
+            $inspections->whereIn("phases.status", $status);
         }
         return $inspections->paginate($limit);
     }
@@ -115,7 +115,7 @@ class InspectionController extends Controller
             ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id])
             ->where(["phases.phase" => $phase]);
         if (null != $status) {
-            $inspections->where("phases.status", $status);
+            $inspections->whereIn("phases.status", $status);
         }
         return $inspections->paginate($limit);
     }
@@ -143,6 +143,23 @@ class InspectionController extends Controller
 
         $data['inspection'] = $inspection->first();
         return ResponseHelper::success($data);
+    }
+
+    private function getStatus($request)
+    {
+        $count = count(explode('&', $_SERVER['QUERY_STRING']));
+        $statuses = null;
+        if($count > 0) {
+            for ($i = 1; $i <= $count; $i++) {
+                if(null != $request->status.$i && is_numeric($request->status.$i)){
+                    if(!is_array($statuses))  $statuses = [];
+                    $statuses[] = $request->status.$i;
+                } else {
+                   break;
+                }
+            }
+        }
+        return $statuses;
     }
 
 }
