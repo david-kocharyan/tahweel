@@ -15,7 +15,7 @@ class CustomerController extends Controller
         $data = json_decode($request->getContent(), true);
         $validator = Validator::make($data,
             [
-                'inspection_id' => 'required|integer',
+                'inspection_id' => 'required|integer|unique:customers',
                 'full_name' => 'required|max:191',
                 'email' => 'max:191|email|unique:customers',
                 'phone' => 'max:191',
