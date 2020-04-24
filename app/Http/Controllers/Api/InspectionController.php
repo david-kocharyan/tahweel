@@ -38,7 +38,6 @@ class InspectionController extends Controller
                 'apartment' => 'max:191',
                 'building_type' => 'required|max:1|integer',
                 'project' => 'required',
-                'comment' => 'max:3000',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
@@ -53,7 +52,6 @@ class InspectionController extends Controller
         $inspection->apartment = $data["apartment"];
         $inspection->building_type = $data["building_type"];
         $inspection->project = $data["project"];
-        $inspection->comment = $data["comment"];
         $inspection->plumber_id = Auth::guard('api')->user()->id;
         $inspection->save();
 

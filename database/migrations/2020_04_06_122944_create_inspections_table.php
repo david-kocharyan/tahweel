@@ -22,7 +22,6 @@ class CreateInspectionsTable extends Migration
             $table->string('apartment', 191)->nullable();
             $table->string('project', 191);
             $table->unsignedTinyInteger('building_type');
-            $table->text('comment');
             $table->timestamps();
 
             $table->foreign('plumber_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
