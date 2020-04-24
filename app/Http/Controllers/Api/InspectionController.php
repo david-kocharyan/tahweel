@@ -28,7 +28,8 @@ class InspectionController extends Controller
      */
     public function request(Request $request)
     {
-        $validator = Validator::make($request->all(),
+        $data = json_decode($request->getContent(), true);
+        $validator = Validator::make($data,
             [
                 'address' => 'required|max:191',
                 'latitude' => 'required|max:191',
