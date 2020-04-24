@@ -151,9 +151,9 @@ class InspectionController extends Controller
         $statuses = null;
         if($count > 0) {
             for ($i = 1; $i <= $count; $i++) {
-                if(null != $request->status.$i && is_numeric($request->status.$i)){
+                if(null != $request->{'status'.$i} && is_numeric($request->{'status'.$i})){
                     if(!is_array($statuses))  $statuses = [];
-                    $statuses[] = $request->status.$i;
+                    $statuses[] = $request->{'status'.$i};
                 } else {
                    break;
                 }
