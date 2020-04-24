@@ -46,18 +46,18 @@ class InspectionController extends Controller
 
         DB::beginTransaction();
         $inspection = new Inspection();
-        $inspection->address = $request->address;
-        $inspection->latitude = $request->latitude;
-        $inspection->longitude = $request->longitude;
-        $inspection->floor = $request->floor;
-        $inspection->apartment = $request->apartment;
-        $inspection->building_type = $request->building_type;
-        $inspection->project = $request->project;
-        $inspection->comment = $request->comment;
+        $inspection->address = $data["address"];
+        $inspection->latitude = $data["latitude"];
+        $inspection->longitude = $data["longitude"];
+        $inspection->floor = $data["floor"];
+        $inspection->apartment = $data["apartment"];
+        $inspection->building_type = $data["building_type"];
+        $inspection->project = $data["project"];
+        $inspection->comment = $data["comment"];
         $inspection->plumber_id = Auth::guard('api')->user()->id;
         $inspection->save();
 
-        $phase = new Phase(["phase" => 1, "status" => 1]);
+        $phase = new Phase(["phase" => 1, "status" => Phase::NEW]);
         $inspection->phases()->save($phase);
 
         DB::commit();
