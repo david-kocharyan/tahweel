@@ -103,27 +103,7 @@ class InspectionFormController extends Controller
         }
 
         $form = InspectionForm::where("inspection_id", $request->inspection)
-            ->selectRaw("
-                            inspection_id,
-                            pre_plaster,
-                            before_tiles_installer,
-                            final_after_finishing,
-                            bathrooms_inspected,
-                            kitchen_inspected,
-                            service_counters_inspected,
-                            bathroom_other_tahweel_materials,
-                            bathroom_other_technical_issue,
-                            roof_other_tahweel_materials,
-                            roof_other_tahweel_valve,
-                            roof_other_technical_issue,
-                            manifold_other_tahweel_materials,
-                            manifold_other_tahweel_valve,
-                            manifold_sunlight,
-                            manifold_insulated,
-                            $this->base_url || '/uploads/' || signature,
-                            approved,
-                            reason,
-                            warranty")->orderBy("id", "DESC")->first();
+            ->selectRaw("inspection_id, pre_plaster, before_tiles_installer, final_after_finishing, bathrooms_inspected, kitchen_inspected, service_counters_inspected, bathroom_other_tahweel_materials, bathroom_other_technical_issue, roof_other_tahweel_materials, roof_other_tahweel_valve, roof_other_technical_issue, manifold_other_tahweel_materials, manifold_other_tahweel_valve, manifold_sunlight, manifold_insulated, $this->base_url || '/uploads/' || signature, approved, reason, warranty")->orderBy("id", "DESC")->first();
         $resp = array("form" => $form);
         return ResponseHelper::success($resp);
     }
