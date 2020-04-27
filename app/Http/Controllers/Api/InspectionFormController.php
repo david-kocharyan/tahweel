@@ -66,6 +66,7 @@ class InspectionFormController extends Controller
         $form->kitchen_inspected = $request->kitchen_inspected;
         $form->service_counters_inspected = $request->service_counters_inspected;
         $form->bathroom_other_tahweel_materials = $request->bathroom_other_tahweel_materials;
+        $form->bathroom_other_tahweel_valve = $request->bathroom_other_tahweel_valve;
         $form->bathroom_other_technical_issue = $request->bathroom_other_technical_issue;
         $form->roof_other_tahweel_materials = $request->roof_other_tahweel_materials;
         $form->roof_other_tahweel_valve = $request->roof_other_tahweel_valve;
@@ -103,7 +104,7 @@ class InspectionFormController extends Controller
         }
 
         $form = InspectionForm::where("inspection_id", $request->inspection)
-            ->selectRaw("inspection_id, pre_plaster, before_tiles_installer, final_after_finishing, bathrooms_inspected, kitchen_inspected, service_counters_inspected, bathroom_other_tahweel_materials, bathroom_other_technical_issue, roof_other_tahweel_materials, roof_other_tahweel_valve, roof_other_technical_issue, manifold_other_tahweel_materials, manifold_other_tahweel_valve, manifold_sunlight, manifold_insulated, '".$this->base_url."' || '/uploads/' || signature as signature_full, signature as signature_string, approved, reason, warranty")->orderBy("id", "DESC")->first();
+            ->selectRaw("inspection_id, pre_plaster, before_tiles_installer, final_after_finishing, bathrooms_inspected, kitchen_inspected, service_counters_inspected, bathroom_other_tahweel_materials, bathroom_other_tahweel_valve, bathroom_other_technical_issue, roof_other_tahweel_materials, roof_other_tahweel_valve, roof_other_technical_issue, manifold_other_tahweel_materials, manifold_other_tahweel_valve, manifold_sunlight, manifold_insulated, '".$this->base_url."' || '/uploads/' || signature as signature_full, signature as signature_string, approved, reason, warranty")->orderBy("id", "DESC")->first();
         $resp = array("form" => $form);
         return ResponseHelper::success($resp);
     }
