@@ -7,7 +7,6 @@ use App\Model\InspectionInspector;
 use App\User;
 use Illuminate\Http\Request;
 use App\Model\Inspection;
-use NunoMaduro\Collision\Adapters\Laravel\Inspector;
 
 class InspectionController extends Controller
 {
@@ -57,7 +56,7 @@ class InspectionController extends Controller
      */
     public function show($id)
     {
-        $data = Inspection::with(['plumber', 'inspector', 'images', 'issue'])->where('id', $id)->first();
+        $data = Inspection::with(['plumber', 'inspector'])->where('id', $id)->first();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".show", compact('title', 'route', 'data'));

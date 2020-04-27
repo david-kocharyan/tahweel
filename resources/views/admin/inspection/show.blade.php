@@ -5,34 +5,7 @@
         <div class="col-lg-12">
             <div class="white-box">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div id="carouselExampleIndicators" class="carousel slide">
-                            <ol class="carousel-indicators">
-                                @foreach($data->images as $bin=>$key)
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="{{$bin}}"
-                                        class="@if($bin == 0) active @endif"></li>
-                                @endforeach
-                            </ol>
-                            <div class="carousel-inner">
-                                @foreach($data->images as $bin=>$key)
-                                    <div class="carousel-item @if($bin == 0) active @endif">
-                                        <img class="d-block w-100"
-                                             src="{{asset('uploads/inspections')."/".$key->image}}">
-                                    </div>
-                                @endforeach
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-                               data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
-                               data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-                    </div>
+
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <h4 class="box-title m-t-40">Inspection description</h4>
                         <p>{{$data->comment}}</p>
