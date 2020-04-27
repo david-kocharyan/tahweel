@@ -83,6 +83,7 @@ class InspectionFormController extends Controller
 
         $currentPhase = Phase::where("inspection_id", $request->inspection_id)->orderBy("id", "DESC")->first();
         $phase = new Phase();
+        $phase->inspection_id = $request->inspection_id;
         $phase->phase = ($request->approved == InspectionForm::DECLINED) ? ($currentPhase->phase ?? 1) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? 2 : $currentPhase->phase );
         $phase->status = ($request->approved == InspectionForm::DECLINED) ? (Phase::REJECTED) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? Phase::NEW : Phase::COMPLETED );
         $phase->save();
