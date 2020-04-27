@@ -87,7 +87,7 @@ class InspectionController extends Controller
         $inspections = DB::table("inspections")
             ->distinct("inspections.id")
             ->selectRaw("inspections.id, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
-            ->leftJoin(DB::raw(" (SELECT * FROM PHASES ORDER BY id DESC LIMIT 1) phases "), "phases.inspection_id", "=", "inspections.id")
+            ->leftJoin(DB::raw(" (SELECT status, phase, inspection_id FROM PHASES group by inspection_id, status, phase) phases "), "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
             ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id]);
@@ -111,7 +111,7 @@ class InspectionController extends Controller
         $inspections = DB::table("inspections")
             ->distinct("inspections.id")
             ->selectRaw("inspections.id, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as plumber, (SELECT (COUNT(id)) FROM phases WHERE phases.inspection_id = inspections.id AND phase = $phase AND status = " . Phase::REJECTED . " ) as repeatCount")
-            ->leftJoin(DB::raw(" (SELECT * FROM PHASES ORDER BY id DESC LIMIT 1) phases "), "phases.inspection_id", "=", "inspections.id")
+            ->leftJoin(DB::raw(" (SELECT status, phase, inspection_id FROM PHASES group by inspection_id, status, phase) phases "), "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspections.plumber_id")
             ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id]);
