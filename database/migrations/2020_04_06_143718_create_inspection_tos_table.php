@@ -16,10 +16,10 @@ class CreateInspectionTosTable extends Migration
         Schema::create('inspection_inspectors', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('inspection_id');
-            $table->unsignedInteger('inspector_id');
             $table->timestamps();
 
             $table->foreign('inspection_id')->references('id')->on('inspections')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('inspector_id');
             $table->foreign('inspector_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

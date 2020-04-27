@@ -40,6 +40,7 @@ Route::group(["prefix" => "v1"], function(){
             Route::get('get-inspection', 'Api\InspectionController@getInspections');
             Route::get('get-inspection/{inspection_id}', 'Api\InspectionController@getInspectionDetails');
             Route::post('customer', 'Api\CustomerController@index');
+            Route::post('form', 'Api\InspectionFormController@index');
         });
     });
 

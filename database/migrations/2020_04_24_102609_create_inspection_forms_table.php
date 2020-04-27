@@ -19,6 +19,9 @@ class CreateInspectionFormsTable extends Migration
             $table->unsignedInteger("inspection_id");
             $table->foreign("inspection_id")->references("id")->on("inspections")->onDelete("cascade");
 
+            $table->unsignedInteger('inspector_id');
+            $table->foreign('inspector_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
             $table->unsignedTinyInteger("pre_plaster")->default(0);
             $table->unsignedTinyInteger("before_tiles_installer")->default(0);
             $table->unsignedTinyInteger("final_after_finishing")->default(0);
@@ -43,9 +46,10 @@ class CreateInspectionFormsTable extends Migration
 
             $table->unsignedTinyInteger("approved")->default(0);
 
-            $table->text("reason")->nullable(
+            $table->text("reason")->nullable();
 
-            );
+            $table->unsignedTinyInteger("warranty")->default(0);
+
             $table->timestamps();
         });
     }
