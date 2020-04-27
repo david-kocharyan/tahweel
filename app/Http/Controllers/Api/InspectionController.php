@@ -71,7 +71,7 @@ class InspectionController extends Controller
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
         $status = $this->getStatus($request);
-        $phase = !is_numeric($request->phase) ? 1 : $request->phase;
+        $phase = !is_numeric($request->phase) ? null : $request->phase;
         $inspections = ($request->role == User::ROLES["plumber"] ? $this->getPlumberInspections($limit, $status, $phase) : $this->getInspectorInspections($limit, $status, $phase));
         return ResponseHelper::success($inspections, true);
     }
@@ -90,8 +90,10 @@ class InspectionController extends Controller
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id")
-            ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id])
-            ->where(["phases.phase" => $phase]);
+            ->where(["inspections.plumber_id" => Auth::guard('api')->user()->id]);
+        if(null != $phase){
+            $inspections->where(["phases.phase" => $phase]);
+        }
         if (null != $status) {
             $inspections->whereIn("phases.status", $status);
         }
@@ -112,8 +114,11 @@ class InspectionController extends Controller
             ->leftJoin("phases", "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspections.plumber_id")
-            ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id])
-            ->where(["phases.phase" => $phase]);
+            ->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id]);
+
+         if(null != $phase){
+             $inspections->where(["phases.phase" => $phase]);
+         }
         if (null != $status) {
             $inspections->whereIn("phases.status", $status);
         }
