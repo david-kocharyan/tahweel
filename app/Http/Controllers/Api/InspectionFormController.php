@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\helpers\FileUploadHelper;
 use App\Http\Controllers\Controller;
 use App\Model\InspectionForm;
+use App\Model\InspectionInspector;
 use App\Model\Phase;
 use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
@@ -53,6 +54,11 @@ class InspectionFormController extends Controller
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
+        $user = Auth::guard('api')->user();
+        $insp = InspectionInspector::where(["inspection_id" => $request->inspection_id, "inspector_id" => $user->id])->first();
+        if(null == $insp) {
+            return ResponseHelper::fail("You cannot update this resource", 403);
+        }
         $image = FileUploadHelper::upload($request->signature, ['*'], "");
         DB::beginTransaction();
 
