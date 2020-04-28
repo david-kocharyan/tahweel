@@ -19,13 +19,8 @@ class InspectionFormController extends Controller
 
     private $base_url;
 
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $user = Auth::guard('api')->user();
-        $inspection = InspectionInspector::where(["inspection_id" => $request->inspection_id, "inspector_id" => $user->id])->first();
-        if(null == $inspection) {
-            return ResponseHelper::fail("You cannot update this resource", 403)->send();
-        }
         $this->base_url = URL::to('/');
     }
 
@@ -58,6 +53,14 @@ class InspectionFormController extends Controller
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
+
+        $user = Auth::guard('api')->user();
+
+        $insp = InspectionInspector::where(["inspection_id" => $request->inspection_id, "inspector_id" => $user->id])->first();
+        if(null == $insp) {
+            return ResponseHelper::fail("You cannot update this resource", 403);
+        }
+
         $image = FileUploadHelper::upload($request->signature, ['*'], "");
         DB::beginTransaction();
 
@@ -106,6 +109,12 @@ class InspectionFormController extends Controller
 
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
+
+        $user = Auth::guard('api')->user();
+        $insp = InspectionInspector::where(["inspection_id" => $request->inspection_id, "inspector_id" => $user->id])->first();
+        if(null == $insp) {
+            return ResponseHelper::fail("You cannot update this resource", 403);
         }
 
         $form = InspectionForm::where("inspection_id", $request->inspection)
