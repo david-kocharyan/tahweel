@@ -42,7 +42,7 @@ Route::group(["prefix" => "v1"], function(){
             Route::post('customer', 'Api\CustomerController@index');
             Route::post('form', 'Api\InspectionFormController@index');
             Route::get('form', 'Api\InspectionFormController@getForm');
-            Route::post('ask-for-inspection', 'Api\InspectionFormController@plumberInspectionRequest');
+            Route::post('ask-for-inspection', 'Api\InspectionController@plumberInspectionRequest');
         });
     });
 
