@@ -24,7 +24,7 @@ class InspectionFormController extends Controller
         $user = Auth::guard('api')->user();
         $inspection = InspectionInspector::where(["inspection_id" => $request->inspection_id, "inspector_id" => $user->id])->first();
         if(null == $inspection) {
-            return ResponseHelper::fail("You cannot update this resource", 403);
+            return ResponseHelper::fail("You cannot update this resource", 403)->send();
         }
         $this->base_url = URL::to('/');
     }
