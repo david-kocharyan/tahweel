@@ -150,6 +150,32 @@ class InspectionController extends Controller
         return ResponseHelper::success($data);
     }
 
+    public function plumberInspectionRequest(Request $request)
+    {
+        $validator = Validator::make($request->all(),
+            [
+                'inspection' => 'required|integer',
+            ]);
+        if ($validator->fails()) {
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
+        $user = Auth::guard('api')->user();
+        $phase = Phase::selectRaw("phases.status as status, phases.phase as phase")
+            ->where(["phases.inspection_id" => $request->inspection, "inspections.plumber_id" => $user->id])
+            ->join("inspections", "inspections.id", "=", "phases.inspection_id")
+            ->orderBy("phases.id", "DESC")
+            ->first();
+        if(null != $phase) {
+            $p = new Phase();
+            $p->inspection_id = $request->inspection;
+            $p->status = Phase::REPEATED;
+            $p->phase = $phase->phase;
+            $p->save();
+            return ResponseHelper::success(array());
+        }
+        return ResponseHelper::fail("The requested inspection cannot be edited!", 403);
+    }
+
     private function getStatus($request)
     {
         $count = count(explode('&', $_SERVER['QUERY_STRING']));
