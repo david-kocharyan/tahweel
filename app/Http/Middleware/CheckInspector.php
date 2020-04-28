@@ -19,8 +19,8 @@ class CheckInspector
     public function handle($request, Closure $next)
     {
         $user = Auth::guard('api')->user();
-
-        $insp = InspectionInspector::where(["inspection_id" => $request->inspection, "inspector_id" => $user->id])->first();
+        $id = $request->inspection ?? $request->inspection_id;
+        $insp = InspectionInspector::where(["inspection_id" => $id, "inspector_id" => $user->id])->first();
         if(null == $insp) {
             return ResponseHelper::fail("You cannot access this resource", 403);
         }
