@@ -136,7 +136,7 @@ class InspectionController extends Controller
                     $query->where(["phase" => 1]);
                 }
                 $query->leftJoin("users", "users.id", "=", "inspection_forms.inspector_id");
-                $query->selectRaw("inspection_forms.id, inspection_id, users.full_name as inspector, inspection_forms.phase, inspection_forms.approved, extract(EPOCH from inspection_forms.created_at) as date");
+                $query->selectRaw("inspection_forms.id, inspection_id, users.full_name as inspector, inspection_forms.phase, inspection_forms.approved, (extract(EPOCH from inspection_forms.created_at) * 1000) as date");
             }
         ])
             ->where('inspections.id', $inspection_id);
@@ -150,7 +150,7 @@ class InspectionController extends Controller
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
         }
 
-        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, users.full_name as $name, extract(EPOCH from inspections.created_at) as date");
+        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, users.full_name as $name, (extract(EPOCH from inspections.created_at) * 1000) as date");
 
         $data['inspection'] = $inspection->first();
         return ResponseHelper::success($data);
