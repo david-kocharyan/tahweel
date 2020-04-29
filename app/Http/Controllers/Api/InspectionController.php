@@ -175,8 +175,8 @@ class InspectionController extends Controller
         if(null != $phase) {
             $p = new Phase();
             $p->inspection_id = $request->inspection;
+            $p->phase = ($phase->status == Phase::APPROVED) ? 2 : $phase->phase;
             $p->status = Phase::REPEATED;
-            $p->phase = $phase->phase;
             $p->save();
             return ResponseHelper::success(array());
         }
