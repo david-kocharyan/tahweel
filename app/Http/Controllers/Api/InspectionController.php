@@ -136,7 +136,7 @@ class InspectionController extends Controller
                     $query->where(["phase" => 1]);
                 }
                 $query->leftJoin("users", "users.id", "=", "inspection_forms.inspector_id");
-                $query->selectRaw("inspection_forms.id, inspection_id, inspector.full_name as inspector, phase, approved, extract(EPOCH from created_at) as date");
+                $query->selectRaw("inspection_forms.id, inspection_id, users.full_name as inspector, phase, approved, extract(EPOCH from created_at) as date");
             }
         ])
             ->where('inspections.id', $inspection_id);
