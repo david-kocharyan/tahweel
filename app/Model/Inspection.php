@@ -34,7 +34,12 @@ class Inspection extends Model
 
     public function issue_phase1()
     {
-        return $this->leftJoin("users", "users.id", "=", "inspection_forms.inspector_id");
+        return $this->hasMany("App\Model\InspectionForm", "inspection_id", "id")->where("phase", 1);
+    }
+
+    public function issue_phase2()
+    {
+        return $this->hasMany("App\Model\InspectionForm", "inspection_id", "id")->where("phase", 2);
     }
 
 }
