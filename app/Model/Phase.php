@@ -14,5 +14,7 @@ class Phase extends Model
 
     const REPEATED  = 3;
 
+    const APPROVED  = 4; // Phase 1 Approved not completed
+
     protected $guarded = [];
 }

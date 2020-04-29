@@ -88,8 +88,8 @@ class InspectionFormController extends Controller
 
         $phase = new Phase();
         $phase->inspection_id = $request->inspection_id;
-        $phase->phase = ($request->approved == InspectionForm::DECLINED) ? ($currentPhase->phase ?? 1) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? 2 : $currentPhase->phase );
-        $phase->status = ($request->approved == InspectionForm::DECLINED) ? (Phase::REJECTED) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? Phase::NEW : Phase::COMPLETED );
+        $phase->phase = ($request->approved == InspectionForm::DECLINED) ? ($currentPhase->phase ?? 1) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? 1 : $currentPhase->phase );
+        $phase->status = ($request->approved == InspectionForm::DECLINED) ? (Phase::REJECTED) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? Phase::APPROVED : Phase::COMPLETED );
         $phase->save();
         DB::commit();
         return ResponseHelper::success(array());

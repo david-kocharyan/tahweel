@@ -135,7 +135,9 @@ class InspectionController extends Controller
                 $query->selectRaw("id, inspection_id, phase, status, extract(EPOCH from created_at) as date");
             },
             'issues' => function ($query) use($currentPhase) {
-                $query->where(["phase" => $currentPhase, "approved" => InspectionForm::DECLINED]);
+                if($currentPhase == 1) {
+                    $query->where(["phase" => 1]);
+                }
             }
         ])
             ->where('inspections.id', $inspection_id);
