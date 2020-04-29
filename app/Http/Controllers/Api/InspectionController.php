@@ -144,15 +144,13 @@ class InspectionController extends Controller
             ->where('inspections.id', $inspection_id);
 
         if($role == User::ROLES["plumber"]){
-            $name = "inspector";
             $inspection->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id");
             $inspection->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id");
         } else {
-            $name = "plumber";
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
         }
         $inspection->leftJoin(DB::raw(" (SELECT distinct on (inspection_id) id, status, phase, inspection_id FROM PHASES order by inspection_id, id desc) phases"), "phases.inspection_id", "=", "inspections.id");
-        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, phases.phase as phase, phases.status as status, users.full_name as $name, (extract(EPOCH from inspections.created_at) * 1000) as date");
+        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, phases.phase as phase, phases.status as status, users.full_name as name, (extract(EPOCH from inspections.created_at) * 1000) as date");
 
         $data['inspection'] = $inspection->first();
         return ResponseHelper::success($data);
