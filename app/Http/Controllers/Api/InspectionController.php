@@ -131,13 +131,12 @@ class InspectionController extends Controller
         $role = Auth::guard('api')->user()->role;
         $currentPhase = Phase::where("inspection_id", $inspection_id)->orderBy("id", "DESC")->first()->phase ?? 1;
         $inspection = Inspection::with([
-            'phases' => function ($query) {
-                $query->selectRaw("id, inspection_id, phase, status, extract(EPOCH from created_at) as date");
-            },
             'issues' => function ($query) use($currentPhase) {
                 if($currentPhase == 1) {
                     $query->where(["phase" => 1]);
                 }
+                $query->leftJoin("users", "users.id", "=", "inspection_forms.inspector_id");
+                $query->selectRaw("id, inspection_id, inspector.full_name as inspector, phase, approved, extract(EPOCH from created_at) as date");
             }
         ])
             ->where('inspections.id', $inspection_id);
