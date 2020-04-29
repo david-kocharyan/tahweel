@@ -129,7 +129,7 @@ class InspectionController extends Controller
     public function getInspectionDetails($inspection_id)
     {
         $role = Auth::guard('api')->user()->role;
-        $currentPhase = Inspection::find($inspection_id)->with("currentPhase")->currentPhase->phase ?? 1;
+        $currentPhase = Phase::where("inspection_id", $inspection_id)->orderBy("id", "DESC")->first()->phase ?? 1;
         $inspection = Inspection::with([
             'phases' => function ($query) {
                 $query->selectRaw("id, inspection_id, phase, status, extract(EPOCH from created_at) as date");
