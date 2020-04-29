@@ -22,6 +22,8 @@ class CreateInspectionFormsTable extends Migration
             $table->unsignedInteger('inspector_id');
             $table->foreign('inspector_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
+            $table->unsignedTinyInteger("phase");
+
             $table->unsignedTinyInteger("pre_plaster")->default(0);
             $table->unsignedTinyInteger("before_tiles_installer")->default(0);
             $table->unsignedTinyInteger("final_after_finishing")->default(0);

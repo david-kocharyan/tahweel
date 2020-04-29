@@ -27,4 +27,9 @@ class Inspection extends Model
         return $this->hasOne("App\Model\Phase", "inspection_id", "id")->latest();
     }
 
+    public function issues()
+    {
+        return $this->hasMany("App\Model\InspectionForm", "inspection_id", "id");
+    }
+
 }

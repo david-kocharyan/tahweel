@@ -54,12 +54,15 @@ class InspectionFormController extends Controller
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
+        $currentPhase = Phase::where("inspection_id", $request->inspection_id)->orderBy("id", "DESC")->first();
+
         $image = FileUploadHelper::upload($request->signature, ['*'], "");
         DB::beginTransaction();
 
         $form = new InspectionForm();
         $form->inspection_id = $request->inspection_id;
         $form->inspector_id = Auth::guard('api')->user()->id;
+        $form->phase = $currentPhase->phase;
         $form->pre_plaster = $request->pre_plaster;
         $form->before_tiles_installer = $request->before_tiles_installer ?? 0;
         $form->final_after_finishing = $request->final_after_finishing ?? 0;
@@ -83,7 +86,6 @@ class InspectionFormController extends Controller
 
         $form->save();
 
-        $currentPhase = Phase::where("inspection_id", $request->inspection_id)->orderBy("id", "DESC")->first();
         $phase = new Phase();
         $phase->inspection_id = $request->inspection_id;
         $phase->phase = ($request->approved == InspectionForm::DECLINED) ? ($currentPhase->phase ?? 1) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? 2 : $currentPhase->phase );

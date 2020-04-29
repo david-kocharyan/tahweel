@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Inspection;
+use App\Model\InspectionForm;
 use App\Model\Phase;
 use App\User;
 use Illuminate\Support\Facades\URL;
@@ -128,10 +129,14 @@ class InspectionController extends Controller
     public function getInspectionDetails($inspection_id)
     {
         $role = Auth::guard('api')->user()->role;
+        $currentPhase = Inspection::find($inspection_id)->with("currentPhase")->currentPhase->phase ?? 1;
         $inspection = Inspection::with([
             'phases' => function ($query) {
                 $query->selectRaw("id, inspection_id, phase, status, extract(EPOCH from created_at) as date");
             },
+            'issues' => function ($query) use($currentPhase) {
+                $query->where(["phase" => $currentPhase, "approved" => InspectionForm::DECLINED]);
+            }
         ])
             ->where('inspections.id', $inspection_id);
 
