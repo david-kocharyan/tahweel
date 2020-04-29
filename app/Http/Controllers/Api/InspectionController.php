@@ -129,12 +129,8 @@ class InspectionController extends Controller
     public function getInspectionDetails($inspection_id)
     {
         $role = Auth::guard('api')->user()->role;
-        $currentPhase = Phase::where("inspection_id", $inspection_id)->orderBy("id", "DESC")->first()->phase ?? 1;
         $inspection = Inspection::with([
-            'issues' => function ($query) use($currentPhase) {
-                if($currentPhase == 1) {
-                    $query->where(["phase" => 1]);
-                }
+            'issues' => function ($query) {
                 $query->leftJoin("users", "users.id", "=", "inspection_forms.inspector_id");
                 $query->selectRaw("inspection_forms.id, inspection_id, users.full_name as inspector, inspection_forms.phase, inspection_forms.approved, (extract(EPOCH from inspection_forms.created_at) * 1000) as date");
             }
@@ -149,8 +145,8 @@ class InspectionController extends Controller
             $name = "plumber";
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
         }
-
-        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, users.full_name as $name, (extract(EPOCH from inspections.created_at) * 1000) as date");
+        $inspection->leftJoin(DB::raw(" (SELECT distinct on (inspection_id) id, status, phase, inspection_id FROM PHASES order by inspection_id, id desc) phases"), "phases.inspection_id", "=", "inspections.id")
+        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, phases.phase as phase, phases.status as status, users.full_name as $name, (extract(EPOCH from inspections.created_at) * 1000) as date");
 
         $data['inspection'] = $inspection->first();
         return ResponseHelper::success($data);
