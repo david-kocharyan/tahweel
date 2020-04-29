@@ -150,7 +150,7 @@ class InspectionController extends Controller
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
         }
 
-        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, users.full_name as $name");
+        $inspection->selectRaw("inspections.id, address, latitude, longitude, apartment, building_type, floor, project, users.full_name as $name, extract(EPOCH from inspections.created_at) as date");
 
         $data['inspection'] = $inspection->first();
         return ResponseHelper::success($data);
