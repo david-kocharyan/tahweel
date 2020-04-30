@@ -196,8 +196,6 @@ class InspectionController extends Controller
     private function getTotalPhases($phase)
     {
         $inspections = DB::table("inspections")
-            ->distinct("inspections.id")
-            ->selectRaw("count(*) as total")
             ->leftJoin(DB::raw(" (SELECT distinct on (inspection_id) id, status, phase, inspection_id FROM PHASES order by inspection_id, id desc) phases"), "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
             ->leftJoin("users", "users.id", "=", "inspections.plumber_id");
