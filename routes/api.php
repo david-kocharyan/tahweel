@@ -38,6 +38,7 @@ Route::group(["prefix" => "v1"], function(){
         Route::prefix('inspections')->group(function () {
             Route::post('request-inspection', 'Api\InspectionController@request');
             Route::get('get-inspection', 'Api\InspectionController@getInspections');
+            Route::get('get-phases-totals', 'Api\InspectionController@getTotals');
             Route::get('get-inspection/{inspection_id}', 'Api\InspectionController@getInspectionDetails');
             Route::post('customer', 'Api\CustomerController@index');
             Route::post('form', 'Api\InspectionFormController@index')->middleware("checkInspector");

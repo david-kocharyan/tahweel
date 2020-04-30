@@ -77,6 +77,17 @@ class InspectionController extends Controller
         return ResponseHelper::success($inspections, true);
     }
 
+    public function getTotals()
+    {
+        $total_phase1 = $this->getTotalPhases(1);
+        $total_phase2 = $this->getTotalPhases(2);
+        $resp = array(
+            "total_phase1" => $total_phase1,
+            "total_phase2" => $total_phase2
+        );
+        return ResponseHelper::success($resp);
+    }
+
     /**
      * @param      $limit
      * @param null $status
@@ -180,6 +191,26 @@ class InspectionController extends Controller
             return ResponseHelper::success(array());
         }
         return ResponseHelper::fail("The requested inspection cannot be edited!", 403);
+    }
+
+    private function getTotalPhases($phase)
+    {
+        $inspections = DB::table("inspections")
+            ->distinct("inspections.id")
+            ->selectRaw("count(*) as total")
+            ->leftJoin(DB::raw(" (SELECT distinct on (inspection_id) id, status, phase, inspection_id FROM PHASES order by inspection_id, id desc) phases"), "phases.inspection_id", "=", "inspections.id")
+            ->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id")
+            ->leftJoin("users", "users.id", "=", "inspections.plumber_id");
+
+        if(Auth::guard('api')->user()->role == 1) {
+            $inspections->where(["inspections.plumber_id" => Auth::guard('api')->user()->id]);
+        } else {
+            $inspections->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id]);
+        }
+        if(null != $phase){
+            $inspections->where(["phases.phase" => $phase]);
+        }
+        return $inspections->first();
     }
 
     private function getStatus($request)
