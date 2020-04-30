@@ -210,7 +210,7 @@ class InspectionController extends Controller
         if(null != $phase){
             $inspections->where(["phases.phase" => $phase]);
         }
-        return $inspections->first();
+        return $inspections->count();
     }
 
     private function getStatus($request)
