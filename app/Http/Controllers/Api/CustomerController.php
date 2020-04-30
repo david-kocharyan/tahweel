@@ -18,7 +18,7 @@ class CustomerController extends Controller
                 'inspection_id' => 'required|integer',
                 'full_name' => 'required|max:191',
                 'email' => 'max:191|email',
-                'phone' => 'max:191',
+                'phone' => 'required|max:191',
                 'shop' => 'max:191',
             ]);
         if ($validator->fails()) {
