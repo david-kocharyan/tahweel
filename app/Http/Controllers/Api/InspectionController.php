@@ -186,7 +186,7 @@ class InspectionController extends Controller
             $p = new Phase();
             $p->inspection_id = $request->inspection;
             $p->phase = ($phase->status == Phase::APPROVED) ? 2 : $phase->phase;
-            $p->status = Phase::REPEATED;
+            $p->status = ($phase->status == Phase::APPROVED) ? Phase::NEW : Phase::REPEATED;
             $p->save();
             return ResponseHelper::success(array());
         }
@@ -205,9 +205,8 @@ class InspectionController extends Controller
         } else {
             $inspections->where(["inspection_inspectors.inspector_id" => Auth::guard('api')->user()->id]);
         }
-        if(null != $phase){
-            $inspections->where(["phases.phase" => $phase]);
-        }
+
+        $inspections->where(["phases.phase" => $phase])->where("phases.status", "!=", Phase::COMPLETED);
         return $inspections->count();
     }
 
