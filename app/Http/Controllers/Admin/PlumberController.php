@@ -134,9 +134,10 @@ class PlumberController extends Controller
         }
 
 
+        $tokens = $plumber->tokens()->get()->pluck('token')->toArray();
+        Firebase::send($tokens, "Notif");
+
         if($sendNotif) {
-            $tokens = $plumber->tokens()->get()->pluck('token')->toArray();
-            Firebase::send($tokens, "Notif");
         }
 
         return redirect(self::ROUTE);

@@ -39,7 +39,7 @@ class Firebase
     private function sendMulti($message, $tokens)
     {
         try{
-            $this->messaging->sendMulticast($message, $tokens);
+          $this->messaging->sendMulticast($message, $tokens);
         } catch (\Exception $exception) {
             dd($exception);
         }
