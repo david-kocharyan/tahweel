@@ -42,4 +42,9 @@ class Inspection extends Model
         return $this->hasMany("App\Model\InspectionForm", "inspection_id", "id")->where("phase", 2);
     }
 
+    public function latestRepeated()
+    {
+        return $this->hasMany("App\Model\Phase", "inspection_id", "id")->where("status", Phase::REPEATED)->orderBy("id", "DESC")->first();
+    }
+
 }

@@ -15,6 +15,7 @@ class Firebase
 
     public static function send($tokens, string $notif, ?string $event = null, $event_id = null, $image = null)
     {
+        if(empty($tokens)) return;
         $firebase = new self();
 
         $data = array(
@@ -40,7 +41,7 @@ class Firebase
         try{
             $this->messaging->sendMulticast($message, $tokens);
         } catch (\Exception $exception) {
-
+            dd($exception);
         }
     }
 
@@ -50,7 +51,7 @@ class Firebase
             $message->withTarget("token", $token);
             $this->messaging->send($message);
         } catch (\Exception $exception) {
-
+            dd($exception);
         }
     }
 }

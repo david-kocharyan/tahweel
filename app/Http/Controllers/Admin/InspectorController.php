@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\helpers\Firebase;
 use App\Http\Controllers\Controller;
 use App\Mail\InspectorMail;
 use App\User;
@@ -58,6 +59,7 @@ class InspectorController extends Controller
         $inspector = new User;
         $inspector->full_name = $request->full_name;
         $inspector->email = $request->email;
+        $inspector->approved = 1;
         $inspector->role = User::ROLES['inspector'];
         $inspector->password = Hash::make($request->password);
         $inspector->save();
@@ -112,7 +114,11 @@ class InspectorController extends Controller
             "email" => "required|unique:users,email," . $id,
         ]);
 
-        $inspector = User::find($id);
+        $inspector = User::with("tokens")->find($id);
+        $sendNotif = false;
+        if(!$inspector->approved && $request->approved) {
+            $sendNotif = true;
+        }
         $inspector->full_name = $request->full_name;
         $inspector->email = $request->email;
         $inspector->approved = $request->approved ?? 0;
@@ -125,6 +131,11 @@ class InspectorController extends Controller
                 'body' => "Hello dear $request->full_name. Your password is` $request->password",
             ];
             Mail::to($request->email)->send(new InspectorMail($details));
+        }
+
+        if($sendNotif) {
+            $tokens = $inspector->tokens()->get()->pluck('token')->toArray();
+            Firebase::send($tokens, "Notif");
         }
 
         return redirect(self::ROUTE);

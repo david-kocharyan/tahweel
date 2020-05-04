@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\helpers\Firebase;
 use App\Http\Controllers\Controller;
 use App\Mail\PlumberMail;
+use App\Model\FcmToken;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -108,7 +110,11 @@ class PlumberController extends Controller
            'full_name' => 'required|max:200',
            "email" => "required|unique:users,email," . $id,
        ]);
-        $plumber = User::find($id);
+        $plumber = User::with("tokens")->find($id);
+        $sendNotif = false;
+        if(!$plumber->approved && $request->approved) {
+            $sendNotif = true;
+        }
         $plumber->full_name = $request->full_name;
         $plumber->email = $request->email;
         $plumber->approved = $request->approved ?? 0;
@@ -123,8 +129,14 @@ class PlumberController extends Controller
             try{
                 Mail::to($request->email)->send(new PlumberMail($details));
             } catch (\Exception $exception) {
-
+                dd($exception);
             }
+        }
+
+
+        if($sendNotif) {
+            $tokens = $plumber->tokens()->get()->pluck('token')->toArray();
+            Firebase::send($tokens, "Notif");
         }
 
         return redirect(self::ROUTE);
