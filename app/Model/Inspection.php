@@ -44,7 +44,7 @@ class Inspection extends Model
 
     public function latestRepeated()
     {
-        return $this->hasOne("App\Model\Phase", "inspection_id", "id")->where("status", Phase::REPEATED)->orderBy("id", "DESC");
+        return $this->hasOne("App\Model\Phase", "inspection_id", "id")->where("status", Phase::REPEATED)->orderBy("id", "ASC");
     }
 
 }
