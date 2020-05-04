@@ -158,7 +158,7 @@ class InspectionController extends Controller
             $inspection->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id");
             $inspection->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id");
             $inspection->with(['latestRepeated' => function ($query) {
-                $query->selectRaw("id, inspection_id, (extract(EPOCH from inspection_forms.created_at) * 1000) as date");
+                $query->selectRaw("id, inspection_id, (extract(EPOCH from created_at) * 1000) as date");
             }]);
         } else {
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
