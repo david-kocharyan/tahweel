@@ -211,7 +211,7 @@ class InspectionController extends Controller
         }
 
         $inspections->where(["phases.phase" => $phase])->where("phases.status", "!=", Phase::COMPLETED);
-        return $inspections->count();
+        return $inspections->get()->count();
     }
 
     private function getStatus($request)
