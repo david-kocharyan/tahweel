@@ -151,13 +151,15 @@ class InspectionController extends Controller
                 $query->leftJoin("users", "users.id", "=", "inspection_forms.inspector_id");
                 $query->selectRaw("inspection_forms.id, inspection_id, users.full_name as inspector, inspection_forms.phase, inspection_forms.approved, reason, (extract(EPOCH from inspection_forms.created_at) * 1000) as date");
             },
-            'latestRepeated'
         ])
             ->where('inspections.id', $inspection_id);
 
         if($role == User::ROLES["plumber"]){
             $inspection->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id");
             $inspection->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id");
+            $inspection->with(['latestRepeated' => function ($query) {
+                $query->selectRaw("id, inspection_id, (extract(EPOCH from inspection_forms.created_at) * 1000) as date");
+            }]);
         } else {
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
         }
