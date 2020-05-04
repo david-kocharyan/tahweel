@@ -37,4 +37,24 @@ class CustomerController extends Controller
         }
         return ResponseHelper::fail("Something Went Wrong", 500);
     }
+
+    public function getCustomer(Request $request)
+    {
+        $validator = Validator::make($request->all(),
+            [
+                'inspection' => 'required|integer',
+            ]);
+        if ($validator->fails()) {
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
+
+        $customer = Customer::where("inspection_id", $request->inspection)->selectRaw("full_name, email, phone, shop")->orderBy("id", "DESC")->first();
+        if(null == $customer) {
+            return ResponseHelper::fail("Customer Not Found", 422);
+        }
+        $resp = array(
+            "customer" => $customer
+        );
+        return ResponseHelper::success($resp);
+    }
 }

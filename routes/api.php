@@ -41,6 +41,7 @@ Route::group(["prefix" => "v1"], function(){
             Route::get('get-phases-totals', 'Api\InspectionController@getTotals');
             Route::get('get-inspection/{inspection_id}', 'Api\InspectionController@getInspectionDetails');
             Route::post('customer', 'Api\CustomerController@index');
+            Route::get('customer', 'Api\CustomerController@getCustomer');
             Route::post('form', 'Api\InspectionFormController@index');
             Route::get('form', 'Api\InspectionFormController@getForm');
             Route::post('ask-for-inspection', 'Api\InspectionController@plumberInspectionRequest');
