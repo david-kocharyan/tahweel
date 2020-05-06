@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\helpers\Firebase;
 use App\helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Inspection;
 use App\Model\InspectionForm;
+use App\Model\InspectionInspector;
 use App\Model\Phase;
 use App\User;
 use Illuminate\Support\Facades\URL;
@@ -191,6 +193,12 @@ class InspectionController extends Controller
             $p->phase = ($phase->status == Phase::APPROVED) ? 2 : $phase->phase;
             $p->status = ($phase->status == Phase::APPROVED) ? Phase::NEW : Phase::REPEATED;
             $p->save();
+
+            $inspection = InspectionInspector::where("inspection_id", $request->inspection)->orderBy("id", "DESC")->first();
+            $inspector = User::find($inspection->inspector_id);
+            $tokens = $inspector->tokens()->get()->pluck('token')->toArray();
+            Firebase::send($tokens, "Dear $user->full_name, You Have a New Inspection Request  (Phase: $p->phase) ");
+
             return ResponseHelper::success(array());
         }
         return ResponseHelper::fail("The requested inspection cannot be edited!", 403);

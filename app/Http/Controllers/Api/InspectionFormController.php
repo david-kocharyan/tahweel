@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\helpers\FileUploadHelper;
+use App\helpers\Firebase;
 use App\Http\Controllers\Controller;
+use App\Model\Inspection;
 use App\Model\InspectionForm;
 use App\Model\InspectionInspector;
 use App\Model\Phase;
+use App\User;
 use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
 use Illuminate\Support\Facades\Auth;
@@ -92,6 +95,12 @@ class InspectionFormController extends Controller
         $phase->status = ($request->approved == InspectionForm::DECLINED) ? (Phase::REJECTED) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? Phase::APPROVED : Phase::COMPLETED );
         $phase->save();
         DB::commit();
+
+        $inspection = Inspection::find($request->inspection_id);
+        $plumber = User::find($inspection->plumber_id);
+        $tokens = $plumber->tokens()->get()->pluck('token')->toArray();
+        Firebase::send($tokens, "Dear $plumber->full_name, Your Request Has Been Inspected");
+
         return ResponseHelper::success(array());
     }
 
