@@ -135,7 +135,7 @@ class InspectorController extends Controller
 
         if($sendNotif) {
             $tokens = $inspector->tokens()->get()->pluck('token')->toArray();
-            Firebase::send($tokens, "Notif");
+            Firebase::send($tokens, "Dear $inspector->full_name, Your Account Has Been Approved");
         }
 
         return redirect(self::ROUTE);

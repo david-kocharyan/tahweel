@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\helpers\Firebase;
 use App\Http\Controllers\Controller;
 use App\Model\InspectionInspector;
 use App\User;
@@ -93,6 +94,9 @@ class InspectionController extends Controller
         $inspection_inspector->inspection_id = $id;
         $inspection_inspector->inspector_id = $request->inspector;
         $inspection_inspector->save();
+        $user = User::find($request->inspector);
+        $tokens = $user->tokens()->get()->pluck('token')->toArray();
+        Firebase::send($tokens, "Dear $user->full_name, You Have a New Inspection Request");
         return  redirect(self::ROUTE);
     }
 

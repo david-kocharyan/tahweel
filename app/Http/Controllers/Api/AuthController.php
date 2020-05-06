@@ -191,6 +191,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
+        FcmToken::where("user_id", $user->id)->delete();
         $fcmToken = new FcmToken();
         $fcmToken->user_id = $user->id;
         $fcmToken->token = $data["token"];
