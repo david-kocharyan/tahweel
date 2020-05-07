@@ -42,9 +42,9 @@ class Inspection extends Model
         return $this->hasMany("App\Model\InspectionForm", "inspection_id", "id")->where("phase", 2);
     }
 
-    public function latestRepeated()
+    public function latestRequestDate()
     {
-        return $this->hasOne("App\Model\Phase", "inspection_id", "id")->where("status", Phase::REPEATED)->orderBy("id", "DESC");
+        return $this->hasOne("App\Model\Phase", "inspection_id", "id")->orderBy("id", "DESC");
     }
 
 }

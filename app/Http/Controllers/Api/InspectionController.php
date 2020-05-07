@@ -75,7 +75,7 @@ class InspectionController extends Controller
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
         $status = $this->getStatus($request);
         $phase = !is_numeric($request->phase) ? null : $request->phase;
-        $inspections = ($request->role == User::ROLES["plumber"] ? $this->getPlumberInspections($limit, $status, $phase) : $this->getInspectorInspections($limit, $status, $phase));
+        $inspections = (Auth::guard('api')->user()->role == User::ROLES["plumber"] ? $this->getPlumberInspections($limit, $status, $phase) : $this->getInspectorInspections($limit, $status, $phase));
         return ResponseHelper::success($inspections, true);
     }
 
@@ -156,12 +156,13 @@ class InspectionController extends Controller
         ])
             ->where('inspections.id', $inspection_id);
 
+        $inspection->with(['latestRequestDate' => function ($query) {
+            $query->selectRaw("id, inspection_id, status, (extract(EPOCH from created_at) * 1000) as date");
+        }]);
+
         if($role == User::ROLES["plumber"]){
             $inspection->leftJoin("inspection_inspectors", "inspection_inspectors.inspection_id", "=", "inspections.id");
             $inspection->leftJoin("users", "users.id", "=", "inspection_inspectors.inspector_id");
-            $inspection->with(['latestRepeated' => function ($query) {
-                $query->selectRaw("id, inspection_id, (extract(EPOCH from created_at) * 1000) as date");
-            }]);
         } else {
             $inspection->leftJoin("users", "users.id", "=", "inspections.plumber_id");
         }
