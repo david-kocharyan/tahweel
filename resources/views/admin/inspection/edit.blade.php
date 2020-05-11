@@ -16,9 +16,10 @@
                                 @error('inspector')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <select name="inspector" id="inspector" class="select2 form-control">
+                                <select name="inspector" id="inspector" class="select2 form-control" required>
+                                    <option value="">Select An Inspector</option>
                                     @foreach($inspectors as $key)
-                                        <option value="{{$key->id}}" @if($key->id == old('inspector')) selected @endif>{{$key->full_name}}</option>
+                                        <option @if($chosenInspectorId == $key->id) selected @endif value="{{$key->id}}" @if($key->id == old('inspector')) selected @endif>{{$key->full_name}}</option>
                                     @endforeach
                                 </select>
                             </div>

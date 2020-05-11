@@ -72,9 +72,10 @@ class InspectionController extends Controller
     public function edit($id)
     {
         $inspectors = User::where('role', User::ROLES['inspector'])->get();
+        $chosenInspectorId = Inspection::with("inspector")->find($id)->inspector->id ?? 0;
         $title = self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER . ".edit", compact('title', 'route', 'inspectors', 'id'));
+        return view(self::FOLDER . ".edit", compact('title', 'route', 'inspectors', 'id', "chosenInspectorId"));
     }
 
     /**

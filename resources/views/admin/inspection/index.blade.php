@@ -61,6 +61,11 @@
                                            data-placement="top" title="Show" class="btn btn-success btn-circle tooltip-success">
                                             <i class="fas fa-plus"></i>
                                         </a>
+                                    @else
+                                        <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
+                                           data-placement="top" title="Edit" class="btn btn-primary btn-circle tooltip-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
                                     @endif
 
 {{--                                    <form--}}

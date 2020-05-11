@@ -14,7 +14,7 @@ class Inspection extends Model
 
     public function inspector()
     {
-        return $this->hasOneThrough(  'App\User', 'App\Model\InspectionInspector',  'inspection_id', 'id', 'id', 'inspector_id');
+        return $this->hasOneThrough(  'App\User', 'App\Model\InspectionInspector',  'inspection_id', 'id', 'id', 'inspector_id')->orderBy("inspection_inspectors.id", "DESC");
     }
 
     public function phases()
