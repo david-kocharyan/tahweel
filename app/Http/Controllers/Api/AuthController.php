@@ -208,7 +208,7 @@ class AuthController extends Controller
 
     public function getPoints()
     {
-        $points = User::where("id", Auth::guard('api')->user()->id)->with("points")->points ?? 0;
+        $points = User::where("id", Auth::guard('api')->user()->id)->with("points")->first()->points->sum("point") ?? 0;
         $resp = array("points" => $points);
         return ResponseHelper::success($resp);
     }
