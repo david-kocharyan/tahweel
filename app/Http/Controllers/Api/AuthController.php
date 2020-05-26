@@ -97,7 +97,7 @@ class AuthController extends Controller
     public function refreshToken(Request $request)
     {
         $http = new \GuzzleHttp\Client;
-        try{
+        try {
             $response = $http->post(url('oauth/token'), [
                 'form_params' => [
                     'grant_type' => 'refresh_token',
@@ -107,7 +107,7 @@ class AuthController extends Controller
                 ],
             ]);
             return ResponseHelper::success(json_decode((string)$response->getBody(), true));
-        } catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return ResponseHelper::fail("Something Went Wrong", 422);
         }
 
@@ -165,7 +165,7 @@ class AuthController extends Controller
         }
 
         $user = User::where(['email' => $request->email])->first();
-        if(null == $user) {
+        if (null == $user) {
             return ResponseHelper::fail("Wrong email provided", 403);
         }
         $pass = uniqid();
@@ -173,7 +173,7 @@ class AuthController extends Controller
         $user->save();
 
         $email = MailHelper::send($request->email, "TayRaRam $pass");
-        if(!$email) {
+        if (!$email) {
             return ResponseHelper::fail("Something Went Wrong", 422);
         }
 
@@ -197,8 +197,13 @@ class AuthController extends Controller
         $fcmToken->token = $data["token"];
         $saved = $fcmToken->save();
 
-        if(!$saved) return ResponseHelper::fail("Something Went Wrong, Please try again later", 500);
+        if (!$saved) return ResponseHelper::fail("Something Went Wrong, Please try again later", 500);
         return ResponseHelper::success(array());
+    }
+
+    public function edit(Request $request)
+    {
+
     }
 
 

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Model\Inspection;
+use App\Model\PlumberPoint;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,5 +48,10 @@ class User extends Authenticatable
     public function tokens()
     {
         return $this->hasMany("App\Model\FcmToken", "user_id", "id");
+    }
+
+    public function points()
+    {
+        return $this->hasManyThrough(PlumberPoint::class, Inspection::class, "id", "id", "inspection_id");
     }
 }

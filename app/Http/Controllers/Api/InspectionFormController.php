@@ -9,6 +9,7 @@ use App\Model\Inspection;
 use App\Model\InspectionForm;
 use App\Model\InspectionInspector;
 use App\Model\Phase;
+use App\Model\PlumberPoint;
 use App\User;
 use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
@@ -94,6 +95,15 @@ class InspectionFormController extends Controller
         $phase->phase = ($request->approved == InspectionForm::DECLINED) ? ($currentPhase->phase ?? 1) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? 1 : $currentPhase->phase );
         $phase->status = ($request->approved == InspectionForm::DECLINED) ? (Phase::REJECTED) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? Phase::APPROVED : Phase::COMPLETED );
         $phase->save();
+
+        // Give Points
+        if($phase->status == Phase::COMPLETED) {
+            $plumberPoint = new PlumberPoint();
+            $plumberPoint->inspection_id = $request->inspection_id;
+            $plumberPoint->point = ($form->bathrooms_inspected + $form->kitchen_inspected + $form->service_counters_inspected) * PlumberPoint::COEFFICIENT;
+            $plumberPoint->save();
+        }
+
         DB::commit();
 
         $inspection = Inspection::find($request->inspection_id);

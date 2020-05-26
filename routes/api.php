@@ -28,6 +28,7 @@ Route::group(["prefix" => "v1"], function(){
             Route::get('get-user', 'Api\AuthController@getUser');
             Route::post("fcm-token", "Api\AuthController@fcmToken");
             Route::get('get-user', 'Api\AuthController@getUser');
+            Route::get('edit-user', 'Api\AuthController@edit');
         });
     });
     Route::group(['middleware' => 'auth:api'], function () {
