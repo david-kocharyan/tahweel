@@ -206,5 +206,12 @@ class AuthController extends Controller
 
     }
 
+    public function getPoints()
+    {
+        $points = User::find(Auth::guard('api')->user()->id)->with("points")->points ?? 0;
+        $resp = array("points" => $points);
+        return ResponseHelper::success($resp);
+    }
+
 
 }
