@@ -34,6 +34,7 @@ Route::group(["prefix" => "v1"], function(){
         });
     });
     Route::group(['middleware' => 'auth:api'], function () {
+
         Route::prefix('issues')->group(function () {
             Route::get('get-issues', 'Api\IssueController@index');
         });
@@ -49,8 +50,13 @@ Route::group(["prefix" => "v1"], function(){
             Route::get('form', 'Api\InspectionFormController@getForm');
             Route::post('ask-for-inspection', 'Api\InspectionController@plumberInspectionRequest');
         });
-    });
 
+
+
+    });
+    Route::prefix('products')->group(function () {
+        Route::get('get-products', 'Api\ProductController@getProducts');
+    });
 
 });
 

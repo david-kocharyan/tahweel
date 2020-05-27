@@ -18,6 +18,9 @@
     <!-- This is a colors CSS -->
     <link href="{{asset('assets/css/colors/default.css')}}" id="theme" rel="stylesheet">
 
+    <!-- Dropify css -->
+    <link rel="stylesheet" href="{{ asset("assets/plugins/dropify/dist/css/dropify.min.css") }}">
+
     @stack('head')
 </head>
 
@@ -117,6 +120,12 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="/admin/products" class="waves-effect"><i class="mdi mdi-hamburger fa-fw"></i> <span
+                            class="hide-menu">Products</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>
@@ -152,6 +161,13 @@
 <script src="{{asset('assets/js/waves.js')}}"></script>
 <!-- Custom Theme JavaScript min -->
 <script src="{{asset('assets/js/custom.min.js')}}"></script>
+<!--Dropify js-->
+<script src="{{ asset("assets/plugins/dropify/dist/js/dropify.min.js") }}"></script>
 
 @stack('foot')
+<script>
+    $(document).ready(function() {
+        $('.dropify').dropify();
+    })
+</script>
 </html>
