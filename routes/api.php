@@ -28,7 +28,8 @@ Route::group(["prefix" => "v1"], function(){
             Route::get('get-user', 'Api\AuthController@getUser');
             Route::post("fcm-token", "Api\AuthController@fcmToken");
             Route::get('get-user', 'Api\AuthController@getUser');
-            Route::get('edit-user', 'Api\AuthController@edit');
+            Route::put('edit-user', 'Api\AuthController@edit');
+            Route::put('change-password', 'Api\AuthController@changePassword');
             Route::get('get-points', 'Api\AuthController@getPoints');
         });
     });

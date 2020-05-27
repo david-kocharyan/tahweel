@@ -27,7 +27,7 @@ class AuthController extends Controller
                 'full_name' => 'required|max:100',
                 'email' => 'required|unique:users|max:150',
                 'role' => 'required|integer|min:1|max:2',
-                'password' => 'required',
+                'password' => 'required|max:25',
                 'confirm_password' => 'required|same:password',
             ]);
         if ($validator->fails()) {
@@ -203,7 +203,23 @@ class AuthController extends Controller
 
     public function edit(Request $request)
     {
+        $data = json_decode($request->getContent(), true);
+        $validator = Validator::make($data,
+            [
+                'full_name' => 'required|max:100',
+                'email' => 'required|unique:users,email,'.Auth::guard('api')->user()->id.'|max:150',
+            ]);
+        if ($validator->fails()) {
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
 
+        $user = User::find(Auth::guard('api')->user()->id);
+        $user->full_name = $data["full_name"];
+        $user->email = $data["email"];
+        if($user->save()) {
+            return ResponseHelper::success(array());
+        }
+        return ResponseHelper::fail("Somtehing Went Wrong");
     }
 
     public function getPoints()
@@ -211,6 +227,36 @@ class AuthController extends Controller
         $points = User::where("id", Auth::guard('api')->user()->id)->with("points")->first()->points->sum("point") ?? 0;
         $resp = array("points" => $points);
         return ResponseHelper::success($resp);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $validator = Validator::make($data,
+            [
+                'old_password' => 'required',
+                'new_password' => 'required|max:25|different:old_password',
+                'confirm_password' => 'required|same:new_password',
+            ]);
+        if ($validator->fails()) {
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
+
+        $current_password = Auth::guard('api')->user()->password;
+        if(Hash::check($data['old_password'], $current_password))
+        {
+            $user = User::find(Auth::guard('api')->user()->id);
+            $user->password = Hash::make($data['new_password']);
+
+            if($user->save()) {
+                return ResponseHelper::success(array());
+            }
+
+            return ResponseHelper::fail("Something Went Wrong", 500);
+        }
+
+        return ResponseHelper::fail("Old Password Is Wrong", 422);
+
     }
 
 
