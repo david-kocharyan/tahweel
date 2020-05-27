@@ -219,7 +219,7 @@ class AuthController extends Controller
         if($user->save()) {
             return ResponseHelper::success(array());
         }
-        return ResponseHelper::fail("Somtehing Went Wrong");
+        return ResponseHelper::fail("Somtehing Went Wrong", 500);
     }
 
     public function getPoints()
@@ -258,6 +258,5 @@ class AuthController extends Controller
         return ResponseHelper::fail("Old Password Is Wrong", 422);
 
     }
-
 
 }
