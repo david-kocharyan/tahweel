@@ -52,10 +52,11 @@ Route::group(["prefix" => "v1"], function(){
         });
 
 
+        Route::prefix('products')->group(function () {
+            Route::get('get-products', 'Api\ProductController@getProducts');
+        });
 
-    });
-    Route::prefix('products')->group(function () {
-        Route::get('get-products', 'Api\ProductController@getProducts');
+
     });
 
 });
