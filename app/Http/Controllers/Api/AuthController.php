@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\helpers\Twilio;
 use App\Http\Controllers\Controller;
 use App\Mail\MailHelper;
 use App\Model\FcmToken;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\helpers\ResponseHelper;
+use App\Model\Phone;
 
 class AuthController extends Controller
 {
@@ -25,6 +27,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'full_name' => 'required|max:100',
+                'phone' => 'required|max:191',
                 'email' => 'required|unique:users|max:150',
                 'role' => 'required|integer|min:1|max:2',
                 'password' => 'required|max:25',
@@ -38,9 +41,11 @@ class AuthController extends Controller
         $user->full_name = $request->full_name;
         $user->email = $request->email;
         $user->role = intval($request->role);
-        $user->approved = 0;
+        $user->approved = $user->role == 1 ? 1 : 0;
         $user->password = bcrypt($request->password);
         $user->save();
+
+        Phone::where("phone", $request->phone)->update(["user_id" => $user->id]);
 
         $user->createToken('Personal Access Token')->accessToken;
         $tokens = $this->get_token($request->email, $request->password);
@@ -257,6 +262,72 @@ class AuthController extends Controller
 
         return ResponseHelper::fail("Old Password Is Wrong", 422);
 
+    }
+
+    private function generateRandomNumber()
+    {
+        $rnd = rand(10000, 99999);
+        $findRnd = Phone::where("verification", $rnd)->first();
+        if(null != $findRnd) {
+            $this->generateRandomNumber();
+        }
+        return $rnd;
+    }
+
+    public function sendVerification(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $validator = Validator::make($data ?? [],
+            [
+                'phone' => 'required|max:191',
+            ]);
+        if ($validator->fails()) {
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
+
+
+        $rnd = $this->generateRandomNumber();
+        $phone = Phone::where("phone", $data["phone"])->first();
+        if(null == $phone) {
+            $phone = new Phone();
+        }
+        $phone->phone = $data["phone"];
+        $phone->verification = $rnd;
+
+        if($phone->save()) {
+
+            if(Twilio::send($phone->phone, "Your verification code is $rnd")) {
+                return ResponseHelper::success(array());
+            } else {
+                return ResponseHelper::fail("Wrong phone number provided", 400);
+            }
+        }
+
+        return ResponseHelper::fail("Something went wrong, please, try again later", 500);
+
+    }
+
+    public function verifyAccount(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $validator = Validator::make($data,
+            [
+                'verification' => 'required',
+            ]);
+
+        if ($validator->fails()) {
+            return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
+
+        $phone = Phone::where("verification", $data["verification"])->first();
+        if(null == $phone) {
+            return ResponseHelper::fail("Your Verification code is incorrect", 422);
+        }
+
+        $phone->verification = null;
+        $phone->save();
+
+        return ResponseHelper::success(array());
     }
 
 }

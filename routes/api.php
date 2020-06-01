@@ -23,6 +23,9 @@ Route::group(["prefix" => "v1"], function(){
         Route::post('refresh-token', 'Api\AuthController@refreshToken');
         Route::post("reset-password", "Api\AuthController@recoverPassword");
 
+        Route::post("send-verification-code", "Api\AuthController@sendVerification");
+        Route::post("verify-account", "Api\AuthController@verifyAccount");
+
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('logout','Api\AuthController@logout'); // Check, if this works for ended token
             Route::get('get-user', 'Api\AuthController@getUser');
