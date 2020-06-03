@@ -24,7 +24,7 @@ class ProductController extends Controller
     public function getProducts(Request $request)
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
-        $products = Product::selectRaw("id, name, (extract(EPOCH from created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || image as image, point")->orderBy("id", "DESC")->paginate($limit);
+        $products = Product::selectRaw("id, name, (extract(EPOCH from created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || image as image, point, description")->orderBy("id", "DESC")->paginate($limit);
 
         return ResponseHelper::success($products, true);
     }
@@ -33,7 +33,7 @@ class ProductController extends Controller
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
         $redeems = Redeem::selectRaw("id, point, (extract(EPOCH from created_at) * 1000) as redeemDate, product_id")->where("plumber_id", Auth::guard('api')->user()->id)->orderBy("id", "DESC")->with(["product" => function($query) {
-            $query->selectRaw("id, name, (extract(EPOCH from created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || image as image ");
+            $query->selectRaw("id, name, (extract(EPOCH from created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || image as image, description ");
         }])->paginate($limit);
 
         return ResponseHelper::success($redeems, true);

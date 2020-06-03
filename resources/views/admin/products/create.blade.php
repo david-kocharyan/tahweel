@@ -23,6 +23,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="name">Product Description</label>
+                                @error('description')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <textarea name="description" id="description" cols="30" class="form-control" rows="10">{{ $product->description ?? old('description')}}</textarea>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="point">Product Point</label>
                                 @error('point')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>

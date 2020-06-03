@@ -52,7 +52,8 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|max:190',
             'point' => 'required|numeric|min:1',
-            "image" => "required|image"
+            "image" => "required|image",
+            "description" => "max:150",
         ]);
 
         $image = FileUploadHelper::upload($request->image, ["*"], self::UPLOAD);
@@ -61,6 +62,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->point = $request->point;
         $product->image = $image ?? "";
+        $product->description = $request->description;
         $product->save();
 
         return redirect(self::ROUTE);
@@ -102,6 +104,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|max:190',
             'point' => 'required|numeric|min:1',
+            "description" => "max:150",
         ]);
         if(null != $request->image) {
             $image = FileUploadHelper::upload($request->image, ["*"], self::UPLOAD);
@@ -110,6 +113,7 @@ class ProductController extends Controller
 
         $product->name = $request->name;
         $product->point = $request->point;
+        $product->description = $request->description;
         $product->save();
 
         return redirect(self::ROUTE);
