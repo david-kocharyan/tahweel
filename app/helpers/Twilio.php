@@ -10,7 +10,7 @@ class Twilio
 {
 
     const SID = "AC62ca829966c24dfe21b3e22d86d5aa69";
-    const TOKEN = "110cfd854de029ef6e2a223cb8e22e60";
+    const TOKEN = "d4d44968232e7e85bd58b7f73659e1cf";
     const UNDEFINED_NUMBER_STATUS = 400;
     const SUCCESS_STATUS = 201;
 
