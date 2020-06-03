@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInspectionsTable extends Migration
+class CreateRedeemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateInspectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('inspections', function (Blueprint $table) {
+        Schema::create('redeems', function (Blueprint $table) {
             $table->id();
-            $table->string('address', 191); //address
-            $table->string('latitude', 191);
-            $table->string('longitude', 191);
-            $table->string('apartment', 191)->nullable();
-            $table->string('project', 191);
-            $table->unsignedTinyInteger('building_type');
-            $table->timestamps();
-
             $table->unsignedInteger('plumber_id');
             $table->foreign('plumber_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->decimal("point", 8, 2);
+            $table->timestamps();
         });
     }
 
@@ -35,6 +33,6 @@ class CreateInspectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inspections');
+        Schema::dropIfExists('redeems');
     }
 }

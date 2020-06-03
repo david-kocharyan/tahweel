@@ -47,4 +47,9 @@ class Inspection extends Model
         return $this->hasOne("App\Model\Phase", "inspection_id", "id")->orderBy("id", "DESC");
     }
 
+    public function points()
+    {
+        return $this->hasMany(PlumberPoint::class, "inspection_id", "id");
+    }
+
 }

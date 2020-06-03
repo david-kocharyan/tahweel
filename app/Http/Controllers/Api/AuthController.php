@@ -6,6 +6,7 @@ use App\helpers\Twilio;
 use App\Http\Controllers\Controller;
 use App\Mail\MailHelper;
 use App\Model\FcmToken;
+use App\Model\Redeem;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -224,14 +225,21 @@ class AuthController extends Controller
         if($user->save()) {
             return ResponseHelper::success(array());
         }
-        return ResponseHelper::fail("Somtehing Went Wrong", 500);
+        return ResponseHelper::fail("Something Went Wrong", 500);
     }
 
     public function getPoints()
     {
-        $points = User::where("id", Auth::guard('api')->user()->id)->with("points")->first()->points->sum("point") ?? 0;
+        $points = $this->getPointsFromDb();
         $resp = array("points" => $points);
         return ResponseHelper::success($resp);
+    }
+
+    public static function getPointsFromDb()
+    {
+        $pointsEarned = User::where("id", Auth::guard('api')->user()->id)->with("pointsEarned")->first()->pointsEarned->sum("point") ?? 0;
+        $pointsRedeemed = Redeem::where("plumber_id", Auth::guard('api')->user()->id)->sum("point") ?? 0;
+        return ($pointsEarned - $pointsRedeemed);
     }
 
     public function changePassword(Request $request)

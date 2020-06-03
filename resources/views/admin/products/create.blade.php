@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Պահպանել</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Save</button>
                             </div>
                         </form>
                     </div>

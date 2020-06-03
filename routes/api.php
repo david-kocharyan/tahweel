@@ -57,6 +57,8 @@ Route::group(["prefix" => "v1"], function(){
 
         Route::prefix('products')->group(function () {
             Route::get('get-products', 'Api\ProductController@getProducts');
+            Route::get('get-redeems', 'Api\ProductController@getRedeems');
+            Route::post('buy-product', 'Api\ProductController@buyProduct');
         });
 
 

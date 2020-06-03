@@ -60,7 +60,7 @@ class InspectionFormController extends Controller
 
         $currentPhase = Phase::where("inspection_id", $request->inspection_id)->orderBy("id", "DESC")->first();
 
-        $image = FileUploadHelper::upload($request->signature, ['*'], "");
+        $image = FileUploadHelper::upload($request->signature, ['*'], "signatures");
         DB::beginTransaction();
 
         $form = new InspectionForm();
