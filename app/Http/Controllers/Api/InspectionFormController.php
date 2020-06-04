@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Inspection;
 use App\Model\InspectionForm;
 use App\Model\InspectionInspector;
+use App\Model\Notification;
 use App\Model\Phase;
 use App\Model\PlumberPoint;
 use App\User;
@@ -109,7 +110,7 @@ class InspectionFormController extends Controller
         $inspection = Inspection::find($request->inspection_id);
         $plumber = User::find($inspection->plumber_id);
         $tokens = $plumber->tokens()->get()->pluck('token')->toArray();
-        Firebase::send($tokens, "Dear $plumber->full_name, Your Request Has Been Inspected");
+        Firebase::send($tokens, "Dear $plumber->full_name, Your Request Has Been Inspected", "", "", "", Notification::INSPECTION_TYPE);
 
         return ResponseHelper::success(array());
     }

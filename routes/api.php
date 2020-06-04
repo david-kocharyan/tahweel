@@ -61,6 +61,10 @@ Route::group(["prefix" => "v1"], function(){
             Route::post('buy-product', 'Api\ProductController@buyProduct');
         });
 
+        Route::prefix('notifications')->group(function () {
+            Route::get('get-notifications', 'Api\NotificationController@getNotifications');
+        });
+
 
     });
 

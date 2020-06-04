@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\helpers\Firebase;
 use App\Http\Controllers\Controller;
 use App\Model\InspectionInspector;
+use App\Model\Notification;
 use App\User;
 use Illuminate\Http\Request;
 use App\Model\Inspection;
@@ -97,7 +98,7 @@ class InspectionController extends Controller
         $inspection_inspector->save();
         $user = User::find($request->inspector);
         $tokens = $user->tokens()->get()->pluck('token')->toArray();
-        Firebase::send($tokens, "Dear $user->full_name, You Have a New Inspection Request");
+        Firebase::send($tokens, "Dear $user->full_name, You Have a New Inspection Request", null, null, null, Notification::INSPECTION_TYPE);
         return  redirect(self::ROUTE);
     }
 

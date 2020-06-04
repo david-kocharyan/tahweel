@@ -2,9 +2,13 @@
 
 
 namespace App\helpers;
+use App\Model\FcmToken;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Kreait\Firebase\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
+use App\Model\Notification as Notif;
 
 class Firebase
 {
@@ -13,11 +17,10 @@ class Firebase
         $this->messaging = app('firebase.messaging');
     }
 
-    public static function send($tokens, string $notif, ?string $event = null, $event_id = null, $image = null)
+    public static function send($tokens, string $notif, ?string $event = null, $event_id = null, $image = null, $type = null, $title = null)
     {
         if(empty($tokens)) return;
         $firebase = new self();
-
         $data = array(
             "image" => $image,
             "title" => "notification",
@@ -27,6 +30,7 @@ class Firebase
         $message = CloudMessage::new()
             ->withData($data)
             ->withNotification(Notification::create($notif));
+        $firebase->saveNotification($notif, $tokens, $type, $title);
 
         if(is_array($tokens)) {
             $firebase->sendMulti($message, $tokens);
@@ -52,6 +56,41 @@ class Firebase
             $this->messaging->send($message);
         } catch (\Exception $exception) {
             dd($exception);
+        }
+    }
+
+    private function saveNotification($body, $tokens, $type, $title = null)
+    {
+        $user = Auth::guard('api')->user() ?? Auth::guard('web')->user();  // The user who has sent the notification
+        $name = $user->full_name ?? $user->name;
+        if(is_array($tokens)) {
+            foreach ($tokens as $key => $value) {
+                $assignedToUser = User::find(FcmToken::where("token", $value)->first()->user_id);  // The user who receives the notification
+                $notification = new Notif();
+                $notification->title = $title ?? ($name . ($user->role == 1 ? " (Plumber)" : $user->role == 2 ? " (Inspector)" : "" ) );
+                $notification->body = $body;
+                $notification->user_id = $assignedToUser->id;
+                $notification->type = $type;
+                try {
+
+                } catch (\Exception $e){
+
+                    $notification->save();
+                }
+            }
+        } else {
+            $assignedToUser = User::find(FcmToken::where("token", $tokens)->first()->user_id);  // The user who receives the notification
+            $notification = new Notif();
+            $notification->title = $title ?? ($user->full_name . ($user->role == 1 ? "Plumber" : "Inspector" ) );
+            $notification->body = $body;
+            $notification->user_id = $assignedToUser->id;
+            $notification->type = $type;
+            try {
+
+            } catch (\Exception $e){
+
+                $notification->save();
+            }
         }
     }
 }
