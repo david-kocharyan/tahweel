@@ -14,7 +14,7 @@ class NotificationController extends Controller
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
         $notifications = Notification::selectRaw("id, type, title, body, (extract(EPOCH from created_at) * 1000) as date")->where(["user_id" => Auth::guard('api')->user()->id, "active" => 1])->orderBy("id", "DESC")->paginate($limit);
-        $notifications = Notification::all();
+        $notifications = Notification::selectRaw("id, type, title, body, (extract(EPOCH from created_at) * 1000) as date")->get();
         return ResponseHelper::success($notifications, true);
     }
 }
