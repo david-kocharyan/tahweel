@@ -72,10 +72,9 @@ class Firebase
                 $notification->user_id = $assignedToUser->id;
                 $notification->type = $type;
                 try {
-
+                    $notification->save();
                 } catch (\Exception $e){
 
-                    $notification->save();
                 }
             }
         } else {
@@ -86,10 +85,9 @@ class Firebase
             $notification->user_id = $assignedToUser->id;
             $notification->type = $type;
             try {
-
+                $notification->save();
             } catch (\Exception $e){
 
-                $notification->save();
             }
         }
     }
