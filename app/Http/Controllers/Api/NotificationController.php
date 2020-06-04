@@ -31,6 +31,9 @@ class NotificationController extends Controller
         }
 
         $notification = Notification::find($data["id"]);
+        if(null == $notification) {
+            return ResponseHelper::fail("Wrong Notification Id Provided", 422);
+        }
         $notification->active = 0;
         $notification->save();
 
