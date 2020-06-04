@@ -98,8 +98,8 @@ class InspectionController extends Controller
      */
     private function getPlumberInspections($limit, $status = null, $phase = null)
     {
-        $inspections = DB::table("inspections")
-            ->distinct("inspections.id")
+        $inspections = Inspection
+            ::distinct("inspections.id")
             ->selectRaw("inspections.id, project, address, apartment, phases.phase as phase, phases.status as status, users.full_name as inspector, CASE WHEN users.full_name IS NULL THEN 0 ELSE 1 END as hasInspector")
             ->leftJoin(DB::raw(" (SELECT distinct on (inspection_id) id, status, phase, inspection_id FROM PHASES order by inspection_id, id desc) phases"), "phases.inspection_id", "=", "inspections.id")
             ->leftJoin("inspection_inspectors", function ($join){
@@ -112,6 +112,15 @@ class InspectionController extends Controller
         }
         if (null != $status) {
             $inspections->whereIn("phases.status", $status);
+            if(in_array(Phase::COMPLETED, $status)) {
+                $inspections->leftJoin("plumber_points", function ($join){
+                    $join->on("plumber_points.inspection_id", "=", "inspections.id")->on("plumber_points.id", "=", DB::raw(" ( SELECT max(plumber_points.id) FROM plumber_points WHERE plumber_points.inspection_id = inspections.id ) "));
+                });
+                $inspections->leftJoin("inspection_forms", function ($join){
+                    $join->on("inspection_forms.inspection_id", "=", "inspections.id")->on("inspection_forms.id", "=", DB::raw(" ( SELECT max(inspection_forms.id) FROM inspection_forms WHERE inspection_forms.inspection_id = inspections.id ) "));
+                });
+                $inspections->selectRaw("plumber_points.point as earned_points, (extract(EPOCH from inspection_forms.created_at) * 1000) as completed_date");
+            }
         }
         return $inspections->paginate($limit);
     }
