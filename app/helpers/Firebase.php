@@ -67,7 +67,7 @@ class Firebase
             foreach ($tokens as $key => $value) {
                 $assignedToUser = User::find(FcmToken::where("token", $value)->first()->user_id);  // The user who receives the notification
                 $notification = new Notif();
-                $notification->title = $title ?? ($name . ($user->role == 1 ? " (Plumber)" : $user->role == 2 ? " (Inspector)" : "" ) );
+                $notification->title = $title ?? ($name . ($user->role == 1 ? " (Plumber)" : ($user->role == 2 ? " (Inspector)" : "" ) ) );
                 $notification->body = $body;
                 $notification->user_id = $assignedToUser->id;
                 $notification->type = $type;
@@ -81,7 +81,7 @@ class Firebase
         } else {
             $assignedToUser = User::find(FcmToken::where("token", $tokens)->first()->user_id);  // The user who receives the notification
             $notification = new Notif();
-            $notification->title = $title ?? ($user->full_name . ($user->role == 1 ? "Plumber" : "Inspector" ) );
+            $notification->title = $title ?? ($name . ($user->role == 1 ? " (Plumber)" : ($user->role == 2 ? " (Inspector)" : "" ) ) );
             $notification->body = $body;
             $notification->user_id = $assignedToUser->id;
             $notification->type = $type;
