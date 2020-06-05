@@ -213,7 +213,7 @@ class AuthController extends Controller
         $validator = Validator::make($data,
             [
                 'full_name' => 'required|max:100',
-                'email' => 'required|unique:users,email,'.Auth::guard('api')->user()->id.'|max:150',
+                'email' => 'required|unique:users,email,'.Auth::guard('api')->user()->id.'|max:150|email',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
