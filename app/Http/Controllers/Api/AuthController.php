@@ -29,7 +29,7 @@ class AuthController extends Controller
             [
                 'full_name' => 'required|max:100',
                 'phone' => $request->role == 1 ? 'required|max:191' : '',
-                'email' => 'required|unique:users|max:150|email',
+                'email' => 'required|unique:users|max:150|regex:/(.+)@(.+)\.(.+)/i',
                 'role' => 'required|integer|min:1|max:2',
                 'password' => 'required|max:25',
                 'confirm_password' => 'required|same:password',
