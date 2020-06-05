@@ -29,7 +29,7 @@ class AuthController extends Controller
             [
                 'full_name' => 'required|max:100',
                 'phone' => $request->role == 1 ? 'required|max:191' : '',
-                'email' => 'required|unique:users|max:150',
+                'email' => 'required|unique:users|max:150|email',
                 'role' => 'required|integer|min:1|max:2',
                 'password' => 'required|max:25',
                 'confirm_password' => 'required|same:password',
@@ -164,7 +164,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'email' => 'required|email',
+                'email' => 'required|regex:/(.+)@(.+)\.(.+)/i',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
@@ -213,7 +213,7 @@ class AuthController extends Controller
         $validator = Validator::make($data,
             [
                 'full_name' => 'required|max:100',
-                'email' => 'required|unique:users,email,'.Auth::guard('api')->user()->id.'|max:150|email',
+                'email' => 'required|unique:users,email,'.Auth::guard('api')->user()->id.'|max:150|regex:/(.+)@(.+)\.(.+)/i',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
