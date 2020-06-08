@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\helpers\QrGenerator;
 use App\helpers\Twilio;
 use App\Http\Controllers\Controller;
 use App\Mail\MailHelper;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use App\helpers\ResponseHelper;
 use App\Model\Phone;
@@ -46,10 +48,17 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
+        $img = QrGenerator::generate(uniqid()."_".$user->id);
+
+        $user->qr = $img;
+        $user->save();
+
         Phone::where("phone", $request->phone)->update(["user_id" => $user->id]);
 
         $user->createToken('Personal Access Token')->accessToken;
         $tokens = $this->get_token($request->email, $request->password);
+
+        $user->qr = URL::to("/") . "/" . $user->qr;
 
         $resp = array(
             "user" => $user,
@@ -136,6 +145,7 @@ class AuthController extends Controller
     public function getUser()
     {
         $user = Auth::guard('api')->user();
+        $user->qr = URL::to("/") . "/" . $user->qr;
         return ResponseHelper::success($user);
     }
 
@@ -326,11 +336,11 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
-
+//////////////////////////////////////////////
         if($data["verification"] == 00000) {
             return ResponseHelper::success(array());
         }
-
+//////////////////////////////////////////////
         $phone = Phone::where("verification", $data["verification"])->first();
         if(null == $phone) {
             return ResponseHelper::fail("Your Verification code is incorrect", 422);

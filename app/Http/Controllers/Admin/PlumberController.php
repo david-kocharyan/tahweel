@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\helpers\Firebase;
+use App\helpers\QrGenerator;
 use App\Http\Controllers\Controller;
 use App\Mail\PlumberMail;
 use App\Model\FcmToken;
