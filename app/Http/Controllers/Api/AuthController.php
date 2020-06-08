@@ -93,7 +93,7 @@ class AuthController extends Controller
 
                 $user->createToken('Personal Access Token')->accessToken;
                 $tokens = $this->get_token($request->email, $request->password);
-
+                $user->qr = URL::to("/") . "/" . $user->qr;
                 $resp = array(
                     "user" => $user,
                     "tokens" => $tokens
