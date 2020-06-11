@@ -64,12 +64,8 @@ Route::group(["prefix" => "v1"], function(){
         Route::prefix('notifications')->group(function () {
             Route::get('get-notifications', 'Api\NotificationController@getNotifications');
             Route::delete('delete-notification', 'Api\NotificationController@deleteNotification');
-            Route::delete('delete-all-notification', 'Api\NotificationController@deleteAllNotification');
         });
-
 
     });
 
 });
-
-

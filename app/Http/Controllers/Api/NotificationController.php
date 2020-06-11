@@ -23,32 +23,20 @@ class NotificationController extends Controller
         $data = json_decode($request->getContent(), true);
         $validator = Validator::make($data,
             [
-                'id' => 'required|integer',
+                'id' => 'required|array',
             ]);
 
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
-        $notification = Notification::find($data["id"]);
-        if(null == $notification) {
+        $notification = Notification::whereIn('id', $data['id'])->get();
+        if($notification->isEmpty()) {
             return ResponseHelper::fail("Wrong Notification Id Provided", 422);
         }
-        $notification->active = 0;
-        $notification->save();
 
+        Notification::whereIn('id', $data['id'])->update(array('active' => 0));
         return ResponseHelper::success(array());
     }
 
-    public function deleteAllNotification()
-    {
-        $user_id = Auth::guard('api')->user()->id;
-        $notification = Notification::where('user_id', $user_id)->get();
-        if(null == $notification) {
-            return ResponseHelper::fail("This User Has No Notification.", 422);
-        }
-        Notification::where('user_id', $user_id)->update(['active' => 0]);
-
-        return ResponseHelper::success(array());
-    }
 }
