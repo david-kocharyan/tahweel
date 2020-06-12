@@ -39,4 +39,16 @@ class NotificationController extends Controller
         return ResponseHelper::success(array());
     }
 
+    public function deleteAllNotification()
+    {
+        $user_id = Auth::guard('api')->user()->id;
+        $notification = Notification::where('user_id', $user_id)->get();
+        if(null == $notification) {
+            return ResponseHelper::fail("This User Has No Notification.", 422);
+        }
+        Notification::where('user_id', $user_id)->update(['active' => 0]);
+
+        return ResponseHelper::success(array());
+    }
+
 }
