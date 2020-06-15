@@ -9,14 +9,12 @@ use App\helpers\ResponseHelper;
 class Twilio
 {
 
-    const SID = "AC62ca829966c24dfe21b3e22d86d5aa69";
-    const TOKEN = "d4d44968232e7e85bd58b7f73659e1cf";
     const UNDEFINED_NUMBER_STATUS = 400;
     const SUCCESS_STATUS = 201;
 
     public static function send(string $number, string $body)
     {
-        $twilio = new Client(self::SID, self::TOKEN);
+        $twilio = new Client(env("TWILIO_SID"), env("TWILIO_TOKEN"));
         try {
             $twilio->messages
                 ->create($number, // to
