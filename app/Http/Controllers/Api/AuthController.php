@@ -46,7 +46,7 @@ class AuthController extends Controller
         $user->role = intval($request->role);
         $user->approved = $user->role == 1 ? 1 : 0;
         $user->password = bcrypt($request->password);
-        $user->lang = User::ENGLISH;
+        $user->lng = User::ENGLISH;
         $user->save();
 
         $img = QrGenerator::generate(uniqid()."_".$user->id);
@@ -358,7 +358,7 @@ class AuthController extends Controller
         $data = json_decode($request->getContent(), true);
         $validator = Validator::make($data,
             [
-                'lang' => 'required|integer|min:1|max:2',
+                'lng' => 'required|integer|min:1|max:2',
             ]);
 
         if ($validator->fails()) {
@@ -366,7 +366,7 @@ class AuthController extends Controller
         }
 
         $user = User::find($user = User::find(Auth::guard('api')->user()->id));
-        $user->lang = $data["lang"];
+        $user->lng = $data["lng"];
         $user->save();
 
         return ResponseHelper::success(array());

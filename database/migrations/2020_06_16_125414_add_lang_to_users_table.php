@@ -14,7 +14,7 @@ class AddLangToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedTinyInteger("lang")->default(1);
+            $table->unsignedTinyInteger("lng")->default(1);
         });
     }
 
