@@ -17,6 +17,9 @@ class User extends Authenticatable
         "inspector" => 2
     ];
 
+    const ENGLISH = 1;
+    const ARABIC = 2;
+
     use HasApiTokens, Notifiable;
 
     /**

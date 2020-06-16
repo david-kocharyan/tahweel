@@ -16,10 +16,10 @@ class CreateInspectionFormsTable extends Migration
         Schema::create('inspection_forms', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger("inspection_id");
+            $table->unsignedBigInteger("inspection_id");
             $table->foreign("inspection_id")->references("id")->on("inspections")->onDelete("cascade");
 
-            $table->unsignedInteger('inspector_id');
+            $table->unsignedBigInteger('inspector_id');
             $table->foreign('inspector_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedTinyInteger("phase");

@@ -15,7 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger("inspection_id");
+            $table->unsignedBigInteger("inspection_id");
             $table->foreign("inspection_id")->references("id")->on("inspections")->onDelete("cascade");
             $table->string("full_name", 191);
             $table->string("email", 191)->nullable();

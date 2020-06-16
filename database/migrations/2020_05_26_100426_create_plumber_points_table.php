@@ -16,7 +16,7 @@ class CreatePlumberPointsTable extends Migration
         Schema::create('plumber_points', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger("inspection_id");
+            $table->unsignedBigInteger("inspection_id");
             $table->foreign("inspection_id")->references("id")->on("inspections")->onDelete("cascade");
 
             $table->decimal("point", 8, 2);

@@ -15,7 +15,7 @@ class CreatePhasesTable extends Migration
     {
         Schema::create('phases', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger("inspection_id");
+            $table->unsignedBigInteger("inspection_id");
             $table->foreign("inspection_id")->references("id")->on("inspections")->onDelete("cascade");
             $table->unsignedTinyInteger("phase")->default(1);
             $table->unsignedTinyInteger("status")->default(1);

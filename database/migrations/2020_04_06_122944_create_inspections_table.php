@@ -23,7 +23,7 @@ class CreateInspectionsTable extends Migration
             $table->unsignedTinyInteger('building_type');
             $table->timestamps();
 
-            $table->unsignedInteger('plumber_id');
+            $table->unsignedBigInteger('plumber_id');
             $table->foreign('plumber_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

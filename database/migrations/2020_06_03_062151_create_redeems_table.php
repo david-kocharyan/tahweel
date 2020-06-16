@@ -15,10 +15,10 @@ class CreateRedeemsTable extends Migration
     {
         Schema::create('redeems', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('plumber_id');
+            $table->unsignedBigInteger('plumber_id');
             $table->foreign('plumber_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->unsignedInteger('product_id');
+            $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
 
             $table->decimal("point", 8, 2);
