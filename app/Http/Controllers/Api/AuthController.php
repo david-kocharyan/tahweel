@@ -365,7 +365,7 @@ class AuthController extends Controller
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
-        $user = User::find($user = User::find(Auth::guard('api')->user()->id));
+        $user = User::find(User::find(Auth::guard('api')->user()->id));
         $user->lng = intval($data["lng"]);
         $user->save();
 
