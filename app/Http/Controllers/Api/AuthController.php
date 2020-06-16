@@ -366,7 +366,7 @@ class AuthController extends Controller
         }
 
         $user = User::find($user = User::find(Auth::guard('api')->user()->id));
-        $user->lng = $data["lng"];
+        $user->lng = intval($data["lng"]);
         $user->save();
 
         return ResponseHelper::success(array());
