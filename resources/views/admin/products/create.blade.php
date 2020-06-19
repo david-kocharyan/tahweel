@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -9,26 +8,27 @@
                     <div class="panel-body">
                         <form method="post" action="{{ $route}}@if(isset($product)){{"/".$product->id }}@endif" enctype="multipart/form-data">
                             @csrf
-
                             @if(isset($product))
                                 @method("PUT")
                             @endif
+                            @foreach($languages as $key => $value)
+                                <div class="form-group">
+                                    <label for="name">Product Name <b>({{ strtoupper($value->lng) }})</b> </label>
+                                    @error("data.$key.name")
+                                    <p class="invalid-feedback text-danger" role="alert"><strong>{{ Str::replaceArray("data.$key.name", ['name'], $message) }}</strong></p>
+                                    @enderror
+                                    <input type="text" class="form-control" id="name" name="data[{{ $key }}][name]" value="{{ $product->languages[$key]->pivot->name ?? old("data")[$key]['name'] ?? ""}}">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="name">Product Name</label>
-                                @error('name')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <input type="text" class="form-control" id="name" name="name" value="{{ $product->name ?? old('name')}}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="name">Product Description</label>
-                                @error('description')
-                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
-                                @enderror
-                                <textarea name="description" id="description" cols="30" class="form-control" rows="10">{{ $product->description ?? old('description')}}</textarea>
-                            </div>
+                                <div class="form-group">
+                                    <label for="name">Product Description <b>({{ strtoupper($value->lng) }})</b></label>
+                                    @error("data.$key.description")
+                                    <p class="invalid-feedback text-danger" role="alert"><strong>{{ Str::replaceArray("data.$key.description", ['description'], $message) }}</strong></p>
+                                    @enderror
+                                    <textarea name="data[{{ $key }}][description]" id="description" cols="30" class="form-control" rows="10">{{ $product->languages[$key]->pivot->description ?? old("data")[$key]['description'] ?? ""}}</textarea>
+                                </div>
+                                <input type="hidden" name="data[{{ $key }}][language_id]" value="{{ $value->id }}">
+                            @endforeach
 
                             <div class="form-group">
                                 <label for="point">Product Point</label>

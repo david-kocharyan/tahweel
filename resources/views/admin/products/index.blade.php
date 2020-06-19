@@ -25,8 +25,16 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td><img style="height: 150px" src="{{ asset("uploads/$val->image") }}" class="img-responsive" alt=""></td>
-                                <td>{{ $val->name }}</td>
-                                <td>{{ $val->description }}</td>
+                                <td>
+                                    @foreach($val->languages as $v)
+                                        {{ $v->pivot->name }} <br>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($val->languages as $v)
+                                        {{ $v->pivot->description }} <br>
+                                    @endforeach
+                                </td>
                                 <td>{{ $val->point }}</td>
                                 <td>
 

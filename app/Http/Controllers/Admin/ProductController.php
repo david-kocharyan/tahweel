@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\helpers\FileUploadHelper;
+use App\Model\Language;
 use App\Model\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -23,7 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::all();
+        $data = Product::with("languages")->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
@@ -38,7 +40,8 @@ class ProductController extends Controller
     {
         $title = self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER . ".create", compact('title', 'route'));
+        $languages = Language::all();
+        return view(self::FOLDER . ".create", compact('title', 'route', 'languages'));
     }
 
     /**
@@ -50,20 +53,22 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:190',
-            'point' => 'required|numeric|min:1',
+            'data.*.name' => 'required|max:100',
+            "data.*.description" => "max:150",
+            'point' => 'required|numeric|min:1|max:1000000',
             "image" => "required|image",
-            "description" => "max:150",
         ]);
 
         $image = FileUploadHelper::upload($request->image, ["*"], self::UPLOAD);
+        DB::beginTransaction();
 
         $product = new Product();
-        $product->name = $request->name;
         $product->point = $request->point;
         $product->image = $image ?? "";
-        $product->description = $request->description;
         $product->save();
+
+        $product->languages()->sync($request->data);
+        DB::commit();
 
         return redirect(self::ROUTE);
     }
@@ -89,7 +94,8 @@ class ProductController extends Controller
     {
         $title = self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER . ".create", compact('title', 'route', 'product'));
+        $languages = Language::all();
+        return view(self::FOLDER . ".create", compact('title', 'route', 'product', 'languages'));
     }
 
     /**
@@ -102,20 +108,24 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name' => 'required|max:190',
-            'point' => 'required|numeric|min:1',
-            "description" => "max:150",
+            'data.*.name' => 'required|max:100',
+            "data.*.description" => "max:150",
+            'point' => 'required|numeric|min:1|max:1000000',
         ]);
+        DB::beginTransaction();
         if(null != $request->image) {
             $image = FileUploadHelper::upload($request->image, ["*"], self::UPLOAD);
             $product->image = $image ?? "";
         }
-
-        $product->name = $request->name;
+        $pushData = [];
+        foreach ($request->data as $d) {
+            $pushData[$d["language_id"]] = $d;
+        }
         $product->point = $request->point;
-        $product->description = $request->description;
         $product->save();
+        $product->languages()->sync($pushData);
 
+        DB::commit();
         return redirect(self::ROUTE);
     }
 
