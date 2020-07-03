@@ -14,6 +14,7 @@ class LanguageSeeder extends Seeder
         \App\Model\Language::insert([
             ["lng" => "en"],
             ["lng" => "ar"],
+            ["lng" => "ur"],
         ]);
     }
 }
