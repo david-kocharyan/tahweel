@@ -358,7 +358,7 @@ class AuthController extends Controller
         $data = json_decode($request->getContent(), true);
         $validator = Validator::make($data,
             [
-                'lng' => 'required|integer|min:1|max:2',
+                'lng' => 'required|integer|min:1|max:3',
             ]);
 
         if ($validator->fails()) {
