@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\helpers\FileUploadHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Certificate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Kreait\Firebase\Storage;
 
 class CertificateController extends Controller
 {
     const FOLDER = "admin.certificate";
     const TITLE = "Certificate";
     const ROUTE = "/admin/certificates";
+    const UPLOAD = "certificates";
 
     /**
      * Display a listing of the resource.
@@ -49,13 +54,16 @@ class CertificateController extends Controller
             'type' => 'required|min:1|max:2',
         ]);
 
+        $file = FileUploadHelper::upload($request->file, ["*"], self::UPLOAD);
+        DB::beginTransaction();
+
         $certificate = new Certificate;
         $certificate->name = $request->name;
-        $certificate->name = $request->name;
-        $certificate->name = $request->name;
+        $certificate->file = $file ?? "";
+        $certificate->type = $request->type;
         $certificate->save();
 
-
+        DB::commit();
         return redirect(self::ROUTE);
     }
 
@@ -80,7 +88,7 @@ class CertificateController extends Controller
         $data = $certificate;
         $title = self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER . ".create", compact('title', 'route', 'type', 'data'));
+        return view(self::FOLDER . ".edit", compact('title', 'route', 'type', 'data'));
     }
 
     /**
@@ -93,16 +101,20 @@ class CertificateController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'file' => 'required',
             'type' => 'required|min:1|max:2',
         ]);
 
+
+        if(null != $request->image) {
+            $file = FileUploadHelper::upload($request->file, ["*"], self::UPLOAD);
+            $certificate->image = $file ?? "";
+        }
         $certificate->name = $request->name;
-        $certificate->name = $request->name;
-        $certificate->name = $request->name;
+        $certificate->type = $request->type;
         $certificate->save();
 
         return redirect(self::ROUTE);
+
     }
 
     /**
@@ -112,6 +124,12 @@ class CertificateController extends Controller
      */
     public function destroy(Certificate $certificate)
     {
-        Certificate::destroy($certificate->id);
+        if($certificate->delete()){
+            if(File::exists(asset("uploads/$certificate->file"))) {
+                File::delete(asset("uploads/$certificate->file"));
+            }
+        }
+
+        return redirect(self::ROUTE);
     }
 }

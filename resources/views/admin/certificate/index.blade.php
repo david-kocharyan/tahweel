@@ -23,7 +23,7 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{ $val->name }}</td>
-                                <td>{{ $val->file }}</td>
+                                <td><a href='{{asset("uploads/$val->file")}}' download>Dawnload {{$val->name}}</a></td>
                                 <td>
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
                                        data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">
