@@ -44,7 +44,7 @@ class AuthController extends Controller
         $user->full_name = $request->full_name;
         $user->email = $request->email;
         $user->role = intval($request->role);
-        $user->approved = $user->role == 1 ? 1 : 0;;
+        $user->approved = $user->role == 1 ? 1 : 0;
         $user->password = bcrypt($request->password);
         $user->lng = User::ENGLISH;
         $user->save();
