@@ -19,6 +19,7 @@ class Firebase
 
     public static function send($tokens, string $notif, ?string $event = null, $event_id = null, $image = null, $type = null, $title = null)
     {
+        dd($tokens);
         if(empty($tokens)) return;
         $firebase = new self();
         $data = array(

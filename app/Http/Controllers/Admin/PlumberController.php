@@ -136,6 +136,7 @@ class PlumberController extends Controller
 
         if($sendNotif) {
             $tokens = $plumber->tokens()->get()->pluck('token')->toArray();
+            dd($tokens);
             Firebase::send($tokens, "Dear $plumber->full_name, Your Account Has Been Approved");
         }
 
