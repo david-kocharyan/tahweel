@@ -17,14 +17,8 @@ class Firebase
         $this->messaging = app('firebase.messaging');
     }
 
-    public static function send($tokens, string $notif, ?string $event = null, $event_id = null, $image = null, $type = null, $title = null)
+    public static function send($tokens, string $notif, string $event = null, $event_id = null, $image = null, $type = null, $title = null)
     {
-        dd($tokens,
-$notif,
-$event,
-$image,
-$type,
-$title);
         if(empty($tokens)) return;
         $firebase = new self();
         $data = array(
