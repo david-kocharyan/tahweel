@@ -137,6 +137,9 @@ class AuthController extends Controller
         $token = Auth::guard('api')->user()->token();
         $token->revoke();
 
+        $fcm = FcmToken::where('user_id', Auth::guard('api')->user()->id)->first();
+        $fcm->delete();
+
         return ResponseHelper::success(array());
     }
 
