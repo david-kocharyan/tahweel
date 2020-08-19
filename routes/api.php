@@ -69,5 +69,5 @@ Route::group(["prefix" => "v1"], function(){
         });
 
     });
-
+    Route::get('inspections/warranty/{warranty}/{inspection_id}', 'Api\InspectionFormController@downloadWarranty');
 });

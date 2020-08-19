@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\helpers\FileUploadHelper;
 use App\helpers\Firebase;
 use App\Http\Controllers\Controller;
+use App\Mail\Warranty;
+use App\Model\Certificate;
+use App\Model\Customer;
 use App\Model\Inspection;
 use App\Model\InspectionForm;
 use App\Model\InspectionInspector;
@@ -16,6 +19,7 @@ use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
@@ -93,12 +97,12 @@ class InspectionFormController extends Controller
 
         $phase = new Phase();
         $phase->inspection_id = $request->inspection_id;
-        $phase->phase = ($request->approved == InspectionForm::DECLINED) ? ($currentPhase->phase ?? 1) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? 1 : $currentPhase->phase );
-        $phase->status = ($request->approved == InspectionForm::DECLINED) ? (Phase::REJECTED) : ( ($request->warranty == InspectionForm::NO_WARRANTY) ? Phase::APPROVED : Phase::COMPLETED );
+        $phase->phase = ($request->approved == InspectionForm::DECLINED) ? ($currentPhase->phase ?? 1) : (($request->warranty == InspectionForm::NO_WARRANTY) ? 1 : $currentPhase->phase);
+        $phase->status = ($request->approved == InspectionForm::DECLINED) ? (Phase::REJECTED) : (($request->warranty == InspectionForm::NO_WARRANTY) ? Phase::APPROVED : Phase::COMPLETED);
         $phase->save();
 
         // Give Points
-        if($phase->status == Phase::COMPLETED) {
+        if ($phase->status == Phase::COMPLETED) {
             $plumberPoint = new PlumberPoint();
             $plumberPoint->inspection_id = $request->inspection_id;
             $plumberPoint->point = ($form->bathrooms_inspected + $form->kitchen_inspected + $form->service_counters_inspected) * PlumberPoint::COEFFICIENT;
@@ -112,6 +116,7 @@ class InspectionFormController extends Controller
         $tokens = $plumber->tokens()->get()->pluck('token')->toArray();
         Firebase::send($tokens, "Dear $plumber->full_name, Your Request Has Been Inspected", "", "", "", Notification::INSPECTION_TYPE);
 
+        $this->sendWarranty($request->warranty, $request->inspection_id);
         return ResponseHelper::success(array());
     }
 
@@ -127,8 +132,32 @@ class InspectionFormController extends Controller
         }
 
         $form = InspectionForm::where("inspection_id", $request->inspection)
-            ->selectRaw("inspection_id, pre_plaster, before_tiles_installer, final_after_finishing, bathrooms_inspected, kitchen_inspected, service_counters_inspected, bathroom_other_tahweel_materials, bathroom_other_tahweel_valve, bathroom_other_technical_issue, roof_other_tahweel_materials, roof_other_tahweel_valve, roof_other_technical_issue, manifold_other_tahweel_materials, manifold_other_tahweel_valve, manifold_sunlight, manifold_insulated, '".$this->base_url."' || '/uploads/' || signature as signature_full, signature as signature_string, approved, reason, warranty")->orderBy("id", "DESC")->first();
+            ->selectRaw("inspection_id, pre_plaster, before_tiles_installer, final_after_finishing, bathrooms_inspected, kitchen_inspected, service_counters_inspected, bathroom_other_tahweel_materials, bathroom_other_tahweel_valve, bathroom_other_technical_issue, roof_other_tahweel_materials, roof_other_tahweel_valve, roof_other_technical_issue, manifold_other_tahweel_materials, manifold_other_tahweel_valve, manifold_sunlight, manifold_insulated, '" . $this->base_url . "' || '/uploads/' || signature as signature_full, signature as signature_string, approved, reason, warranty")->orderBy("id", "DESC")->first();
         $resp = array("form" => $form);
         return ResponseHelper::success($resp);
+    }
+
+    private function sendWarranty($warranty, $inspection_id){
+
+        $customer = Customer::where('inspection_id', $inspection_id)->first();
+        $link = $this->base_url."api/v1/inspections/warranty/$warranty/$inspection_id";
+
+        $details = [
+            'title' => 'Warranty',
+            'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
+            'link' => $link,
+        ];
+
+        Mail::to("$customer->email")->send(new Warranty($details));
+    }
+
+    public function downloadWarranty($warranty, $inspection_id){
+        $file = Certificate::where('type', $warranty)->first()->file;
+
+        $form = InspectionForm::where('inspection_id', $inspection_id)->first();
+        $form->approved = 1;
+        $form->save();
+
+        return view('admin.warranty', compact('file'));
     }
 }
