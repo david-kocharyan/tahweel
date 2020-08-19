@@ -92,10 +92,9 @@ class InspectionFormController extends Controller
         $form->approved = $request->approved ?? 0;
         $form->reason = $request->reason;
         $form->warranty = $request->warranty ?? 0;
-
         $form->save();
 
-        if ($request->warranty != 0 OR $request->warranty != null){
+        if ($request->warranty != 0){
             $this->sendWarranty($request->warranty, $request->inspection_id);
         }
 
@@ -158,7 +157,7 @@ class InspectionFormController extends Controller
         $file = Certificate::where('type', $warranty)->first()->file;
 
         $form = InspectionForm::where('inspection_id', $inspection_id)->first();
-        $form->approved = 1;
+        $form->customer_approved = 1;
         $form->save();
 
         return view('admin.warranty', compact('file'));
