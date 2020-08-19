@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Certificate extends Model
 {
-    const TYPE = ['Full'=>1, 'Normal'=>2];
+    const TYPE = ['Normal'=>1, 'Full'=>2];
 }
