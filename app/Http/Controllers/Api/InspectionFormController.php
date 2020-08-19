@@ -95,6 +95,10 @@ class InspectionFormController extends Controller
 
         $form->save();
 
+        if ($request->warranty != 0 OR $request->warranty != null){
+            $this->sendWarranty($request->warranty, $request->inspection_id);
+        }
+
         $phase = new Phase();
         $phase->inspection_id = $request->inspection_id;
         $phase->phase = ($request->approved == InspectionForm::DECLINED) ? ($currentPhase->phase ?? 1) : (($request->warranty == InspectionForm::NO_WARRANTY) ? 1 : $currentPhase->phase);
@@ -116,7 +120,6 @@ class InspectionFormController extends Controller
         $tokens = $plumber->tokens()->get()->pluck('token')->toArray();
         Firebase::send($tokens, "Dear $plumber->full_name, Your Request Has Been Inspected", "", "", "", Notification::INSPECTION_TYPE);
 
-        $this->sendWarranty($request->warranty, $request->inspection_id);
         return ResponseHelper::success(array());
     }
 
