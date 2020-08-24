@@ -8,7 +8,7 @@ use App\Model\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Kreait\Firebase\Storage;
+use Illuminate\Support\Facades\Storage;
 
 class CertificateController extends Controller
 {
@@ -54,7 +54,9 @@ class CertificateController extends Controller
             'type' => 'required|min:1|max:2',
         ]);
 
-        $file = FileUploadHelper::upload($request->file, ["*"], self::UPLOAD);
+        $file_name = $request->name . "." . $request->file->getClientOriginalExtension();
+        $file = Storage::disk('local')->putFileAs(self::UPLOAD, $request->file, $file_name);
+
         DB::beginTransaction();
 
         $certificate = new Certificate;
@@ -105,10 +107,15 @@ class CertificateController extends Controller
         ]);
 
 
-        if(null != $request->image) {
-            $file = FileUploadHelper::upload($request->file, ["*"], self::UPLOAD);
-            $certificate->image = $file ?? "";
+        if (null != $request->file) {
+            Storage::disk('local')->delete(self::UPLOAD . "$certificate->file");
+
+            $file_name = $request->name . "." . $request->file->getClientOriginalExtension();
+            $file = Storage::disk('local')->putFileAs(self::UPLOAD, $request->file, $file_name);
+
+            $certificate->file = $file ?? "";
         }
+
         $certificate->name = $request->name;
         $certificate->type = $request->type;
         $certificate->save();
@@ -124,12 +131,8 @@ class CertificateController extends Controller
      */
     public function destroy(Certificate $certificate)
     {
-        if($certificate->delete()){
-            if(File::exists(asset("uploads/$certificate->file"))) {
-                File::delete(asset("uploads/$certificate->file"));
-            }
-        }
-
+        Storage::disk('local')->delete("$certificate->file");
+        $certificate->delete();
         return redirect(self::ROUTE);
     }
 }
