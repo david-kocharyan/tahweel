@@ -28,7 +28,7 @@ class ProductController extends Controller
 
         $products = Product::selectRaw("id, product_languages.name, product_languages.description, (extract(EPOCH from created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || image as image, point")
             ->join('product_languages', 'products.id', '=', 'product_languages.product_id')
-            ->where(array('product_languages.languages_id' => $lang))
+            ->where(array('product_languages.language_id' => $lang))
             ->orderBy("id", "DESC")
             ->paginate($limit);
 
