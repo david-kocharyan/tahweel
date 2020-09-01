@@ -24,8 +24,9 @@ class ProductController extends Controller
     public function getProducts(Request $request)
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
-        $products = Product::selectRaw("id, name, (extract(EPOCH from created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || image as image, point, description")->orderBy("id", "DESC")->paginate($limit);
+        $products = Product::selectRaw("id, (extract(EPOCH from created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || image as image, point")->orderBy("id", "DESC")->paginate($limit);
 
+        dd(Auth::guard('api')->user());
         return ResponseHelper::success($products, true);
     }
 
