@@ -24,7 +24,7 @@ class ProductController extends Controller
     public function getProducts(Request $request)
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
-        $lang = Auth::guard('api')->user()->lang;
+        $lang = Auth::guard('api')->user();
 
         $products = Product::distinct("products.id")
             ->selectRaw("products.id, product_languages.name, product_languages.description, (extract(EPOCH from created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || image as image, point")
