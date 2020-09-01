@@ -24,16 +24,15 @@ class ProductController extends Controller
     public function getProducts(Request $request)
     {
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
-        $lang = Auth::guard('api')->user();
+        $lang = Auth::guard('api')->user()->lng;
 
         $products = Product::distinct("products.id")
             ->selectRaw("products.id, product_languages.name, product_languages.description, (extract(EPOCH from products.created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || products.image as image, products.point")
             ->leftJoin('product_languages', 'products.id', '=', 'product_languages.product_id')
-            ->where(array('product_languages.language_id' => 1))
+            ->where(array('product_languages.language_id' => $lang))
             ->orderBy("id", "DESC")
             ->paginate($limit);
 
-        dd($products, $lang);
         return ResponseHelper::success($products, true);
     }
 
