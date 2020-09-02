@@ -19,7 +19,7 @@ class RedeemsController extends Controller
      */
     public function index()
     {
-        $data = Redeem::with(array('user', 'products'))->get();
+        $data = Redeem::with(array('user', 'product'))->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
