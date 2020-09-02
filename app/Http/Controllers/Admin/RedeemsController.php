@@ -18,7 +18,7 @@ class RedeemsController extends Controller
      */
     public function index()
     {
-        $data = Redeem::selectRaw("point, (extract(EPOCH from created_at) * 1000) as redeemDate, product_id")->with(['user', "product" => function ($query) {
+        $data = Redeem::with(['user', "product" => function ($query) {
             $query->selectRaw("products.id, product_languages.name, product_languages.description, (extract(EPOCH from products.created_at) * 1000) as date, products.point")
                 ->leftJoin('product_languages', 'products.id', '=', 'product_languages.product_id')
                 ->where(array('product_languages.language_id' => 1));
