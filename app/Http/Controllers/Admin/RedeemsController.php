@@ -23,6 +23,7 @@ class RedeemsController extends Controller
             $query->leftJoin('product_languages', 'products.id', '=', 'product_languages.product_id')
                 ->where(array('product_languages.language_id' => 1));
         }))->get();
+        dd($data);
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
