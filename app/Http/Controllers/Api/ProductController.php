@@ -27,7 +27,7 @@ class ProductController extends Controller
         $lang = Auth::guard('api')->user()->lng;
 
         $products = Product::distinct("products.id")
-            ->selectRaw("products.id, product_languages.name, product_languages.description, (extract(EPOCH from products.created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || products.image as image, products.point")
+            ->selectRaw("products.id, product_languages.name, product_languages.description, (extract(EPOCH from products.created_at) * 1000) as date, '" . $this->base_url . "' || '/uploads/' || products.image as image, products.point")
             ->leftJoin('product_languages', 'products.id', '=', 'product_languages.product_id')
             ->where(array('product_languages.language_id' => $lang))
             ->orderBy("id", "DESC")
@@ -38,10 +38,16 @@ class ProductController extends Controller
 
     public function getRedeems(Request $request)
     {
+        $lang = Auth::guard('api')->user()->lng;
+
         $limit = !is_numeric($request->limit) ? 20 : $request->limit;
-        $redeems = Redeem::selectRaw("id, point, (extract(EPOCH from created_at) * 1000) as redeemDate, product_id")->where("plumber_id", Auth::guard('api')->user()->id)->orderBy("id", "DESC")->with(["product" => function($query) {
-            $query->selectRaw("id, name, (extract(EPOCH from created_at) * 1000) as date, '".$this->base_url."' || '/uploads/' || image as image, description ");
-        }])->paginate($limit);
+        $redeems = Redeem::selectRaw("id, point, (extract(EPOCH from created_at) * 1000) as redeemDate, product_id")
+            ->where("plumber_id", Auth::guard('api')->user()->id)->orderBy("id", "DESC")->with(["product" => function ($query) use ($lang) {
+//                $query->selectRaw("id, name, (extract(EPOCH from created_at) * 1000) as date, '" . $this->base_url . "' || '/uploads/' || image as image, description ");
+                $query->selectRaw("products.id, product_languages.name, product_languages.description, (extract(EPOCH from products.created_at) * 1000) as date, '" . $this->base_url . "' || '/uploads/' || products.image as image, products.point")
+                    ->leftJoin('product_languages', 'products.id', '=', 'product_languages.product_id')
+                    ->where(array('product_languages.language_id' => $lang));
+            }])->paginate($limit);
 
         return ResponseHelper::success($redeems, true);
     }
@@ -60,11 +66,11 @@ class ProductController extends Controller
 
         $points = AuthController::getPointsFromDb(); // Current user's points
         $product = Product::find($data["id"]);
-        if(null == $product) {
+        if (null == $product) {
             return ResponseHelper::fail("Product Not Found", 404);
         }
 
-        if($product->point > $points) {
+        if ($product->point > $points) {
             return ResponseHelper::fail("You have not enough points to buy this item", 422);
         }
 
