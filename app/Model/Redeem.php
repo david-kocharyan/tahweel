@@ -16,9 +16,4 @@ class Redeem extends Model
     {
         return $this->belongsTo(User::class, "plumber_id", "id");
     }
-
-    public function ProdWithLang()
-    {
-        return $this->hasManyThrough(ProductLanguage::class, Product::class, "product_id", "id", "id", "product_id");
-    }
 }
