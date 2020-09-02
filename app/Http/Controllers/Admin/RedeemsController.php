@@ -24,8 +24,6 @@ class RedeemsController extends Controller
                 ->where(array('product_languages.language_id' => 1));
         }])->get();
 
-        dd($data);
-
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
