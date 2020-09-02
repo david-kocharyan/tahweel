@@ -31,5 +31,5 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('products', 'ProductController');
     Route::resource('certificates', 'CertificateController');
     Route::resource('notifications', 'NotificationController');
-    Route::resource('redeems', 'InspectorController');
+    Route::resource('redeems', 'RedeemsController');
 });
