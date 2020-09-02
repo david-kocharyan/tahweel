@@ -115,12 +115,6 @@
                 </li>
 
                 <li>
-                    <a href="/admin/settings" class="waves-effect"><i class="mdi mdi-settings fa-fw"></i> <span
-                            class="hide-menu">Settings</span>
-                    </a>
-                </li>
-
-                <li>
                     <a href="/admin/products" class="waves-effect"><i class="mdi mdi-hamburger fa-fw"></i> <span
                             class="hide-menu">Products</span>
                     </a>

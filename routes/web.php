@@ -28,12 +28,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('plumbers', 'PlumberController');
     Route::resource('inspectors', 'InspectorController');
     Route::resource('inspections', 'InspectionController');
-    Route::resource('issue-categories', 'IssueCategoryController');
-    Route::resource('issues', 'IssueController');
     Route::resource('products', 'ProductController');
     Route::resource('certificates', 'CertificateController');
+    Route::resource('notifications', 'NotificationController');
 
 //    Route::resource('redeems', 'InspectorController');
-//    Route::resource('notifications', 'InspectorController');
-//    Route::resource('settings', 'InspectorController');
 });
