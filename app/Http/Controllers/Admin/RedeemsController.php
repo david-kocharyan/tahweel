@@ -19,10 +19,7 @@ class RedeemsController extends Controller
      */
     public function index()
     {
-        $data = Redeem::with(array('user', 'product' => function($query){
-            $query->leftJoin('product_languages', 'products.id', '=', 'product_languages.product_id')
-                ->where(array('product_languages.language_id' => 1));
-        }))->get();
+        $data = Redeem::with(array('user', 'ProdWithLang'))->get();
         dd($data);
         $title = self::TITLE;
         $route = self::ROUTE;
