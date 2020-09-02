@@ -12,10 +12,9 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Type</th>
+                            <th>User</th>
                             <th>Title</th>
                             <th>Body</th>
-                            <th>Active</th>
                         </tr>
                         </thead>
 
@@ -23,11 +22,9 @@
                         @foreach($data as $key=>$val)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{ $val->type }}</td>
+                                <td>{{ $val->user->full_name }}</td>
                                 <td>{{ $val->title }}</td>
                                 <td>{{ $val->body }}</td>
-                                <td>{{ $val->active }}</td>
-                                <td>{{ $val->user_id }}</td>
 
 {{--                                <td>--}}
 {{--                                    <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"--}}

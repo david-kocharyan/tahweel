@@ -19,7 +19,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $data = Notification::all();
+        $data = Notification::with('user')->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
