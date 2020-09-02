@@ -15,7 +15,6 @@
                             <th>User</th>
                             <th>Product</th>
                             <th>Point</th>
-                            <th>Date</th>
                         </tr>
                         </thead>
 
@@ -26,7 +25,6 @@
                                 <td>{{ $val->user->full_name }}</td>
                                 <td>{{ $val->product->name }}</td>
                                 <td>{{ $val->point }}</td>
-                                <td>{{ \Carbon\Carbon::createFromTimestamp($val->product->date)->toDateTimeString() }}</td>
                             </tr>
                         @endforeach
                         </tbody>
