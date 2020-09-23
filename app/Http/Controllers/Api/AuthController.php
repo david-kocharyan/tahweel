@@ -49,7 +49,7 @@ class AuthController extends Controller
         $user->lng = User::ENGLISH;
         $user->save();
 
-        $img = QrGenerator::generate(uniqid()."_".$user->id);
+        $img = QrGenerator::generate(uniqid()."_".$user->id,  $user->full_name, $request->phone);
 
         $user->qr = $img;
         $user->save();

@@ -141,6 +141,8 @@ class InspectionFormController extends Controller
 
     private function sendWarranty($warranty, $inspection_id){
 
+//        send admin for approve !!!!!!!!!
+
         $customer = Customer::where('inspection_id', $inspection_id)->first();
         $link = $this->base_url."/api/v1/inspections/warranty/$warranty/$inspection_id";
 
