@@ -7,6 +7,7 @@ use App\helpers\Firebase;
 use App\Http\Controllers\Controller;
 use App\Mail\Warranty;
 use App\Model\CastomerWarranty;
+use App\Model\CastomerWarrantySave;
 use App\Model\Certificate;
 use App\Model\Customer;
 use App\Model\Inspection;
@@ -145,7 +146,7 @@ class InspectionFormController extends Controller
         $customer = Customer::where('inspection_id', $inspection_id)->first();
         $inspection = InspectionForm::where('id', $form_id)->frst();
 
-        $warranty_save = new CastomerWarranty;
+        $warranty_save = new CastomerWarrantySave;
         $warranty_save->inspector_id = $inspection->inspector_id;
         $warranty_save->customer_id = $customer->id;
         $warranty_save->warranty_type = $warranty;
