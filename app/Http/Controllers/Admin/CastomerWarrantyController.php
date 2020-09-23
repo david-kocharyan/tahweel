@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\CastomerWarranty;
+use App\Model\InspectionForm;
 use Illuminate\Http\Request;
 
 class CastomerWarrantyController extends Controller
@@ -21,7 +22,7 @@ class CastomerWarrantyController extends Controller
     public function index()
     {
         $data = CastomerWarranty::all();
-        dd($data);
+
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));

@@ -96,7 +96,7 @@ class InspectionFormController extends Controller
         $form->save();
 
         if ($request->warranty != 0) {
-            $this->sendWarranty($request->warranty, $request->inspection_id);
+            $this->sendWarranty($request->warranty, $request->inspection_id, $form->id);
         }
 
         $phase = new Phase();
@@ -140,14 +140,16 @@ class InspectionFormController extends Controller
         return ResponseHelper::success($resp);
     }
 
-    private function sendWarranty($warranty, $inspection_id)
+    private function sendWarranty($warranty, $inspection_id, $form_id)
     {
         $customer = Customer::where('inspection_id', $inspection_id)->first();
+        $inspection = InspectionForm::where('id', $form_id)->frst();
 
         $warranty_save = new CastomerWarranty;
-        $warranty_save->inspection_id = $inspection_id;
+        $warranty_save->inspector_id = $inspection->inspector_id;
         $warranty_save->customer_id = $customer->id;
         $warranty_save->warranty_type = $warranty;
+        $warranty_save->phase = $inspection->phase;
         $warranty_save->save();
     }
 

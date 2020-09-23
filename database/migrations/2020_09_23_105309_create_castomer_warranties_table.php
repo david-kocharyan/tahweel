@@ -15,12 +15,13 @@ class CreateCastomerWarrantiesTable extends Migration
     {
         Schema::create('castomer_warranties', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("inspection_id");
+            $table->unsignedBigInteger("inspector_id");
             $table->unsignedBigInteger('customer_id');
             $table->unsignedTinyInteger('warranty_type');
+            $table->unsignedTinyInteger('phase');
             $table->timestamps();
 
-            $table->foreign("inspection_id")->references("id")->on("inspection_forms")->onDelete("cascade");
+            $table->foreign("inspector_id")->references("id")->on("users")->onDelete("cascade");
             $table->foreign("customer_id")->references("id")->on("customers")->onDelete("cascade");
         });
     }
