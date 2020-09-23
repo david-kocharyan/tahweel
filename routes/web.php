@@ -32,4 +32,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('certificates', 'CertificateController');
     Route::resource('notifications', 'NotificationController');
     Route::resource('redeems', 'RedeemsController');
+    Route::resource('warranty', 'CastomerWarrantyController');
+
+
 });

@@ -94,7 +94,7 @@ class InspectionFormController extends Controller
         $form->warranty = $request->warranty ?? 0;
         $form->save();
 
-        if ($request->warranty != 0){
+        if ($request->warranty != 0) {
             $this->sendWarranty($request->warranty, $request->inspection_id);
         }
 
@@ -139,23 +139,28 @@ class InspectionFormController extends Controller
         return ResponseHelper::success($resp);
     }
 
-    private function sendWarranty($warranty, $inspection_id){
-
-//        send admin for approve !!!!!!!!!
-
+    private function sendWarranty($warranty, $inspection_id)
+    {
         $customer = Customer::where('inspection_id', $inspection_id)->first();
-        $link = $this->base_url."/api/v1/inspections/warranty/$warranty/$inspection_id";
 
-        $details = [
-            'title' => 'Warranty',
-            'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
-            'link' => $link,
-        ];
+        $warranty_save = new Warranty;
+        $warranty_save->inspection_id = $inspection_id;
+        $warranty_save->customer_id = $customer->id;
+        $warranty_save->warranty_type = $warranty;
+        $warranty_save->save();
 
-        Mail::to("$customer->email")->send(new Warranty($details));
+//
+//        $link = $this->base_url . "/api/v1/inspections/warranty/$warranty/$inspection_id";
+//        $details = [
+//            'title' => 'Warranty',
+//            'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
+//            'link' => $link,
+//        ];
+//        Mail::to("$customer->email")->send(new Warranty($details));
     }
 
-    public function downloadWarranty($warranty, $inspection_id){
+    public function downloadWarranty($warranty, $inspection_id)
+    {
         $file = Certificate::where('type', $warranty)->first()->file;
 
         $form = InspectionForm::where('inspection_id', $inspection_id)->first();
