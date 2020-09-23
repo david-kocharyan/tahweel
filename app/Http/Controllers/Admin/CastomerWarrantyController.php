@@ -78,7 +78,14 @@ class CastomerWarrantyController extends Controller
      */
     public function update(Request $request, CastomerWarranty $castomerWarranty)
     {
-        //
+
+//        $link = $this->base_url . "/api/v1/inspections/warranty/$warranty/$inspection_id";
+//        $details = [
+//            'title' => 'Warranty',
+//            'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
+//            'link' => $link,
+//        ];
+//        Mail::to("$customer->email")->send(new Warranty($details));
     }
 
     /**

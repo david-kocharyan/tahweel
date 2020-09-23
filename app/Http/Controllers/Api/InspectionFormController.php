@@ -6,6 +6,7 @@ use App\helpers\FileUploadHelper;
 use App\helpers\Firebase;
 use App\Http\Controllers\Controller;
 use App\Mail\Warranty;
+use App\Model\CastomerWarranty;
 use App\Model\Certificate;
 use App\Model\Customer;
 use App\Model\Inspection;
@@ -143,20 +144,11 @@ class InspectionFormController extends Controller
     {
         $customer = Customer::where('inspection_id', $inspection_id)->first();
 
-        $warranty_save = new Warranty;
+        $warranty_save = new CastomerWarranty;
         $warranty_save->inspection_id = $inspection_id;
         $warranty_save->customer_id = $customer->id;
         $warranty_save->warranty_type = $warranty;
         $warranty_save->save();
-
-//
-//        $link = $this->base_url . "/api/v1/inspections/warranty/$warranty/$inspection_id";
-//        $details = [
-//            'title' => 'Warranty',
-//            'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
-//            'link' => $link,
-//        ];
-//        Mail::to("$customer->email")->send(new Warranty($details));
     }
 
     public function downloadWarranty($warranty, $inspection_id)
