@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Model\CastomerWarranty;
+use App\Model\CastomerWarrantySave;
 use App\Model\InspectionForm;
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class CastomerWarrantyController extends Controller
      */
     public function index()
     {
-        $data = CastomerWarranty::all();
+        $data = CastomerWarrantySave::all();
 
         $title = self::TITLE;
         $route = self::ROUTE;

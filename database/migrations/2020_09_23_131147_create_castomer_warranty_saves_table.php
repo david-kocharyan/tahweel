@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCastomerWarrantiesTable extends Migration
+class CreateCastomerWarrantySavesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCastomerWarrantiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('castomer_warranties', function (Blueprint $table) {
+        Schema::create('castomer_warranty_saves', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("inspector_id");
             $table->unsignedBigInteger('customer_id');
@@ -33,6 +33,6 @@ class CreateCastomerWarrantiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('castomer_warranties');
+        Schema::dropIfExists('castomer_warranty_saves');
     }
 }
