@@ -77,7 +77,7 @@ class CastomerWarrantyController extends Controller
      * @param  \App\Model\CastomerWarranty  $castomerWarranty
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CastomerWarranty $castomerWarranty)
+    public function update(Request $request, CastomerWarrantySave $castomerWarranty)
     {
 
         dd($castomerWarranty);
