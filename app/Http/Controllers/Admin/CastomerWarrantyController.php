@@ -86,6 +86,7 @@ class CastomerWarrantyController extends Controller
         $data = CastomerWarrantySave::where('id', $id)->first();
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
 
+        dd($customer);
         $link = URL::to('/') . "/api/v1/inspections/warranty/$data->warranty_type/$data->inspection_id";
         $details = [
             'title' => 'Warranty',
