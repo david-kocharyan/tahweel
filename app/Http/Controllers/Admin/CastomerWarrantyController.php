@@ -9,6 +9,7 @@ use App\Model\Customer;
 use App\Model\InspectionForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class CastomerWarrantyController extends Controller
 {
@@ -85,7 +86,7 @@ class CastomerWarrantyController extends Controller
         $data = CastomerWarrantySave::where('id', $id)->first();
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
 
-        $link = $this->base_url . "/api/v1/inspections/warranty/$data->warranty_type/$data->inspection_id";
+        $link = URL::to('/') . "/api/v1/inspections/warranty/$data->warranty_type/$data->inspection_id";
         $details = [
             'title' => 'Warranty',
             'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
