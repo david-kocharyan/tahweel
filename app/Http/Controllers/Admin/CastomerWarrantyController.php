@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Warranty;
 use App\Model\CastomerWarrantySave;
+use App\Model\Customer;
 use App\Model\InspectionForm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CastomerWarrantyController extends Controller
 {
@@ -79,14 +82,16 @@ class CastomerWarrantyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = CastomerWarrantySave::where('id', $id)->delete();
-//        $link = $this->base_url . "/api/v1/inspections/warranty/$warranty/$inspection_id";
-//        $details = [
-//            'title' => 'Warranty',
-//            'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
-//            'link' => $link,
-//        ];
-//        Mail::to("$customer->email")->send(new Warranty($details));
+        $data = CastomerWarrantySave::where('id', $id)->first();
+        $customer = Customer::where('inspection_id', $data->inspection_id)->first();
+
+        $link = $this->base_url . "/api/v1/inspections/warranty/$data->warranty_type/$data->inspection_id";
+        $details = [
+            'title' => 'Warranty',
+            'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
+            'link' => $link,
+        ];
+        Mail::to("$customer->email")->send(new Warranty($details));
     }
 
     /**
