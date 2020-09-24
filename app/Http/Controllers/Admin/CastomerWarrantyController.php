@@ -22,6 +22,7 @@ class CastomerWarrantyController extends Controller
     public function index()
     {
         $data = CastomerWarrantySave::all();
+        dd($data);
 
         $title = self::TITLE;
         $route = self::ROUTE;
