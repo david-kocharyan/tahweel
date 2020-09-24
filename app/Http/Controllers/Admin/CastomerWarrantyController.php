@@ -77,10 +77,10 @@ class CastomerWarrantyController extends Controller
      * @param  \App\Model\CastomerWarranty  $castomerWarranty
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CastomerWarrantySave $castomerWarranty)
+    public function update(Request $request, $id)
     {
 
-        dd($castomerWarranty);
+        dd($id);
 //        $link = $this->base_url . "/api/v1/inspections/warranty/$warranty/$inspection_id";
 //        $details = [
 //            'title' => 'Warranty',
