@@ -86,14 +86,15 @@ class CastomerWarrantyController extends Controller
         $data = CastomerWarrantySave::where('id', $id)->first();
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
 
-        dd($customer);
-        $link = URL::to('/') . "/api/v1/inspections/warranty/$data->warranty_type/$data->inspection_id";
-        $details = [
-            'title' => 'Warranty',
-            'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
-            'link' => $link,
-        ];
-        Mail::to("$customer->email")->send(new Warranty($details));
+        if ($customer->email){
+            $link = URL::to('/') . "/api/v1/inspections/warranty/$data->warranty_type/$data->inspection_id";
+            $details = [
+                'title' => 'Warranty',
+                'body' => "Hello $customer->full_name. Please follow the link to get a warranty!",
+                'link' => $link,
+            ];
+            Mail::to("$customer->email")->send(new Warranty($details));
+        }
 
         CastomerWarrantySave::destroy($id);
         return redirect(self::ROUTE);
