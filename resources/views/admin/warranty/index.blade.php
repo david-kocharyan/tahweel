@@ -22,8 +22,8 @@
                         @foreach($data as $key=>$val)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{ $val->phase }}</td>
-                                <td>{{ $val->phase }}</td>
+                                <td>{{ $val->inspector->full_name }}</td>
+                                <td>{{ $val->customer->full_name }}</td>
                                 <td>{{ $val->phase }}</td>
                                 <td>{{ $val->phase }}</td>
                                 <td>
