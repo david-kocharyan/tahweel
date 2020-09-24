@@ -22,7 +22,6 @@ class CastomerWarrantyController extends Controller
     public function index()
     {
         $data = CastomerWarrantySave::with(['inspector', 'customer'])->get();
-        dd($data);
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));

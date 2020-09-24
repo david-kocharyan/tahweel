@@ -24,7 +24,7 @@
                                 <td>{{$key + 1}}</td>
                                 <td>{{ $val->inspector->full_name }}</td>
                                 <td>{{ $val->customer->full_name }}</td>
-                                <td>{{ $val->phase }}</td>
+                                <td>{{ array_search($val->warranty_type,\App\Model\Certificate::TYPE,true) }}</td>
                                 <td>{{ $val->phase }}</td>
                                 <td>
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
@@ -32,18 +32,6 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
 
-                                    <form
-                                        onsubmit="if(confirm('Do You Really Want To Delete The Certificate?') == false) return false;"
-                                        style="display: inline-block" action="{{ $route."/".$val->id }}" method="post">
-                                        @csrf
-                                        @method("DELETE")
-                                        <a href="javascript:void(0)">
-                                            <button data-toggle="tooltip"
-                                                    data-placement="top" title="Delete"
-                                                    class="btn btn-danger btn-circle tooltip-danger"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </a>
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
