@@ -22,7 +22,10 @@
                         @foreach($data as $key=>$val)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{ $val->name }}</td>
+                                <td>{{ $val->phase }}</td>
+                                <td>{{ $val->phase }}</td>
+                                <td>{{ $val->phase }}</td>
+                                <td>{{ $val->phase }}</td>
                                 <td>
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
                                        data-placement="top" title="Edit" class="btn btn-info btn-circle tooltip-info">

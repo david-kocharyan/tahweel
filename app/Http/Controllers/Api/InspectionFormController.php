@@ -144,7 +144,7 @@ class InspectionFormController extends Controller
     private function sendWarranty($warranty, $inspection_id, $form_id)
     {
         $customer = Customer::where('inspection_id', $inspection_id)->first();
-        $inspection = InspectionForm::where('id', $form_id)->frst();
+        $inspection = InspectionForm::where('id', $form_id)->first();
 
         $warranty_save = new CastomerWarrantySave;
         $warranty_save->inspector_id = $inspection->inspector_id;
