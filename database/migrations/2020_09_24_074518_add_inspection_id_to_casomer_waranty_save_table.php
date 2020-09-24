@@ -14,7 +14,7 @@ class AddInspectionIdToCasomerWarantySaveTable extends Migration
     public function up()
     {
         Schema::table('castomer_warranty_saves', function (Blueprint $table) {
-            $table->bigInteger("inspection_id");
+            $table->bigInteger("inspection_id")->default(1);
         });
     }
 
