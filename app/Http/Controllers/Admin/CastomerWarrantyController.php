@@ -80,7 +80,8 @@ class CastomerWarrantyController extends Controller
     public function update(Request $request, $id)
     {
 
-        dd($id);
+        $data = CastomerWarrantySave::where('id', $id)->first();
+        dd($data);
 //        $link = $this->base_url . "/api/v1/inspections/warranty/$warranty/$inspection_id";
 //        $details = [
 //            'title' => 'Warranty',
