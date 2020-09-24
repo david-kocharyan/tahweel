@@ -34,8 +34,7 @@
                                         <a href="javascript:void(0)">
                                             <button data-toggle="tooltip"
                                                     data-placement="top" title="Send"
-                                                    class="btn btn-danger btn-circle tooltip-danger"><i
-                                                    class="fas fa-send"></i></button>
+                                                    class="btn btn-danger btn-circle tooltip-danger"><i class="fas fa-envelope"></i></button>
                                         </a>
                                     </form>
                                 </td>
