@@ -28,9 +28,15 @@
                                 <td>{{ $val->customer->full_name }}</td>
                                 <td>{{ array_search($val->warranty_type,\App\Model\Certificate::TYPE,true) }}</td>
                                 <td>{{ $val->phase }}</td>
-                                <td>{{ \App\Model\CastomerWarrantySave::TYPE[$val->status] }}</td>
                                 <td>
-                                    @if($val->status != 1)
+                                    @if($val->customer->email == null)
+                                        No Email
+                                    @else
+                                        {{ \App\Model\CastomerWarrantySave::TYPE[$val->status] }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($val->status != 1 AND $val->customer->email != null)
                                         <form style="display: inline-block" action="{{ $route."/".$val->id }}"
                                               method="post">
                                             @csrf

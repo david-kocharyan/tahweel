@@ -99,7 +99,7 @@ class CastomerWarrantyController extends Controller
             $data->save();
         }
         else{
-            $data->status = 2;
+            $data->status = 0;
             $data->save();
         }
 
