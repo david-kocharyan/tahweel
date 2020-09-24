@@ -6,7 +6,8 @@
             <div class="white-box">
                 <h3 class="box-title">{{$title}}</h3>
                 <div class="table-responsive">
-                    <table id="datatable" class="display table table-hover table-striped nowrap" cellspacing="0" width="100%">
+                    <table id="datatable" class="display table table-hover table-striped nowrap" cellspacing="0"
+                           width="100%">
                         <thead>
                         <tr>
                             <th>Id</th>
@@ -29,15 +30,19 @@
                                 <td>{{ $val->phase }}</td>
                                 <td>{{ \App\Model\CastomerWarrantySave::TYPE[$val->status] }}</td>
                                 <td>
-                                    <form style="display: inline-block" action="{{ $route."/".$val->id }}" method="post">
-                                        @csrf
-                                        @method("PUT")
-                                        <a href="javascript:void(0)">
-                                            <button data-toggle="tooltip"
-                                                    data-placement="top" title="Send"
-                                                    class="btn btn-danger btn-circle tooltip-danger"><i class="fas fa-envelope"></i></button>
-                                        </a>
-                                    </form>
+                                    @if($val->status != 1)
+                                        <form style="display: inline-block" action="{{ $route."/".$val->id }}"
+                                              method="post">
+                                            @csrf
+                                            @method("PUT")
+                                            <a href="javascript:void(0)">
+                                                <button data-toggle="tooltip"
+                                                        data-placement="top" title="Send"
+                                                        class="btn btn-danger btn-circle tooltip-danger"><i
+                                                        class="fas fa-envelope"></i></button>
+                                            </a>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
