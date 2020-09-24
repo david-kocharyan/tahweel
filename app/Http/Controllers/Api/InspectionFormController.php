@@ -147,6 +147,7 @@ class InspectionFormController extends Controller
         $inspection = InspectionForm::where('id', $form_id)->first();
 
         $warranty_save = new CastomerWarrantySave;
+        $warranty_save->inspection_id = $inspection_id;
         $warranty_save->inspector_id = $inspection->inspector_id;
         $warranty_save->customer_id = $customer->id;
         $warranty_save->warranty_type = $warranty;
