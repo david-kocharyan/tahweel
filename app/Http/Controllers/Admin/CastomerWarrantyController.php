@@ -94,9 +94,15 @@ class CastomerWarrantyController extends Controller
                 'link' => $link,
             ];
             Mail::to("$customer->email")->send(new Warranty($details));
+
+            $data->status = 1;
+            $data->save();
+        }
+        else{
+            $data->status = 2;
+            $data->save();
         }
 
-        CastomerWarrantySave::destroy($id);
         return redirect(self::ROUTE);
     }
 

@@ -14,6 +14,7 @@
                             <th>Customer Name</th>
                             <th>Warranty Name</th>
                             <th>Phase</th>
+                            <th>Status</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -26,8 +27,8 @@
                                 <td>{{ $val->customer->full_name }}</td>
                                 <td>{{ array_search($val->warranty_type,\App\Model\Certificate::TYPE,true) }}</td>
                                 <td>{{ $val->phase }}</td>
+                                <td>{{ \App\Model\CastomerWarrantySave::TYPE[$val->status] }}</td>
                                 <td>
-
                                     <form style="display: inline-block" action="{{ $route."/".$val->id }}" method="post">
                                         @csrf
                                         @method("PUT")
