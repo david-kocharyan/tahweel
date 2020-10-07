@@ -36,7 +36,7 @@ class SendNotificationController extends Controller
             $users = User::with('tokens')->where('role', $request->role[0])->get()->pluck('token');
         }
 
-        dd($users, $users->tokens);
+        dd($users);
 
 
 
