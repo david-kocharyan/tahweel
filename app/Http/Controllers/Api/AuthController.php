@@ -30,7 +30,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'full_name' => 'required|max:100',
-                'phone' => $request->role == 1 ? 'required|max:191' : '',
+                'phone' => 'required|max:191',
                 'email' => 'required|unique:users|max:150|regex:/(.+)@(.+)\.(.+)/i',
                 'role' => 'required|integer|min:1|max:2',
                 'password' => 'required|max:25',
@@ -44,7 +44,7 @@ class AuthController extends Controller
         $user->full_name = $request->full_name;
         $user->email = $request->email;
         $user->role = intval($request->role);
-        $user->approved = $user->role == 1 ? 1 : 0;
+        $user->approved = 0;
         $user->password = bcrypt($request->password);
         $user->lng = User::ENGLISH;
         $user->save();
