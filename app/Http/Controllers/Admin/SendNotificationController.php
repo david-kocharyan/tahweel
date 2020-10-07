@@ -37,7 +37,7 @@ class SendNotificationController extends Controller
         }
 
         dd($users);
-        $tokens = $users->tokens()->get()->pluck('token')->toArray();
+//        $tokens = $users->tokens()->get()->pluck('token')->toArray();
 
 
 
