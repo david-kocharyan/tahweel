@@ -36,9 +36,7 @@ class SendNotificationController extends Controller
             $tokens = User::with('tokensForAll')->where('role', $request->role[0])->has('tokensForAll')->get()->pluck('tokensForAll.token')->toArray();
         }
 
-        dd($tokens);
-
-//        Firebase::send($tokens, "Dear $user->full_name, You Have a New Inspection Request", null, null, null, Notification::INSPECTION_TYPE);
-
+        Firebase::send($tokens, $request->message, null, null, null, Notification::ADMIN_TYPE, $request->title);
+        return redirect(self::ROUTE);
     }
 }

@@ -2,6 +2,7 @@
 
 
 namespace App\helpers;
+
 use App\Model\FcmToken;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -19,11 +20,11 @@ class Firebase
 
     public static function send($tokens, string $notif, string $event = null, $event_id = null, $image = null, $type = null, $title = null)
     {
-        if(empty($tokens)) return;
+        if (empty($tokens)) return;
         $firebase = new self();
         $data = array(
             "image" => $image,
-            "title" => "notification",
+            "title" => $title = null ? "notification" : $title,
             "body" => $notif,
             "action" => $event,
         );
@@ -32,7 +33,7 @@ class Firebase
             ->withNotification(Notification::create($notif));
         $firebase->saveNotification($notif, $tokens, $type, $title);
 
-        if(is_array($tokens)) {
+        if (is_array($tokens)) {
             $firebase->sendMulti($message, $tokens);
         } else {
             $firebase->sendSpecific($message, $tokens);
@@ -42,8 +43,8 @@ class Firebase
 
     private function sendMulti($message, $tokens)
     {
-        try{
-          $this->messaging->sendMulticast($message, $tokens);
+        try {
+            $this->messaging->sendMulticast($message, $tokens);
         } catch (\Exception $exception) {
             dd($exception);
         }
@@ -51,7 +52,7 @@ class Firebase
 
     private function sendSpecific($message, $token)
     {
-        try{
+        try {
             $message->withTarget("token", $token);
             $this->messaging->send($message);
         } catch (\Exception $exception) {
@@ -63,30 +64,30 @@ class Firebase
     {
         $user = Auth::guard('api')->user() ?? Auth::guard('web')->user();  // The user who has sent the notification
         $name = $user->full_name ?? $user->name;
-        if(is_array($tokens)) {
+        if (is_array($tokens)) {
             foreach ($tokens as $key => $value) {
                 $assignedToUser = User::find(FcmToken::where("token", $value)->first()->user_id);  // The user who receives the notification
                 $notification = new Notif();
-                $notification->title = $title ?? ($name . ($user->role == 1 ? " (Plumber)" : ($user->role == 2 ? " (Inspector)" : "" ) ) );
+                $notification->title = $title ?? ($name . ($user->role == 1 ? " (Plumber)" : ($user->role == 2 ? " (Inspector)" : "")));
                 $notification->body = $body;
                 $notification->user_id = $assignedToUser->id;
                 $notification->type = $type;
                 try {
                     $notification->save();
-                } catch (\Exception $e){
+                } catch (\Exception $e) {
 
                 }
             }
         } else {
             $assignedToUser = User::find(FcmToken::where("token", $tokens)->first()->user_id);  // The user who receives the notification
             $notification = new Notif();
-            $notification->title = $title ?? ($name . ($user->role == 1 ? " (Plumber)" : ($user->role == 2 ? " (Inspector)" : "" ) ) );
+            $notification->title = $title ?? ($name . ($user->role == 1 ? " (Plumber)" : ($user->role == 2 ? " (Inspector)" : "")));
             $notification->body = $body;
             $notification->user_id = $assignedToUser->id;
             $notification->type = $type;
             try {
                 $notification->save();
-            } catch (\Exception $e){
+            } catch (\Exception $e) {
 
             }
         }
