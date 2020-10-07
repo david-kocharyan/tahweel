@@ -34,5 +34,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('redeems', 'RedeemsController');
     Route::resource('warranty', 'CastomerWarrantyController');
 
+    Route::get('send-notification', 'SendNotificationController@index');
+    Route::post('send-notification/send', 'SendNotificationController@send');
 
 });

@@ -132,6 +132,13 @@
                     </a>
                 </li>
 
+
+                <li>
+                    <a href="/admin/send-notification" class="waves-effect"><i class="mdi mdi-send fa-fw"></i> <span
+                            class="hide-menu">Send Notification</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>
