@@ -54,11 +54,6 @@ class User extends Authenticatable
         return $this->hasMany("App\Model\FcmToken", "user_id", "id");
     }
 
-    public function tokensForAll()
-    {
-        return $this->hasOne("App\Model\FcmToken", "user_id", "id");
-    }
-
     public function pointsEarned()
     {
         return $this->hasManyThrough(PlumberPoint::class, Inspection::class, "plumber_id", "inspection_id", "id", "id");
