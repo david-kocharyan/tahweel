@@ -31,12 +31,12 @@ class SendNotificationController extends Controller
         ]);
 
         if (count($request->role) > 1) {
-            $users = User::with('tokens')->get()->pluck('token');
+            $users = User::with('tokens')->get();
         } else {
             $users = User::with('tokens')->where('role', $request->role[0])->get()->pluck('token');
         }
 
-        dd($users);
+        dd($users, $users->tokens);
 
 
 
