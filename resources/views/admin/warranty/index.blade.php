@@ -51,7 +51,7 @@
                                     @endif
                                         <button data-toggle="tooltip" data-id="{{$val->id}}"
                                                 data-placement="top" title="Download"
-                                                class="btn btn-danger btn-circle tooltip-danger load"><i class="fas fa-download"></i></button>
+                                                class="btn btn-success btn-circle tooltip-success load"><i class="fas fa-download"></i></button>
                                 </td>
                             </tr>
                         @endforeach

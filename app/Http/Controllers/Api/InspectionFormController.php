@@ -22,8 +22,10 @@ use App\helpers\ResponseHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class InspectionFormController extends Controller
 {
@@ -157,11 +159,23 @@ class InspectionFormController extends Controller
 
     public function downloadWarranty($warranty, $inspection_id)
     {
-        $file = Certificate::where('type', $warranty)->first()->file;
-
         $form = InspectionForm::where('inspection_id', $inspection_id)->first();
         $form->customer_approved = 1;
         $form->save();
+
+        $customer = Customer::where('inspection_id', $inspection_id)->first();
+        $file = Certificate::where('type', $warranty)->first()->file;
+
+        $img = Image::make(public_path("uploads/$file"));
+        $img->rotate(-90);
+        $img->text($customer->full_name, 1000 , 1170 , function($font) {
+            $font->file(public_path('assets/css/MotionPicture_PersonalUseOnly.ttf'));
+            $font->size(100);
+            $font->align('center');
+            $font->valign('center');
+        });
+        $img->save(public_path("uploads/certificates/warranty_$customer->id.jpg"));
+        $file= "certificates/warranty_$customer->id.jpg";
 
         return view('admin.warranty', compact('file'));
     }
