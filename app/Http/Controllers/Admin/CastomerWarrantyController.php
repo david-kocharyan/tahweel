@@ -119,9 +119,9 @@ class CastomerWarrantyController extends Controller
 
         $img = Image::make(public_path("uploads/$file"));
         $img->rotate(-90);
-        $img->text('Customer name', 0, 20, function($font) {
+        $img->text('Customer name', 1420 , 1236 , function($font) {
             $font->file(public_path('assets/css/MotionPicture_PersonalUseOnly.ttf'));
-            $font->size(34);
+            $font->size(120);
             $font->align('center');
             $font->valign('center');
         });
