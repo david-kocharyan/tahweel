@@ -99,7 +99,6 @@
         $(document).ready(function () {
             $('#datatable').DataTable();
 
-
             $('.load').click(function () {
                 var id = $(this).data('id');
                 $.ajax({
@@ -110,15 +109,14 @@
                     url: '{{ url('/admin/warranty/send') }}',
                     data: {id},
                     success: function (res) {
-                        console.log(res)
-                        // var a = document.createElement('a');
-                        // var url = window.URL.createObjectURL(data);
-                        // a.href = url;
-                        // a.download = 'myfile.pdf';
-                        // document.body.append(a);
-                        // a.click();
-                        // a.remove();
-                        // window.URL.revokeObjectURL(url);
+                        var a = document.createElement('a');
+                        var url = window.URL.createObjectURL({{url()}}res.file);
+                        a.href = url;
+                        a.download = 'warranty.jpg';
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
                     }
                 });
             })
