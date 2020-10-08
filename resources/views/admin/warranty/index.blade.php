@@ -110,7 +110,7 @@
                     data: {id},
                     success: function (res) {
                         var a = document.createElement('a');
-                        var url = window.URL.createObjectURL({{url()}}res.file);
+                        var url = window.URL.createObjectURL(res.file);
                         a.href = url;
                         a.download = 'warranty.jpg';
                         document.body.append(a);

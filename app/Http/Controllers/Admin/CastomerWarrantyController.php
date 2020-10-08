@@ -128,7 +128,7 @@ class CastomerWarrantyController extends Controller
             $font->valign('center');
         });
         $img->save(public_path("uploads/certificates/warranty_$customer->id.jpg"));
-        $file= "uploads/certificates/warranty_$customer->id.jpg";
+        $file= url("uploads/certificates/warranty_$customer->id.jpg");
 
         return Response::json(['file'=>$file]);
     }
