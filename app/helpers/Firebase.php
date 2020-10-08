@@ -27,6 +27,7 @@ class Firebase
             "title" => $title = null ? "notification" : $title,
             "body" => $notif,
             "action" => $event,
+            'type' => $type,
         );
         $message = CloudMessage::new()
             ->withData($data)
