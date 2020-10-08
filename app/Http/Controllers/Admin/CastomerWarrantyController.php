@@ -125,6 +125,7 @@ class CastomerWarrantyController extends Controller
             $font->align('center');
             $font->valign('center');
         });
+
         $img->save(public_path('uploads/hardik4.jpg'));
 
         dd($customer);
