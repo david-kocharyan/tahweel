@@ -137,8 +137,7 @@ class CastomerWarrantyController extends Controller
             'Content-Type: application/pdf',
         );
 
-        Response::download($file, 'warranty.jpg', $headers);
-        return redirect(self::ROUTE);
+        return Response::download($file, 'warranty.jpg', $headers);
     }
 
 }
