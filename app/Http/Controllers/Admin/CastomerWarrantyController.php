@@ -118,7 +118,7 @@ class CastomerWarrantyController extends Controller
         $file = Certificate::where('type', $data->warranty_type)->first()->file;
 
         $img = Image::make(public_path("uploads/$file"));
-        $img->text('foo', 0, 0, function($font) {
+        $img->text('Customer name', 50, 50, function($font) {
             $font->size(100);
             $font->color('#FF0067');
             $font->angle(90);
