@@ -112,8 +112,9 @@ class CastomerWarrantyController extends Controller
         //
     }
 
-    public function downloadCertificate($id)
+    public function downloadCertificate(Request $request)
     {
+        $id = $request->id;
         $data = CastomerWarrantySave::where('id', $id)->first();
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
         $file = Certificate::where('type', $data->warranty_type)->first()->file;

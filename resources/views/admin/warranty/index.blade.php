@@ -101,10 +101,17 @@
 
 
             $('.load').click(function () {
-                var id = $(this).data('id')
-                console.log(id)
+                var id = $(this).data('id');
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+                    },
+                    url: '{{ url('/warranty/send) }}',
+                    data: {id},
+                    success: function (res) {}
+                });
             })
-
 
         });
     </script>
