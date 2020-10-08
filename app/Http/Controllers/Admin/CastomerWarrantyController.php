@@ -9,6 +9,7 @@ use App\Model\Certificate;
 use App\Model\Customer;
 use App\Model\InspectionForm;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Intervention\Image\Facades\Image;
