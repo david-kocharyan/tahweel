@@ -118,7 +118,7 @@ class CastomerWarrantyController extends Controller
         $file = Certificate::where('type', $data->warranty_type)->first()->file;
 
         $img = Image::make(public_path("uploads/$file"));
-        $img->text("HAST KLIR", 120, 100);
+        $img->text("HAST KLIR", 50, 30);
         $img->save(public_path('uploads/hardik3.jpg'));
 
         dd($customer);
