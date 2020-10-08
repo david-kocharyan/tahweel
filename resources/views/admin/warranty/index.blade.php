@@ -115,7 +115,6 @@
                         a.download = 'warranty.jpg';
                         document.body.append(a);
                         a.click();
-                        a.remove();
                         window.URL.revokeObjectURL(url);
                     }
                 });
