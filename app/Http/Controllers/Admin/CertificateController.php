@@ -50,7 +50,7 @@ class CertificateController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'file' => 'required',
+            'file' => 'required|image',
             'type' => 'required|min:1|max:2',
         ]);
 
