@@ -117,6 +117,7 @@ class CastomerWarrantyController extends Controller
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
         $file = Certificate::where('type', $data->warranty_type)->first()->file;
 
+        dd($customer);
         $img = Image::make(public_path("uploads/$file"));
         $img->rotate(-90);
         $img->text("$customer->name", 1420 , 1236 , function($font) {
