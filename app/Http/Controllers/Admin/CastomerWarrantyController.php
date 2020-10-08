@@ -126,10 +126,16 @@ class CastomerWarrantyController extends Controller
             $font->valign('center');
         });
 
-        $img->save(public_path('uploads/hardik4.jpg'));
+        $img->save(public_path("uploads/warranty/warranty_$customer->id.jpg"));
 
-        dd($customer);
 
+        $file= public_path("uploads/warranty/warranty_$customer->id.jpg");
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, 'warranty.jpg', $headers);
     }
 
 }
