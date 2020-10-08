@@ -49,7 +49,7 @@
                                             </a>
                                         </form>
                                     @endif
-                                        <form style="display: inline-block" action="{{ $route }}"
+                                        <form style="display: inline-block" action="{{ $route."/show/".$val->id}}"
                                               method="post">
                                             @csrf
                                             @method("POST")
