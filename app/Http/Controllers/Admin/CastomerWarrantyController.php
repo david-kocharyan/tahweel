@@ -20,7 +20,6 @@ class CastomerWarrantyController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -33,7 +32,6 @@ class CastomerWarrantyController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -43,8 +41,7 @@ class CastomerWarrantyController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,8 +51,7 @@ class CastomerWarrantyController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Model\CastomerWarranty  $castomerWarranty
+     * @param \App\Model\CastomerWarranty $castomerWarranty
      * @return \Illuminate\Http\Response
      */
     public function show(CastomerWarranty $castomerWarranty)
@@ -65,8 +61,7 @@ class CastomerWarrantyController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\CastomerWarranty  $castomerWarranty
+     * @param \App\Model\CastomerWarranty $castomerWarranty
      * @return \Illuminate\Http\Response
      */
     public function edit(CastomerWarranty $castomerWarranty)
@@ -76,9 +71,8 @@ class CastomerWarrantyController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\CastomerWarranty  $castomerWarranty
+     * @param \Illuminate\Http\Request    $request
+     * @param \App\Model\CastomerWarranty $castomerWarranty
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -86,7 +80,7 @@ class CastomerWarrantyController extends Controller
         $data = CastomerWarrantySave::where('id', $id)->first();
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
 
-        if ($customer->email){
+        if ($customer->email) {
             $link = URL::to('/') . "/api/v1/inspections/warranty/$data->warranty_type/$data->inspection_id";
             $details = [
                 'title' => 'Warranty',
@@ -97,8 +91,7 @@ class CastomerWarrantyController extends Controller
 
             $data->status = 1;
             $data->save();
-        }
-        else{
+        } else {
             $data->status = 0;
             $data->save();
         }
@@ -108,12 +101,17 @@ class CastomerWarrantyController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Model\CastomerWarranty  $castomerWarranty
+     * @param \App\Model\CastomerWarranty $castomerWarranty
      * @return \Illuminate\Http\Response
      */
     public function destroy(CastomerWarranty $castomerWarranty)
     {
         //
     }
+
+    public function downloadCertificate($id)
+    {
+        
+    }
+
 }

@@ -49,6 +49,16 @@
                                             </a>
                                         </form>
                                     @endif
+                                        <form style="display: inline-block" action="{{ $route }}"
+                                              method="post">
+                                            @csrf
+                                            @method("POST")
+                                            <a href="javascript:void(0)">
+                                                <button data-toggle="tooltip"
+                                                        data-placement="top" title="Download"
+                                                        class="btn btn-danger btn-circle tooltip-danger"><i class="fas fa-download"></i></button>
+                                            </a>
+                                        </form>
                                 </td>
                             </tr>
                         @endforeach
