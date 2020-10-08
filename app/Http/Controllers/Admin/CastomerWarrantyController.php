@@ -126,10 +126,10 @@ class CastomerWarrantyController extends Controller
             $font->valign('center');
         });
 
-        $img->save(public_path("uploads/warranty/warranty_$customer->id.jpg"));
+        $img->save(public_path("uploads/certificates/warranty_$customer->id.jpg"));
 
 
-        $file= public_path("uploads/warranty/warranty_$customer->id.jpg");
+        $file= public_path("uploads/certificates/warranty_$customer->id.jpg");
 
         $headers = array(
             'Content-Type: application/pdf',
