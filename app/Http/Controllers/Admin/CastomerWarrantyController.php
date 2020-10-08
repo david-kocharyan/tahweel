@@ -113,7 +113,10 @@ class CastomerWarrantyController extends Controller
     {
         $data = CastomerWarrantySave::where('id', $id)->first();
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
-        dd($customer);
+        dd($customer, $data);
+
+
+
     }
 
 }
