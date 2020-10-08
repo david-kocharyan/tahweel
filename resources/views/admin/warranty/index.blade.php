@@ -110,12 +110,11 @@
                     data: {id},
                     success: function (res) {
                         var a = document.createElement('a');
-                        var url = window.URL.createObjectURL(res.file);
-                        a.href = url;
+                        a.href = res.file;
                         a.download = 'warranty.jpg';
                         document.body.append(a);
                         a.click();
-                        window.URL.revokeObjectURL(url);
+                        a.remove();
                     }
                 });
             })
