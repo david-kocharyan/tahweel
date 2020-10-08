@@ -109,7 +109,17 @@
                     },
                     url: '{{ url('/admin/warranty/send') }}',
                     data: {id},
-                    success: function (res) {}
+                    success: function (res) {
+                        console.log(res)
+                        // var a = document.createElement('a');
+                        // var url = window.URL.createObjectURL(data);
+                        // a.href = url;
+                        // a.download = 'myfile.pdf';
+                        // document.body.append(a);
+                        // a.click();
+                        // a.remove();
+                        // window.URL.revokeObjectURL(url);
+                    }
                 });
             })
 
