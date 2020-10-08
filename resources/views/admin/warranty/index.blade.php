@@ -49,16 +49,9 @@
                                             </a>
                                         </form>
                                     @endif
-                                        <form style="display: inline-block" action="{{ $route."/show/".$val->id}}"
-                                              method="post">
-                                            @csrf
-                                            @method("POST")
-                                            <a href="javascript:void(0)">
-                                                <button data-toggle="tooltip"
-                                                        data-placement="top" title="Download"
-                                                        class="btn btn-danger btn-circle tooltip-danger"><i class="fas fa-download"></i></button>
-                                            </a>
-                                        </form>
+                                        <button data-toggle="tooltip" data-id="{{$val->id}}"
+                                                data-placement="top" title="Download"
+                                                class="btn btn-danger btn-circle tooltip-danger load"><i class="fas fa-download"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -105,6 +98,13 @@
     <script>
         $(document).ready(function () {
             $('#datatable').DataTable();
+
+
+            $('.load').click(function () {
+                var id = $(this).data('id')
+                console.log(id)
+            })
+
 
         });
     </script>
