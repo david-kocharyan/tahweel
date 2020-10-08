@@ -119,13 +119,11 @@ class CastomerWarrantyController extends Controller
 
         $img = Image::make(public_path("uploads/$file"));
         $img->text('foo', 0, 0, function($font) {
-            $font->size(24);
-            $font->color('#fdf6e3');
-            $font->align('center');
-            $font->valign('top');
-            $font->angle(45);
+            $font->size(100);
+            $font->color('red');
+            $font->angle(90);
         });
-        $img->save(public_path('uploads/hardik3.jpg'));
+        $img->save(public_path('uploads/hardik4.jpg'));
 
         dd($customer);
 
