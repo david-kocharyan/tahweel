@@ -107,7 +107,7 @@
                     headers: {
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
                     },
-                    url: '{{ url('admin/warranty/send') }}',
+                    url: '{{ url('/admin/warranty/send') }}',
                     data: {id},
                     success: function (res) {}
                 });
