@@ -121,7 +121,7 @@ class CastomerWarrantyController extends Controller
         $img->rotate(-90);
         $img->text($customer->name, 1320 , 1136 , function($font) {
             $font->file(public_path('assets/css/MotionPicture_PersonalUseOnly.ttf'));
-            $font->size(120);
+            $font->size(100);
             $font->align('center');
             $font->valign('center');
         });
