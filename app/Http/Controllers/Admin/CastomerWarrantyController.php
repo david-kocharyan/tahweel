@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\Warranty;
 use App\Model\CastomerWarrantySave;
+use App\Model\Certificate;
 use App\Model\Customer;
 use App\Model\InspectionForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
+use Intervention\Image\Facades\Image;
 
 class CastomerWarrantyController extends Controller
 {
@@ -113,7 +115,13 @@ class CastomerWarrantyController extends Controller
     {
         $data = CastomerWarrantySave::where('id', $id)->first();
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
-        dd($customer, $data);
+        $file = Certificate::where('type', $data->warranty_type)->first()->file;
+
+        dd($file);
+        $img = Image::make(public_path('uploads/'));
+        $img->text('This is a example ', 120, 100);
+        $img->save(public_path('images/hardik3.jpg'));
+
 
 
 
