@@ -123,7 +123,7 @@ class CastomerWarrantyController extends Controller
         $img->rotate(-90);
         $img->text($customer->full_name, 1370, 656, function($font) {
             $font->file(public_path('assets/css/Roboto-Black.ttf'));
-            $font->size(30);
+            $font->size(40);
         });
         $img->save(public_path("uploads/certificates/warranty_$customer->id.jpg"));
         $file= url("uploads/certificates/warranty_$customer->id.jpg");
