@@ -19,7 +19,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "simplesoftwareio/simple-qrcode": "^3.0",
-        "twilio/sdk": "^6.6"
+        "twilio/sdk": "^6.6",
+        "johntaa/ar-php": "dev-master"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
