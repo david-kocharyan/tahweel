@@ -122,7 +122,7 @@ class CastomerWarrantyController extends Controller
         $img = Image::make(public_path("uploads/$file"));
         $img->rotate(-90);
         $img->text($customer->full_name, 1370, 656, function($font) {
-            $font->file(public_path('assets/css/Amiri-Regular.ttf'));
+            $font->file(public_path('assets/css/LateefRegOT.ttf'));
             $font->size(50);
         });
         $img->save(public_path("uploads/certificates/warranty_$customer->id.jpg"));
