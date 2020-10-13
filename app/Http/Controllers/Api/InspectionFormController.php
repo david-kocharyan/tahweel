@@ -170,9 +170,7 @@ class InspectionFormController extends Controller
         $img->rotate(-90);
         $img->text($customer->full_name, 1370, 656, function($font) {
             $font->file(public_path('assets/css/MotionPicture_PersonalUseOnly.ttf'));
-            $font->size(100);
-            $font->align('center');
-            $font->valign('center');
+            $font->size(30);
         });
         $img->save(public_path("uploads/certificates/warranty_$customer->id.jpg"));
         $file= "certificates/warranty_$customer->id.jpg";
