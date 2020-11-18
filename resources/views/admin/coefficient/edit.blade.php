@@ -20,7 +20,7 @@
                                        placeholder="Coefficient" name="coefficient" value="{{$data->point}}">
                             </div>
 
-                            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Save City
+                            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Save Coefficient
                             </button>
                         </form>
                     </div>

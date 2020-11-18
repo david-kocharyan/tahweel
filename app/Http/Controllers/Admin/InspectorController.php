@@ -21,7 +21,6 @@ class InspectorController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -34,7 +33,6 @@ class InspectorController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -47,8 +45,7 @@ class InspectorController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -80,11 +77,13 @@ class InspectorController extends Controller
             $phone->phone = $request->phone;
             $phone->save();
 
-            $details = [
-                'title' => 'Your password in Tahweel Application',
-                'body' => "Hello dear $request->full_name. Your password is` $request->password",
-            ];
-            Mail::to($request->email)->send(new InspectorMail($details));
+            if ($request->email) {
+                $details = [
+                    'title' => 'Your password in Tahweel Application',
+                    'body' => "Hello dear $request->full_name. Your password is` $request->password",
+                ];
+                Mail::to($request->email)->send(new InspectorMail($details));
+            }
         }
 
         return redirect(self::ROUTE);
@@ -92,8 +91,7 @@ class InspectorController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -103,13 +101,12 @@ class InspectorController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $data = User::with('phone')->where('id',$id)->first();
+        $data = User::with('phone')->where('id', $id)->first();
         $city = City::all();
         $title = "Edit " . self::TITLE;
         $route = self::ROUTE;
@@ -118,9 +115,8 @@ class InspectorController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -130,11 +126,11 @@ class InspectorController extends Controller
             'username' => 'required|max:200|unique:users,username,' . $id,
             'city' => 'required',
             'phone' => 'required',
-            ]);
+        ]);
 
         $inspector = User::with("tokens")->find($id);
         $sendNotif = false;
-        if(!$inspector->approved && $request->approved) {
+        if (!$inspector->approved && $request->approved) {
             $sendNotif = true;
         }
 
@@ -158,7 +154,7 @@ class InspectorController extends Controller
             Mail::to($request->email)->send(new InspectorMail($details));
         }
 
-        if($sendNotif) {
+        if ($sendNotif) {
             $tokens = $inspector->tokens()->get()->pluck('token')->toArray();
             Firebase::send($tokens, "Dear $inspector->full_name, Your Account Has Been Approved");
         }
@@ -168,8 +164,7 @@ class InspectorController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
