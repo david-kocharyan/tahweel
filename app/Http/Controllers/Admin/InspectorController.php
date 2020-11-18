@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\helpers\Firebase;
 use App\Http\Controllers\Controller;
 use App\Mail\InspectorMail;
+use App\Model\City;
+use App\Model\Phone;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -37,9 +39,10 @@ class InspectorController extends Controller
      */
     public function create()
     {
+        $city = City::all();
         $title = "Create " . self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER . ".create", compact('title', 'route'));
+        return view(self::FOLDER . ".create", compact('title', 'route', 'city'));
     }
 
     /**
@@ -52,12 +55,17 @@ class InspectorController extends Controller
     {
         $request->validate([
             'full_name' => 'required|max:200',
-            'email' => 'required|email|unique:users,email',
-            "password" => "required|min:6"
+            'username' => 'required|max:200|unique:users,username',
+            'city' => 'required',
+            'email' => 'nullable|email',
+            "password" => "required|min:6",
+            "phone" => "required|min:6"
         ]);
 
         $inspector = new User;
         $inspector->full_name = $request->full_name;
+        $inspector->city_id = $request->city;
+        $inspector->username = $request->username;
         $inspector->email = $request->email;
         $inspector->approved = 1;
         $inspector->role = User::ROLES['inspector'];
@@ -65,6 +73,13 @@ class InspectorController extends Controller
         $inspector->save();
 
         if ($inspector->id) {
+
+            $phone = new Phone;
+            $phone->user_id = $inspector->id;
+            $phone->verification = 1;
+            $phone->phone = $request->phone;
+            $phone->save();
+
             $details = [
                 'title' => 'Your password in Tahweel Application',
                 'body' => "Hello dear $request->full_name. Your password is` $request->password",
@@ -94,10 +109,11 @@ class InspectorController extends Controller
      */
     public function edit($id)
     {
-        $data = User::find($id);
+        $data = User::with('phone')->where('id',$id)->first();
+        $city = City::all();
         $title = "Edit " . self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER . ".edit", compact('title', 'route', 'data'));
+        return view(self::FOLDER . ".edit", compact('title', 'route', 'data', 'city'));
     }
 
     /**
@@ -111,19 +127,28 @@ class InspectorController extends Controller
     {
         $request->validate([
             'full_name' => 'required|max:200',
-            "email" => "required|unique:users,email," . $id,
-        ]);
+            'username' => 'required|max:200|unique:users,username,' . $id,
+            'city' => 'required',
+            'phone' => 'required',
+            ]);
 
         $inspector = User::with("tokens")->find($id);
         $sendNotif = false;
         if(!$inspector->approved && $request->approved) {
             $sendNotif = true;
         }
+
+        $inspector->city_id = $request->city;
+        $inspector->username = $request->username;
         $inspector->full_name = $request->full_name;
         $inspector->email = $request->email;
         $inspector->approved = $request->approved ?? 0;
         if ($request->password) $inspector->password = Hash::make($request->password);
         $inspector->save();
+
+        $phone = Phone::where('user_id', $inspector->id)->first();
+        $phone->phone = $request->phone;
+        $phone->save();
 
         if ($request->password) {
             $details = [

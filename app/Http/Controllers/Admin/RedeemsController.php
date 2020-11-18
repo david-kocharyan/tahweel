@@ -76,7 +76,10 @@ class RedeemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $redeem = Redeem::where('id', $id)->first();
+        $redeem->status = 1;
+        $redeem->save();
+        return redirect(self::ROUTE);
     }
 
     /**

@@ -26,6 +26,8 @@ Auth::routes([
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth:web'], function () {
     Route::get('/', 'AdminController@index');
     Route::resource('plumbers', 'PlumberController');
+    Route::post('add-plumber-points', 'PlumberController@addPoint');
+
     Route::resource('inspectors', 'InspectorController');
     Route::resource('inspections', 'InspectionController');
     Route::resource('products', 'ProductController');
@@ -38,4 +40,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::get('send-notification', 'SendNotificationController@index');
     Route::post('send-notification/send', 'SendNotificationController@send');
 
+//    ajax for countoing data
+    Route::post('calculate', 'AdminController@calculate');
+
+//    settings
+    Route::resource('cities', 'CityController');
+    Route::resource('points', 'PointCoeficientController');
 });

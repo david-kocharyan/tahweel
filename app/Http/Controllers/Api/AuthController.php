@@ -7,6 +7,7 @@ use App\helpers\Twilio;
 use App\Http\Controllers\Controller;
 use App\Mail\MailHelper;
 use App\Model\FcmToken;
+use App\Model\PlumberPointsFromAdmin;
 use App\Model\Redeem;
 use Illuminate\Http\Request;
 use App\User;
@@ -30,8 +31,10 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'full_name' => 'required|max:100',
-                'phone' => 'required|max:191',
-                'email' => 'required|unique:users|max:150|regex:/(.+)@(.+)\.(.+)/i',
+                'city' => 'required|numeric',
+                'username' => 'required|max:100|unique:users',
+                'phone' => 'required|max:191|unique:phones',
+                'email' => 'nullable|unique:users|max:150|regex:/(.+)@(.+)\.(.+)/i',
                 'role' => 'required|integer|min:1|max:2',
                 'password' => 'required|max:25',
                 'confirm_password' => 'required|same:password',
@@ -42,6 +45,8 @@ class AuthController extends Controller
 
         $user = new User;
         $user->full_name = $request->full_name;
+        $user->city_id = $request->city;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->role = intval($request->role);
         $user->approved = 0;
@@ -79,7 +84,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'email' => 'required|max:150',
+                'username' => 'required|max:150',
                 'password' => 'required',
             ]);
 
@@ -87,13 +92,13 @@ class AuthController extends Controller
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
-        $user = User::where(['email' => $request->email])->first();
+        $user = User::where(['username' => $request->username])->first();
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
 
                 $user->createToken('Personal Access Token')->accessToken;
-                $tokens = $this->get_token($request->email, $request->password);
+                $tokens = $this->get_token($request->username, $request->password);
                 $user->qr = URL::to("/") . "/" . $user->qr;
                 $resp = array(
                     "user" => $user,
@@ -192,7 +197,7 @@ class AuthController extends Controller
         $user->password = bcrypt($pass);
         $user->save();
 
-        $email = MailHelper::send($request->email, "TayRaRam $pass");
+        $email = MailHelper::send($request->email, "Your Password $pass");
         if (!$email) {
             return ResponseHelper::fail("Something Went Wrong", 422);
         }
@@ -251,9 +256,10 @@ class AuthController extends Controller
 
     public static function getPointsFromDb()
     {
+        $pointsEarnedFromAdmin = PlumberPointsFromAdmin::where("plumber_id", Auth::guard('api')->user()->id)->sum("points") ?? 0;
         $pointsEarned = User::where("id", Auth::guard('api')->user()->id)->with("pointsEarned")->first()->pointsEarned->sum("point") ?? 0;
         $pointsRedeemed = Redeem::where("plumber_id", Auth::guard('api')->user()->id)->sum("point") ?? 0;
-        return ($pointsEarned - $pointsRedeemed);
+        return (($pointsEarnedFromAdmin + $pointsEarned) - $pointsRedeemed);
     }
 
     public function changePassword(Request $request)

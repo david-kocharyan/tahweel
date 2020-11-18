@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call([AdminTableSeeder::class, LanguageSeeder::class]);
+        $this->call([
+            AdminTableSeeder::class,
+            LanguageSeeder::class,
+            CountryTableSeeder::class,
+            PointCoefficientTableSeeder::class
+        ]);
     }
 }

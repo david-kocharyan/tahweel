@@ -55,7 +55,6 @@ Route::group(["prefix" => "v1"], function(){
             Route::post('ask-for-inspection', 'Api\InspectionController@plumberInspectionRequest');
         });
 
-
         Route::prefix('products')->group(function () {
             Route::get('get-products', 'Api\ProductController@getProducts');
             Route::get('get-redeems', 'Api\ProductController@getRedeems');
@@ -70,4 +69,6 @@ Route::group(["prefix" => "v1"], function(){
 
     });
     Route::get('inspections/warranty/{warranty}/{inspection_id}', 'Api\InspectionFormController@downloadWarranty');
+    Route::get('get-country', 'Api\CityController@country');
+    Route::get('get-city', 'Api\CityController@city');
 });

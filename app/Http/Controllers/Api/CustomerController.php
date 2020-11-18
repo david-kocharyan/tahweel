@@ -19,7 +19,7 @@ class CustomerController extends Controller
                 'full_name' => 'required|max:191',
                 'email' => 'max:191|email',
                 'phone' => 'required|max:191',
-                'shop' => 'max:191',
+                'shop' => 'max:191|nullable',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);

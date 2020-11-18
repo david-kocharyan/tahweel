@@ -16,6 +16,7 @@ use App\Model\InspectionInspector;
 use App\Model\Notification;
 use App\Model\Phase;
 use App\Model\PlumberPoint;
+use App\Model\PointCoeficient;
 use App\User;
 use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
@@ -110,9 +111,16 @@ class InspectionFormController extends Controller
 
         // Give Points
         if ($phase->status == Phase::COMPLETED) {
+
+            $bathroom = PointCoeficient::where('code', 'BA')->first()->point;
+            $kitchen = PointCoeficient::where('code', 'KI')->first()->point;
+            $service = PointCoeficient::where('code', 'SC')->first()->point;
+
+            $plumber_point = ($form->bathrooms_inspected*$bathroom) + ($form->kitchen_inspected * $kitchen) + ($form->service_counters_inspected * $service);
+
             $plumberPoint = new PlumberPoint();
             $plumberPoint->inspection_id = $request->inspection_id;
-            $plumberPoint->point = ($form->bathrooms_inspected + $form->kitchen_inspected + $form->service_counters_inspected) * PlumberPoint::COEFFICIENT;
+            $plumberPoint->point = $plumber_point;
             $plumberPoint->save();
         }
 

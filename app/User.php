@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Model\City;
 use App\Model\Inspection;
+use App\Model\Phone;
 use App\Model\PlumberPoint;
 use App\Model\Redeem;
 use Laravel\Passport\HasApiTokens;
@@ -73,4 +75,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Inspection::class, "plumber_id", "id");
     }
+
+    public function phone()
+    {
+        return $this->hasOne(Phone::class, "user_id", "id");
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, "city_id", "id");
+    }
+
 }

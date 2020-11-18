@@ -5,16 +5,19 @@
         <div class="col-md-12">
             <div class="white-box">
                 <h3 class="box-title">{{$title}}</h3>
-{{--                <a href="{{ $route }}/create" class="box-title m-b-20 btn btn-success">Add New {{ $title }}</a>--}}
+                {{--                <a href="{{ $route }}/create" class="box-title m-b-20 btn btn-success">Add New {{ $title }}</a>--}}
                 {{--table--}}
                 <div class="table-responsive">
-                    <table id="datatable" class="display table table-hover table-striped nowrap" cellspacing="0" width="100%">
+                    <table id="datatable" class="display table table-hover table-striped nowrap" cellspacing="0"
+                           width="100%">
                         <thead>
                         <tr>
                             <th>Id</th>
                             <th>User</th>
                             <th>Product</th>
                             <th>Point</th>
+                            <th>Status</th>
+                            <th>Options</th>
                         </tr>
                         </thead>
 
@@ -25,6 +28,27 @@
                                 <td>{{ $val->user->full_name }}</td>
                                 <td>{{ $val->product->name }}</td>
                                 <td>{{ $val->point }}</td>
+                                <td>
+                                    @if($val->status == 1)
+                                        Delivered
+                                    @else
+                                        New
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($val->status != 1)
+                                        <form
+                                            style="display: inline-block" action="{{ $route."/".$val->id }}"
+                                            method="post">
+                                            @csrf
+                                            @method("PUT")
+                                            <a href="javascript:void(0)">
+                                                <button class="btn btn-primary btn-circle"><i class="fas fa-truck"></i>
+                                                </button>
+                                            </a>
+                                        </form>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

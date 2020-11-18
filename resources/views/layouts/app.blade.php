@@ -85,26 +85,38 @@
                 </li>
                 <li class="devider"></li>
                 <li>
-                    <a href="/admin/plumbers" class="waves-effect"><i class="mdi mdi-account-settings fa-fw"></i> <span
-                            class="hide-menu">Plumbers</span>
+                    <a href="/admin/plumbers" class="waves-effect"><i class="mdi mdi-account-settings fa-fw"></i>
+                        <span class="hide-menu">
+                            Plumbers
+                            <span class="label label-rouded label-warning pull-right plumber_count"></span>
+                        </span>
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/inspectors" class="waves-effect"><i class="mdi mdi-account-edit fa-fw"></i> <span
-                            class="hide-menu">Inspectors</span>
+                    <a href="/admin/inspectors" class="waves-effect"><i class="mdi mdi-account-edit fa-fw"></i>
+                        <span class="hide-menu">
+                            Inspectors
+                            <span class="label label-rouded label-warning pull-right inspectors_count"></span>
+                        </span>
                     </a>
                 </li>
 
 
                 <li>
-                    <a href="/admin/inspections" class="waves-effect"><i class="mdi mdi-calendar-check fa-fw"></i> <span
-                            class="hide-menu">Inspections</span>
+                    <a href="/admin/inspections" class="waves-effect"><i class="mdi mdi-calendar-check fa-fw"></i>
+                        <span class="hide-menu">
+                            Inspections
+                            <span class="label label-rouded label-warning pull-right inspections_count"></span>
+                        </span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="/admin/redeems" class="waves-effect"><i class="mdi mdi-share fa-fw"></i> <span
-                            class="hide-menu">Redeems</span>
+                    <a href="/admin/redeems" class="waves-effect"><i class="mdi mdi-share fa-fw"></i>
+                        <span class="hide-menu">
+                            Redeems
+                            <span class="label label-rouded label-warning pull-right redeems_count"></span>
+                        </span>
                     </a>
                 </li>
 
@@ -137,6 +149,29 @@
                     <a href="/admin/send-notification" class="waves-effect"><i class="mdi mdi-send fa-fw"></i> <span
                             class="hide-menu">Send Notification</span>
                     </a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect">
+                        <i class="mdi mdi-settings fa-fw"></i>
+                        <span class="hide-menu">
+                                Settings
+                                <span class="fa arrow"></span>
+                            </span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/admin/cities" class="waves-effect"><i class="mdi mdi-city fa-fw"></i> <span
+                                    class="hide-menu">Cities</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/admin/points" class="waves-effect"><i class="mdi mdi-coin fa-fw"></i> <span
+                                    class="hide-menu">Points</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>
@@ -179,8 +214,29 @@
 
 @stack('foot')
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.dropify').dropify();
-    })
+
+        function calc(){
+            $.ajax({
+                type: "POST",
+                url: "/admin/calculate",
+                headers: {
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                },
+                success: function (data) {
+                    $('.plumber_count').html(data.plumber)
+                    $('.inspectors_count').html(data.inspector)
+                    $('.inspections_count').html(data.inspections)
+                    $('.redeems_count').html(data.redeems)
+                },
+            });
+        }
+
+        calc();
+        setInterval(function () {
+            calc();
+        }, 50000);
+    });
 </script>
 </html>

@@ -20,6 +20,27 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="username">Username</label>
+                                @error('username')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" class="form-control" id="username"
+                                       placeholder="Username" name="username" value="{{old('username')}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                @error('city')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <select name="city" id="city" class="form-control">
+                                    @foreach($city as $key=>$val)
+                                        <option value="{{$val->id}}" @if($val->id == old('city')) selected @endif>{{$val->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="email">Email</label>
                                 @error('email')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
@@ -37,6 +58,15 @@
                                        placeholder="Password" name="password">
                                 <button type="button" class="pass btn btn-primary m-t-5">Generate Password</button>
 
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                @error('phone')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" autocomplete="off" class="form-control" id="phone"
+                                       placeholder="Phone" name="phone" value="{{old('phone')}}">
                             </div>
 
 

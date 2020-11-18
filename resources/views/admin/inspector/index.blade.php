@@ -16,7 +16,11 @@
                         <tr>
                             <th>Id</th>
                             <th>Full Name</th>
+                            <th>Username</th>
                             <th>Email</th>
+                            <th>Phone</th>
+                            <th>City</th>
+                            <th>Role</th>
                             <th>Approved</th>
                             <th>Options</th>
                         </tr>
@@ -27,7 +31,11 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$val->full_name}}</td>
-                                <td>{{$val->email}}</td>
+                                <td>{{$val->username}}</td>
+                                <td>{{$val->email ?? "Empty"}}</td>
+                                <td>{{$val->phone->phone ?? 'Empty'}}</td>
+                                <td>{{$val->city->name}}</td>
+                                <td>Inspector</td>
                                 <td>
                                     @if($val->approved == 0)
                                         <span class="badge badge-warning">Waiting</span>
@@ -43,7 +51,7 @@
                                     </a>
 
                                     <form
-                                        onsubmit="if(confirm('Do You Really Want To Delete The Plumber?') == false) return false;"
+                                        onsubmit="if(confirm('Do You Really Want To Delete The Inspector?') == false) return false;"
                                         style="display: inline-block" action="{{ $route."/".$val->id }}" method="post">
                                         @csrf
                                         @method("DELETE")
@@ -70,11 +78,40 @@
     <link href="{{asset('assets/plugins/datatables/media/css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css"/>
 @endpush
 
+
 @push('foot')
     <!--Datatable js-->
     <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
+    <!-- start - This is for export functionality only -->
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <!-- end - This is for export functionality only -->
     <script>
-        $('#datatable').DataTable();
+        $('#datatable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6],
+                    },
+                    customize: function(xlsx) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        var col = $('col', sheet);
+                        $('row:first c', sheet).attr( 's', '32' );
+                        col.each(function () {
+                            $(this).attr('width', 25);
+                        });
+                    }
+                },
+            ]
+        });
+        $('.buttons-excel').addClass('btn btn-primary m-r-10');
     </script>
 @endpush
 
