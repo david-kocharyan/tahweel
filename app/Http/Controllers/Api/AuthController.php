@@ -34,7 +34,7 @@ class AuthController extends Controller
                 'full_name' => 'required|max:100',
                 'city' => 'required|numeric',
                 'username' => 'required|max:100|unique:users,username',
-                'phone' => 'required|max:191|unique:phones,phone',
+                'phone' => 'required|max:191',
                 'email' => 'nullable|unique:users,email|max:150|regex:/(.+)@(.+)\.(.+)/i',
                 'role' => 'required|integer|min:1|max:2',
                 'password' => 'required|max:25',
@@ -60,10 +60,7 @@ class AuthController extends Controller
         $user->qr = $img;
         $user->save();
 
-        Phone::create([
-            "user_id" => $user->id,
-            "phone" => $request->phone,
-        ]);
+        Phone::where("phone", $request->phone)->update(["user_id" => $user->id]);
 
         $user->createToken('Personal Access Token')->accessToken;
         $tokens = $this->get_token($request->email, $request->password);
@@ -320,12 +317,11 @@ class AuthController extends Controller
         $data = json_decode($request->getContent(), true);
         $validator = Validator::make($data ?? [],
             [
-                'phone' => 'required|max:191',
+                'phone' => 'required|max:191|unique:phones,phone',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
-
 
         $rnd = $this->generateRandomNumber();
         $phone = Phone::where("phone", $data["phone"])->first();
@@ -345,7 +341,6 @@ class AuthController extends Controller
         }
 
         return ResponseHelper::fail("Something went wrong, please, try again later", 500);
-
     }
 
     public function verifyAccount(Request $request)
