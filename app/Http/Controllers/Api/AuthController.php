@@ -33,9 +33,9 @@ class AuthController extends Controller
             [
                 'full_name' => 'required|max:100',
                 'city' => 'required|numeric',
-                'username' => 'required|max:100|unique:users',
-                'phone' => 'required|max:191|unique:phones',
-                'email' => 'nullable|unique:users|max:150|regex:/(.+)@(.+)\.(.+)/i',
+                'username' => 'required|max:100|unique:users,username',
+                'phone' => 'required|max:191|unique:phones,phone',
+                'email' => 'nullable|unique:users,email|max:150|regex:/(.+)@(.+)\.(.+)/i',
                 'role' => 'required|integer|min:1|max:2',
                 'password' => 'required|max:25',
                 'confirm_password' => 'required|same:password',
@@ -79,7 +79,6 @@ class AuthController extends Controller
         );
 
         return ResponseHelper::success($resp);
-
     }
 
 
