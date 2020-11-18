@@ -63,7 +63,7 @@ class AuthController extends Controller
         Phone::where("phone", $request->phone)->update(["user_id" => $user->id]);
 
         $user->createToken('Personal Access Token')->accessToken;
-        $tokens = $this->get_token($request->email, $request->password);
+        $tokens = $this->get_token($request->username, $request->password);
 
         $user->qr = URL::to("/") . "/" . $user->qr;
 
