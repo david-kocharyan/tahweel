@@ -60,7 +60,10 @@ class AuthController extends Controller
         $user->qr = $img;
         $user->save();
 
-        Phone::where("phone", $request->phone)->update(["user_id" => $user->id]);
+        Phone::create([
+            "user_id" => $user->id,
+            "phone" => $request->phone,
+        ]);
 
         $user->createToken('Personal Access Token')->accessToken;
         $tokens = $this->get_token($request->email, $request->password);
