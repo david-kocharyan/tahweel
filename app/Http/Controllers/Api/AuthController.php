@@ -6,6 +6,7 @@ use App\helpers\QrGenerator;
 use App\helpers\Twilio;
 use App\Http\Controllers\Controller;
 use App\Mail\MailHelper;
+use App\Model\City;
 use App\Model\FcmToken;
 use App\Model\PlumberPointsFromAdmin;
 use App\Model\Redeem;
@@ -65,6 +66,9 @@ class AuthController extends Controller
         $tokens = $this->get_token($request->email, $request->password);
 
         $user->qr = URL::to("/") . "/" . $user->qr;
+
+        $city = City::where('id', $user->city_id)->first();
+        $user->city = $city;
 
         $resp = array(
             "user" => $user,
