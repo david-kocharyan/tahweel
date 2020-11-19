@@ -44,13 +44,7 @@
                                 <td>{{$val->inspector->full_name ?? "Empty"}}</td>
                                 <td>{{$val->created_at}}</td>
                                 <td>{{$val->address}}</td>
-                                <td>
-                                    @if($val->phases != null)
-                                        {{key(array_slice($val->phases, -1, 1, true))->phase}}
-                                    @else
-                                        No Phase
-                                    @endif
-                                </td>
+                                <td>{{$val->phases->phase}}</td>
                                 <td>
                                     @if(isset($val->inspector->full_name))
                                         Attached
