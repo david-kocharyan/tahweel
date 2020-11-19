@@ -44,7 +44,12 @@
                                 <td>{{$val->inspector->full_name ?? "Empty"}}</td>
                                 <td>{{$val->created_at}}</td>
                                 <td>{{$val->address}}</td>
-                                <td>{{end($val->phases)}}</td>
+                                <td>
+                                    @php
+                                        $phase = end($val->phases);
+                                        echo $phase;
+                                    @endphp
+                                </td>
                                 <td>
                                     @if(isset($val->inspector->full_name))
                                         Attached
@@ -60,28 +65,30 @@
 
                                     @if(!isset($val->inspector->full_name))
                                         <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
-                                           data-placement="top" title="Show" class="btn btn-success btn-circle tooltip-success">
+                                           data-placement="top" title="Show"
+                                           class="btn btn-success btn-circle tooltip-success">
                                             <i class="fas fa-plus"></i>
                                         </a>
                                     @else
                                         <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"
-                                           data-placement="top" title="Edit" class="btn btn-primary btn-circle tooltip-primary">
+                                           data-placement="top" title="Edit"
+                                           class="btn btn-primary btn-circle tooltip-primary">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     @endif
 
-{{--                                    <form--}}
-{{--                                        onsubmit="if(confirm('Do You Really Want To Delete The Inspection?') == false) return false;"--}}
-{{--                                        style="display: inline-block" action="{{ $route."/".$val->id }}" method="post">--}}
-{{--                                        @csrf--}}
-{{--                                        @method("DELETE")--}}
-{{--                                        <a href="javascript:void(0)">--}}
-{{--                                            <button data-toggle="tooltip"--}}
-{{--                                                    data-placement="top" title="Delete"--}}
-{{--                                                    class="btn btn-danger btn-circle tooltip-danger"><i--}}
-{{--                                                    class="fas fa-trash"></i></button>--}}
-{{--                                        </a>--}}
-{{--                                    </form>--}}
+                                    {{--                                    <form--}}
+                                    {{--                                        onsubmit="if(confirm('Do You Really Want To Delete The Inspection?') == false) return false;"--}}
+                                    {{--                                        style="display: inline-block" action="{{ $route."/".$val->id }}" method="post">--}}
+                                    {{--                                        @csrf--}}
+                                    {{--                                        @method("DELETE")--}}
+                                    {{--                                        <a href="javascript:void(0)">--}}
+                                    {{--                                            <button data-toggle="tooltip"--}}
+                                    {{--                                                    data-placement="top" title="Delete"--}}
+                                    {{--                                                    class="btn btn-danger btn-circle tooltip-danger"><i--}}
+                                    {{--                                                    class="fas fa-trash"></i></button>--}}
+                                    {{--                                        </a>--}}
+                                    {{--                                    </form>--}}
                                 </td>
                             </tr>
                         @endforeach
