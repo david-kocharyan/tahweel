@@ -27,7 +27,6 @@ class InspectionController extends Controller
             $query->latest()->first();
         }])->get();
 
-        dd($data);
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
