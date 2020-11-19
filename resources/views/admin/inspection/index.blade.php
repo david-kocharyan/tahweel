@@ -17,6 +17,7 @@
                             <th>Inspector</th>
                             <th>Requested Date</th>
                             <th>Address</th>
+                            <th>Phase</th>
                             <th>Status</th>
                             <th>Options</th>
                         </tr>
@@ -43,6 +44,7 @@
                                 <td>{{$val->inspector->full_name ?? "Empty"}}</td>
                                 <td>{{$val->created_at}}</td>
                                 <td>{{$val->address}}</td>
+                                <td>{{end($val->phases)}}</td>
                                 <td>
                                     @if(isset($val->inspector->full_name))
                                         Attached
