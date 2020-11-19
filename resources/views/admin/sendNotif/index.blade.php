@@ -11,16 +11,47 @@
                             @csrf
 
                             <div class="form-group">
-                                @error('role')
+                                <label for="plumber">Plumber</label>
+                                @error('plumber')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                @foreach($role as $key=>$val)
-                                    <div class="form-check m-t-5">
-                                        <input type="checkbox" value="{{$val}}" name='role[]' class="form-check-input">
-                                        <label class="form-check-label text-uppercase">{{$key}}</label>
-                                    </div>
-                                @endforeach
+                                <select class="form-control plumber" name="plumber[]" multiple="multiple">
+                                    <option value="0">Select All</option>
+                                    @foreach($plumber as $key=>$val)
+                                        <option value="{{$val->id}}">{{$val->full_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="inspector">Inspector</label>
+                                @error('inspector')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <select class="form-control inspector" name="inspector[]" multiple="multiple">
+                                    <option value="0">Select All</option>
+                                    @foreach($inspector as $key=>$val)
+                                        <option value="{{$val->id}}">{{$val->full_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                @error('city')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <select class="form-control city" name="city[]" multiple="multiple">
+                                    <option value="0">Select All</option>
+                                    @foreach($city as $key=>$val)
+                                        <option value="{{$val->id}}">{{$val->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <hr>
+                            <h4><strong>Notification body` </strong></h4>
+                            <hr>
 
                             <div class="form-group">
                                 <label for="title">Title</label>
@@ -48,7 +79,6 @@
                                 <input type="text" value="" name='link' class="form-control">
                             </div>
 
-
                             <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Send
                                 Notification
                             </button>
@@ -60,3 +90,56 @@
         </div>
     </div>
 @endsection
+
+
+
+@push('head')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+@endpush
+
+
+@push('foot')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script !src="">
+        $(".plumber").select2({});
+        $(".inspector").select2({});
+        $(".city").select2({});
+
+        $(".plumber").on('change', function() {
+            var selected = $(this).val();
+            if (selected != null) {
+                if (selected.indexOf('0') >= 0) {
+                    $(this).val('0').select2();
+                }
+            }
+        })
+
+        $(".inspector").on('change', function() {
+            var selected = $(this).val();
+            if (selected != null) {
+                if (selected.indexOf('0') >= 0) {
+                    $(this).val('0').select2();
+                }
+            }
+        })
+
+        $(".city").on('change', function() {
+            var selected = $(this).val();
+            if (selected != null) {
+                if (selected.indexOf('0') >= 0) {
+                    $(this).val('0').select2();
+                }
+            }
+        })
+
+
+
+
+
+
+
+
+
+
+    </script>
+@endpush
