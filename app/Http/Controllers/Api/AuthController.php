@@ -32,7 +32,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'full_name' => 'required|max:100',
-                'city' => 'required|numeric',
+                'city_id' => 'required|numeric',
                 'username' => 'required|max:100|unique:users,username',
                 'phone' => 'required|max:191',
                 'email' => 'nullable|unique:users,email|max:150|regex:/(.+)@(.+)\.(.+)/i',
@@ -46,7 +46,7 @@ class AuthController extends Controller
 
         $user = new User;
         $user->full_name = $request->full_name;
-        $user->city_id = $request->city;
+        $user->city_id = $request->city_id;
         $user->username = $request->username;
         $user->email = $request->email;
         $user->role = intval($request->role);
@@ -258,7 +258,7 @@ class AuthController extends Controller
                 'full_name' => 'required|max:100',
                 'email' => 'nullable|unique:users,email,'.$id.'|max:150|regex:/(.+)@(.+)\.(.+)/i',
                 'username' => 'required|unique:users,username,'.$id,
-                'city' => 'required|numeric',
+                'city_id' => 'required|numeric',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
@@ -268,7 +268,7 @@ class AuthController extends Controller
         $user->full_name = $data["full_name"];
         $user->email = $data["email"];
         $user->username = $data["username"];
-        $user->city_id = $data["city"];
+        $user->city_id = $data["city_id"];
 
         if($user->save()) {
             return ResponseHelper::success(array());
