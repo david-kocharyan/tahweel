@@ -45,7 +45,13 @@
                                 <td>{{$val->inspector->full_name ?? "Empty"}}</td>
                                 <td>{{$val->created_at}}</td>
                                 <td>{{$val->address}}</td>
-                                <td>{{$val->phases[0]->phase ?? 'No Phase'}}</td>
+                                <td>
+                                    @if($val->phases != null)
+                                        {{$val->phases[count($val->phases)-1]['phase']}}
+                                    @else
+                                        No Phases
+                                    @endif
+                                </td>
                                 <td>
                                     @if(isset($val->inspector->full_name))
                                         Attached

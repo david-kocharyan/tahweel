@@ -23,10 +23,7 @@ class InspectionController extends Controller
      */
     public function index()
     {
-        $data = Inspection::with(['plumber', 'inspector', 'phases' => function($query){
-            $query->latest()->first();
-        }])->get();
-
+        $data = Inspection::with(['plumber', 'inspector', 'phases'])->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
