@@ -14,7 +14,7 @@ class AddLinkToNotificationTable extends Migration
     public function up()
     {
         Schema::table('notifications', function (Blueprint $table) {
-            $table->text("link");
+            $table->text("link")->nullable();
         });
     }
 
