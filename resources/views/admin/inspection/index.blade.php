@@ -45,7 +45,7 @@
                                 <td>{{$val->created_at}}</td>
                                 <td>{{$val->address}}</td>
                                 <td>
-                                    {{key(array_slice($val->phases, -1, 1, true))->phase}}
+                                    {{$val->phases ? key(array_slice($val->phases, -1, 1, true))->phase : 0 }}
                                 </td>
                                 <td>
                                     @if(isset($val->inspector->full_name))
