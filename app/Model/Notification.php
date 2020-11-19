@@ -9,6 +9,7 @@ class Notification extends Model
 //    Notificaion Types
     const INSPECTION_TYPE = 0;
     const ADMIN_TYPE = 1;
+    const ADMIN_LINK_TYPE = 2;
 
     public function user()
     {

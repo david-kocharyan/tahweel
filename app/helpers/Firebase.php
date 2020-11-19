@@ -18,7 +18,7 @@ class Firebase
         $this->messaging = app('firebase.messaging');
     }
 
-    public static function send($tokens, string $notif, string $event = null, $event_id = null, $image = null, $type = null, $title = null)
+    public static function send($tokens, string $notif, string $event = null, $event_id = null, $image = null, $type = null, $title = null, $link = null)
     {
         if (empty($tokens)) return;
         $firebase = new self();
@@ -28,11 +28,12 @@ class Firebase
             "body" => $notif,
             "action" => $event,
             'type' => $type,
+            'link' => $link,
         );
         $message = CloudMessage::new()
             ->withData($data)
             ->withNotification(Notification::create($notif));
-        $firebase->saveNotification($notif, $tokens, $type, $title);
+        $firebase->saveNotification($notif, $tokens, $type, $title, $link);
 
         if (is_array($tokens)) {
             $firebase->sendMulti($message, $tokens);
@@ -61,7 +62,7 @@ class Firebase
         }
     }
 
-    private function saveNotification($body, $tokens, $type, $title = null)
+    private function saveNotification($body, $tokens, $type, $title = null, $link = null)
     {
         $user = Auth::guard('api')->user() ?? Auth::guard('web')->user();  // The user who has sent the notification
         $name = $user->full_name ?? $user->name;
@@ -73,6 +74,7 @@ class Firebase
                 $notification->body = $body;
                 $notification->user_id = $assignedToUser->id;
                 $notification->type = $type;
+                $notification->link = $link;
                 try {
                     $notification->save();
                 } catch (\Exception $e) {
@@ -86,6 +88,7 @@ class Firebase
             $notification->body = $body;
             $notification->user_id = $assignedToUser->id;
             $notification->type = $type;
+            $notification->type = $link;
             try {
                 $notification->save();
             } catch (\Exception $e) {

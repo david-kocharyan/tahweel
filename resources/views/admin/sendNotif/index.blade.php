@@ -40,6 +40,14 @@
                                           placeholder="Message" name="message">{{old('message')}}</textarea>
                             </div>
 
+                            <div class="form-group">
+                                <label for="link">Link</label>
+                                @error('link')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" value="" name='link' class="form-control">
+                            </div>
+
 
                             <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Send
                                 Notification
@@ -52,7 +60,3 @@
         </div>
     </div>
 @endsection
-
-
-
-
