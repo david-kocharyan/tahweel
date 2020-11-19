@@ -189,6 +189,10 @@ class AuthController extends Controller
         return json_decode((string)$response->getBody(), true);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function recoverPassword(Request $request)
     {
         $validator = Validator::make($request->all(),
@@ -215,6 +219,10 @@ class AuthController extends Controller
         return ResponseHelper::success(array());
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function fcmToken(Request $request)
     {
         $user = Auth::guard('api')->user();
@@ -236,27 +244,41 @@ class AuthController extends Controller
         return ResponseHelper::success(array());
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function edit(Request $request)
     {
         $data = json_decode($request->getContent(), true);
+        $id = Auth::guard('api')->user()->id;
+
         $validator = Validator::make($data,
             [
                 'full_name' => 'required|max:100',
-                'email' => 'required|unique:users,email,'.Auth::guard('api')->user()->id.'|max:150|regex:/(.+)@(.+)\.(.+)/i',
+                'email' => 'required|unique:users,email,'.$id.'|max:150|regex:/(.+)@(.+)\.(.+)/i',
+                'username' => 'required|unique:users,username,'.$id,
+                'city' => 'required|numeric',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
-        $user = User::find(Auth::guard('api')->user()->id);
+        $user = User::find($id);
         $user->full_name = $data["full_name"];
         $user->email = $data["email"];
+        $user->username = $data["username"];
+        $user->city_id = $data["city"];
+
         if($user->save()) {
             return ResponseHelper::success(array());
         }
         return ResponseHelper::fail("Something Went Wrong", 500);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getPoints()
     {
         $points = $this->getPointsFromDb();
@@ -264,6 +286,9 @@ class AuthController extends Controller
         return ResponseHelper::success($resp);
     }
 
+    /**
+     * @return int
+     */
     public static function getPointsFromDb()
     {
         $pointsEarnedFromAdmin = PlumberPointsFromAdmin::where("plumber_id", Auth::guard('api')->user()->id)->sum("points") ?? 0;
@@ -272,6 +297,10 @@ class AuthController extends Controller
         return (($pointsEarnedFromAdmin + $pointsEarned) - $pointsRedeemed);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function changePassword(Request $request)
     {
         $data = json_decode($request->getContent(), true);
@@ -302,6 +331,9 @@ class AuthController extends Controller
 
     }
 
+    /**
+     * @return int
+     */
     private function generateRandomNumber()
     {
         $rnd = rand(10000, 99999);
@@ -312,6 +344,10 @@ class AuthController extends Controller
         return $rnd;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sendVerification(Request $request)
     {
         $data = json_decode($request->getContent(), true);
@@ -343,6 +379,10 @@ class AuthController extends Controller
         return ResponseHelper::fail("Something went wrong, please, try again later", 500);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verifyAccount(Request $request)
     {
         $data = json_decode($request->getContent(), true);
@@ -366,6 +406,10 @@ class AuthController extends Controller
         return ResponseHelper::success(array());
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function changeLanguage(Request $request)
     {
         $data = json_decode($request->getContent(), true);
