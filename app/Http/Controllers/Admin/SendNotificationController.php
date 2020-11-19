@@ -49,7 +49,7 @@ class SendNotificationController extends Controller
             $tokens = User::with('tokensForAll')->where('role', $request->role[0])->has('tokensForAll')->get()->pluck('tokensForAll.token')->toArray();
         }
 
-        if ($request->link  != null){
+        if ($request->link != null){
             Firebase::send($tokens, $request->message, null, null, null, Notification::ADMIN_LINK_TYPE, $request->title, $request->link);
         }else{
             Firebase::send($tokens, $request->message, null, null, null, Notification::ADMIN_TYPE, $request->title);

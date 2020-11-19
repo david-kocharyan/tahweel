@@ -15,6 +15,7 @@
                             <th>User</th>
                             <th>Title</th>
                             <th>Body</th>
+                            <th>Link</th>
                         </tr>
                         </thead>
 
@@ -25,6 +26,7 @@
                                 <td>{{ $val->user->full_name }}</td>
                                 <td>{{ $val->title }}</td>
                                 <td>{{ $val->body }}</td>
+                                <td>{{ $val->link ?? "Empty" }}</td>
 
 {{--                                <td>--}}
 {{--                                    <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"--}}

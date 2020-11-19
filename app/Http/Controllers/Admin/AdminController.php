@@ -41,6 +41,10 @@ class AdminController extends Controller
         $inspections_with_inspector = InspectionInspector::count();
         $inspections = $inspections_all - $inspections_with_inspector;
 
+        if($inspections < 0){
+            $inspections = 0;
+        }
+
         $data = array(
             'plumber' => $plumber,
             'inspector' => $inspector,

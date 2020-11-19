@@ -196,12 +196,14 @@ class InspectionController extends Controller
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
+
         $user = Auth::guard('api')->user();
         $phase = Phase::selectRaw("phases.status as status, phases.phase as phase")
             ->where(["phases.inspection_id" => $request->inspection, "inspections.plumber_id" => $user->id])
             ->join("inspections", "inspections.id", "=", "phases.inspection_id")
             ->orderBy("phases.id", "DESC")
             ->first();
+
         if(null != $phase) {
             $p = new Phase();
             $p->inspection_id = $request->inspection;
@@ -209,10 +211,10 @@ class InspectionController extends Controller
             $p->status = ($phase->status == Phase::APPROVED) ? Phase::NEW : Phase::REPEATED;
             $p->save();
 
-            $inspection = InspectionInspector::where("inspection_id", $request->inspection)->orderBy("id", "DESC")->first();
-            $inspector = User::find($inspection->inspector_id);
-            $tokens = $inspector->tokens()->get()->pluck('token')->toArray();
-            Firebase::send($tokens, "Dear $user->full_name, You Have a New Inspection Request  (Phase: $p->phase) ", "", "", "", Notification::INSPECTION_TYPE);
+            $inspection = InspectionInspector::where("inspection_id", $request->inspection)->orderBy("id", "DESC")->delete();
+//            $inspector = User::find($inspection->inspector_id);
+//            $tokens = $inspector->tokens()->get()->pluck('token')->toArray();
+//            Firebase::send($tokens, "Dear $user->full_name, You Have a New Inspection Request  (Phase: $p->phase) ", "", "", "", Notification::INSPECTION_TYPE);
 
             return ResponseHelper::success(array());
         }
