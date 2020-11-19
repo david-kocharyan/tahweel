@@ -71,19 +71,6 @@
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     @endif
-
-                                    {{--                                    <form--}}
-                                    {{--                                        onsubmit="if(confirm('Do You Really Want To Delete The Inspection?') == false) return false;"--}}
-                                    {{--                                        style="display: inline-block" action="{{ $route."/".$val->id }}" method="post">--}}
-                                    {{--                                        @csrf--}}
-                                    {{--                                        @method("DELETE")--}}
-                                    {{--                                        <a href="javascript:void(0)">--}}
-                                    {{--                                            <button data-toggle="tooltip"--}}
-                                    {{--                                                    data-placement="top" title="Delete"--}}
-                                    {{--                                                    class="btn btn-danger btn-circle tooltip-danger"><i--}}
-                                    {{--                                                    class="fas fa-trash"></i></button>--}}
-                                    {{--                                        </a>--}}
-                                    {{--                                    </form>--}}
                                 </td>
                             </tr>
                         @endforeach
@@ -132,7 +119,7 @@
             var table = $('#datatable').DataTable({
                 bSort: false,
                 initComplete: function () {
-                    this.api().columns([1, 2, 4, 5,]).every(function (i) {
+                    this.api().columns([1, 2, 4, 5, 6]).every(function (i) {
                         var column = this;
                         var select = $('<select class="select2  form-control"><option value="">All</option></select>')
                             .appendTo($(column.header()).empty())
