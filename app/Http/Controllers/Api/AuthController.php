@@ -256,7 +256,7 @@ class AuthController extends Controller
         $validator = Validator::make($data,
             [
                 'full_name' => 'required|max:100',
-                'email' => 'required|unique:users,email,'.$id.'|max:150|regex:/(.+)@(.+)\.(.+)/i',
+                'email' => 'nullable|unique:users,email,'.$id.'|max:150|regex:/(.+)@(.+)\.(.+)/i',
                 'username' => 'required|unique:users,username,'.$id,
                 'city' => 'required|numeric',
             ]);
