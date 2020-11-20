@@ -7,6 +7,7 @@ use App\Model\FcmToken;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Kreait\Firebase\Messaging;
+use Kreait\Firebase\Messaging\ApnsConfig;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use App\Model\Notification as Notif;
