@@ -39,10 +39,6 @@ class Firebase
 
         $result = $firebase->getType($tokens);
 
-        dd($result[self::ANDROID_ARR], $result[self::ANDROID_ARR][0]);
-
-
-
         //for ios
         $config_ios = ApnsConfig::fromArray([
             'headers' => [
@@ -66,11 +62,12 @@ class Firebase
                 ->withApnsConfig($config_ios);
             $firebase->sendMulti($message, $tokens);
         } elseif (isset($result[self::IOS_ARR]) && count($result[self::IOS_ARR]) == 1) {
+            $token = $result[self::IOS_ARR][0];
             $message = CloudMessage::withTarget('token', $result[self::IOS_ARR][0])
                 ->withData($data)
                 ->withNotification(Notification::create($notif))
                 ->withApnsConfig($config_ios);
-            $firebase->sendSpecific($message, $tokens);
+            $firebase->sendSpecific($message, $token);
         }
 
         //for android
@@ -79,8 +76,9 @@ class Firebase
             $message = CloudMessage::new()->withData($data);
             $firebase->sendMulti($message, $tokens);
         } elseif (isset($result[self::ANDROID_ARR]) && count($result[self::ANDROID_ARR]) == 1) {
+            $token = $result[self::ANDROID_ARR][0];
             $message = CloudMessage::withTarget('token', $result[self::ANDROID_ARR][0])->withData($data);
-            $firebase->sendSpecific($message, $tokens);
+            $firebase->sendSpecific($message, $token);
         }
 
         $firebase->saveNotification($notif, $tokens, $type, $title, $link);
