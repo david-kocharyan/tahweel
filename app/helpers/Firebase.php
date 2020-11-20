@@ -36,21 +36,10 @@ class Firebase
             'link' => $link,
         );
 
-        $data = FcmToken::whereIn('token', $tokens)->get();
-        $result = array();
-        foreach ($data as $d) {
-            if ($d->os == Firebase::ANDROID && !empty($d->token)) {
-                $result[Firebase::ANDROID_ARR][] = $d->token;
-            } elseif ($d->os == Firebase::IOS && !empty($d->token)) {
-                $result[Firebase::IOS_ARR][] = $d->token;
-            }
-        }
+        $result = $firebase->getType($tokens);
 
-        dd($result);
-
-
-
-        $config = ApnsConfig::fromArray([
+        //for ios
+        $config_ios = ApnsConfig::fromArray([
             'headers' => [
                 'apns-priority' => '10',
             ],
@@ -64,21 +53,32 @@ class Firebase
                 ],
             ],
         ]);
-
-        $message = CloudMessage::new()
-            ->withData($data)
-            ->withNotification(Notification::create($notif))
-            ->withApnsConfig($config);
-
-
-
-        $firebase->saveNotification($notif, $tokens, $type, $title, $link);
-        if (is_array($tokens)) {
+        if (isset($result[self::IOS_ARR]) && count($result[self::IOS_ARR]) > 1) {
+            $tokens = $result[self::IOS_ARR];
+            $message = CloudMessage::new()
+                ->withData($data)
+                ->withNotification(Notification::create($notif))
+                ->withApnsConfig($config_ios);
             $firebase->sendMulti($message, $tokens);
-        } else {
+        } elseif (isset($result[self::IOS_ARR]) && count($result[self::IOS_ARR]) == 1) {
+            $message = CloudMessage::withTarget('token', $result[self::IOS_ARR][0])
+                ->withData($data)
+                ->withNotification(Notification::create($notif))
+                ->withApnsConfig($config_ios);
             $firebase->sendSpecific($message, $tokens);
         }
 
+        //for android
+        if (isset($result[self::ANDROID_ARR]) && count($result[self::ANDROID_ARR]) > 1) {
+            $tokens = $result[self::ANDROID_ARR];
+            $message = CloudMessage::new()->withData($data);
+            $firebase->sendMulti($message, $tokens);
+        } elseif (isset($result[self::ANDROID_ARR]) && count($result[self::ANDROID_ARR]) == 1) {
+            $message = CloudMessage::withTarget('token', $result[self::ANDROID_ARR][0])->withData($data);
+            $firebase->sendSpecific($message, $tokens);
+        }
+
+        $firebase->saveNotification($notif, $tokens, $type, $title, $link);
     }
 
     private function sendMulti($message, $tokens)
@@ -98,6 +98,20 @@ class Firebase
         } catch (\Exception $exception) {
             dd($exception);
         }
+    }
+
+    private function getType($tokens)
+    {
+        $token_os = FcmToken::whereIn('token', $tokens)->get();
+        $result = array();
+        foreach ($token_os as $d) {
+            if ($d->os == Firebase::ANDROID && !empty($d->token)) {
+                $result[Firebase::ANDROID_ARR][] = $d->token;
+            } elseif ($d->os == Firebase::IOS && !empty($d->token)) {
+                $result[Firebase::IOS_ARR][] = $d->token;
+            }
+        }
+        return $result;
     }
 
     private function saveNotification($body, $tokens, $type, $title = null, $link = null)
