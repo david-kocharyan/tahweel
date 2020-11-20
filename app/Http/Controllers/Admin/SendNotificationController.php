@@ -35,21 +35,45 @@ class SendNotificationController extends Controller
     public function send(Request $request)
     {
         $request->validate([
-            'role' => 'required|array|min:1',
             'message' => 'required',
             "title" => "required",
             "link" => "nullable|string"
         ]);
+        $arr = array();
 
-        if (count($request->role) > 1) {
-            $tokens = User::with('tokensForAll')->has('tokensForAll')->get()->pluck('tokensForAll.token')->toArray();
-        } else {
-            $tokens = User::with('tokensForAll')->where('role', $request->role[0])->has('tokensForAll')->get()->pluck('tokensForAll.token')->toArray();
+        if (isset($request->plumber) AND $request->plumber[0] == 0) {
+            $plumber = User::where('role', User::ROLES['plumber'])->get()->pluck('id')->toArray();
+            $arr = array_merge($arr, $plumber);
+        } elseif (isset($request->plumber) AND $request->plumber[0] != 0) {
+            foreach ($request->plumber as $key => $val) {
+                $arr[] = intval($val);
+            }
         }
 
-        if ($request->link != null){
+        if (isset($request->inspector) AND $request->inspector[0] == 0) {
+            $inspector = User::where('role', User::ROLES['inspector'])->get()->pluck('id')->toArray();
+            $arr = array_merge($arr, $inspector);
+        } elseif (isset($request->inspector) AND $request->inspector[0] != 0) {
+            foreach ($request->plumber as $key => $val) {
+                $arr[] = intval($val);
+            }
+        }
+
+        if (isset($request->city) AND $request->city[0] == 0) {
+            $city = City::all()->pluck('id')->toArray();
+            $user_by_all_city = User::whereIn('city_id', $city)->get()->pluck('id')->toArray();
+            $arr = array_merge($arr, $user_by_all_city);
+        } elseif (isset($request->city) AND $request->city[0] != 0) {
+            $user_by_city = User::whereIn('city_id', $request->city)->get()->pluck('id')->toArray();
+            $arr = array_merge($arr, $user_by_city);
+        }
+
+        $arr = array_values(array_unique($arr));
+        $tokens = User::with('tokensForAll')->whereIn('id', $arr)->has('tokensForAll')->get()->pluck('tokensForAll.token')->toArray();
+
+        if ($request->link != null) {
             Firebase::send($tokens, $request->message, null, null, null, Notification::ADMIN_LINK_TYPE, $request->title, $request->link);
-        }else{
+        } else {
             Firebase::send($tokens, $request->message, null, null, null, Notification::ADMIN_TYPE, $request->title);
         }
 
