@@ -12,12 +12,30 @@
                             @method("PUT")
 
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                @error('name')
+                                <label for="en">Name EN</label>
+                                @error('en')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="text" class="form-control" id="full_name"
-                                       placeholder="City name" name="name" value="{{$data->name}}">
+                                <input type="text" class="form-control" id="en"
+                                       placeholder="City name" name="en" value="{{$data->en}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ar">Name AR</label>
+                                @error('ar')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" class="form-control" id="ar"
+                                       placeholder="City name" name="ar" value="{{$data->ar}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ur">Name UR</label>
+                                @error('ur')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" class="form-control" id="ur"
+                                       placeholder="City name" name="ur" value="{{$data->ur}}">
                             </div>
 
                             <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Save City

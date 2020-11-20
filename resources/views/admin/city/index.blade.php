@@ -15,7 +15,9 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
+                            <th>Name En</th>
+                            <th>Name Ar</th>
+                            <th>Name Ur</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -24,7 +26,9 @@
                         @foreach($data as $key=>$val)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{$val->name}}</td>
+                                <td>{{$val->en}}</td>
+                                <td>{{$val->ar}}</td>
+                                <td>{{$val->ur}}</td>
                                 <td>
 
                                     <a href="{{$route."/".$val->id."/edit"}}" data-toggle="tooltip"

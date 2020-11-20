@@ -67,7 +67,7 @@ class AuthController extends Controller
 
         $user->qr = URL::to("/") . "/" . $user->qr;
 
-        $city = City::selectRaw('id, country_id, name')->where('id', $user->city_id)->first();
+        $city = City::selectRaw('id, country_id, en, ar, ur')->where('id', $user->city_id)->first();
         $user->city = $city;
 
         $resp = array(
@@ -104,7 +104,7 @@ class AuthController extends Controller
                 $tokens = $this->get_token($request->username, $request->password);
                 $user->qr = URL::to("/") . "/" . $user->qr;
 
-                $city = City::selectRaw('id, country_id, name')->where('id', $user->city_id)->first();
+                $city = City::selectRaw('id, country_id, en, ar, ur')->where('id', $user->city_id)->first();
                 $user->city = $city;
 
                 $resp = array(
@@ -162,7 +162,7 @@ class AuthController extends Controller
     {
         $user = Auth::guard('api')->user();
         $user->qr = URL::to("/") . "/" . $user->qr;
-        $city = City::selectRaw('id, country_id, name')->where('id', $user->city_id)->first();
+        $city = City::selectRaw('id, country_id, en, ar, ur')->where('id', $user->city_id)->first();
         $user->city = $city;
 
         return ResponseHelper::success($user);

@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
             AdminTableSeeder::class,
             LanguageSeeder::class,
             CountryTableSeeder::class,
-            PointCoefficientTableSeeder::class
+            PointCoefficientTableSeeder::class,
+            CityTableSeeder::class
         ]);
     }
 }

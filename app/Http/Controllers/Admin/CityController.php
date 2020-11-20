@@ -21,7 +21,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        $data = City::all();
+        $data = City::orderBy('id', "ASC")->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER . ".index", compact('title', 'route', 'data'));
@@ -48,12 +48,16 @@ class CityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:200',
+            'en' => 'required',
+            'ar' => 'required',
+            'ur' => 'required',
         ]);
 
         $city = new City();
         $city->country_id = self::COUNTRY;
-        $city->name = $request->name;
+        $city->en = $request->en;
+        $city->ar = $request->ar;
+        $city->ur = $request->ur;
         $city->save();
 
         return redirect(self::ROUTE);
@@ -94,11 +98,15 @@ class CityController extends Controller
     public function update(Request $request, City $city)
     {
         $request->validate([
-            'name' => 'required|max:200',
+            'en' => 'required',
+            'ar' => 'required',
+            'ur' => 'required',
         ]);
 
         $city->country_id = self::COUNTRY;
-        $city->name = $request->name;
+        $city->en = $request->en;
+        $city->ar = $request->ar;
+        $city->ur = $request->ur;
         $city->save();
 
         return redirect(self::ROUTE);

@@ -11,12 +11,30 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                @error('name')
+                                <label for="en">Name EN</label>
+                                @error('en')
                                 <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
                                 @enderror
-                                <input type="text" class="form-control" id="full_name"
-                                       placeholder="City name" name="name" value="{{old('name')}}">
+                                <input type="text" class="form-control" id="en"
+                                       placeholder="City name" name="en" value="{{old('en')}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ar">Name AR</label>
+                                @error('ar')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" class="form-control" id="ar"
+                                       placeholder="City name" name="ar" value="{{old('ar')}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ur">Name UR</label>
+                                @error('ur')
+                                <p class="invalid-feedback text-danger" role="alert"><strong>{{ $message }}</strong></p>
+                                @enderror
+                                <input type="text" class="form-control" id="ur"
+                                       placeholder="City name" name="ur" value="{{old('ur')}}">
                             </div>
 
                             <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Save City

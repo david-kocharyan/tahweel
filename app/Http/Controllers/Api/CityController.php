@@ -29,7 +29,7 @@ class CityController extends Controller
      */
     public function city(Request $request)
     {
-        $city = City::selectRaw('id, name')->where('country_id', $request->country_id)->get();
+        $city = City::selectRaw('id, en, ar, ur')->where('country_id', $request->country_id)->orderBy('id', 'ASC')->get();
         return ResponseHelper::success($city);
     }
 
