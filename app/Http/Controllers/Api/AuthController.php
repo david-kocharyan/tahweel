@@ -239,7 +239,7 @@ class AuthController extends Controller
         $fcmToken = new FcmToken();
         $fcmToken->user_id = $user->id;
         $fcmToken->token = $data["token"];
-        $fcmToken->token = $data["os"];
+        $fcmToken->os = $data["os"];
         $saved = $fcmToken->save();
 
         if (!$saved) return ResponseHelper::fail("Something Went Wrong, Please try again later", 500);
