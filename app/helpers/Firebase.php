@@ -35,9 +35,43 @@ class Firebase
             'type' => $type,
             'link' => $link,
         );
+
+        $data = User::with('tokensForAll')->whereIn('token', $tokens)->has('tokensForAll')->get()->pluck('tokensForAll.token', 'tokensForAll.os')->toArray();
+        $result = array();
+        foreach ($data as $d) {
+            if ($d->os == Firebase::ANDROID && !empty($d->token)) {
+                $result[Firebase::ANDROID_ARR][] = $d->token;
+            } elseif ($d->os == Firebase::IOS && !empty($d->token)) {
+                $result[Firebase::IOS_ARR][] = $d->token;
+            }
+        }
+
+        dd($result);
+
+
+
+        $config = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+            ],
+            'payload' => [
+                'aps' => [
+                    'alert' => [
+                        'title' => $title,
+                        'body' => $notif,
+                    ],
+                    "category" => "link",
+                ],
+            ],
+        ]);
+
         $message = CloudMessage::new()
             ->withData($data)
-            ->withNotification(Notification::create($notif));
+            ->withNotification(Notification::create($notif))
+            ->withApnsConfig($config);
+
+
+
         $firebase->saveNotification($notif, $tokens, $type, $title, $link);
         if (is_array($tokens)) {
             $firebase->sendMulti($message, $tokens);

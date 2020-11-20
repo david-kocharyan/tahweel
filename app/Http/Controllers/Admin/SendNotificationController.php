@@ -71,17 +71,6 @@ class SendNotificationController extends Controller
         $arr = array_values(array_unique($arr));
         $data = User::with('tokensForAll')->whereIn('id', $arr)->has('tokensForAll')->get()->pluck('tokensForAll.token', 'tokensForAll.os')->toArray();
 
-//        $result = array();
-//        foreach ($data as $d) {
-//            if ($d->os == Firebase::ANDROID && !empty($d->token)) {
-//                $result[Firebase::ANDROID_ARR][] = $d->token;
-//            } elseif ($d->os == Firebase::IOS && !empty($d->token)) {
-//                $result[Firebase::IOS_ARR][] = $d->token;
-//            }
-//        }
-//
-//        dd($result);
-
         if ($request->link != null) {
             Firebase::send($data, $request->message, null, null, null, Notification::ADMIN_LINK_TYPE, $request->title, $request->link);
         } else {
