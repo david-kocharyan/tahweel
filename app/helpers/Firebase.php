@@ -51,6 +51,7 @@ class Firebase
                         'body' => $notif,
                     ],
                     "category" => "link",
+                    "mutable-content" => 1,
                 ],
             ],
         ]);
