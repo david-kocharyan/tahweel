@@ -31,7 +31,7 @@ class Firebase
             "image" => $image,
             "title" => $title = null ? "notification" : $title,
             "body" => $notif,
-            "click_action" => "click",
+            "category" => "click",
             'type' => $type,
             'link' => $link,
         );
