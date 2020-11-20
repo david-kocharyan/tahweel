@@ -36,7 +36,7 @@ class Firebase
             'link' => $link,
         );
 
-        $data = FcmToken::whereIn('token', $tokens)->get()->pluck('tokensForAll.token', 'tokensForAll.os');
+        $data = FcmToken::whereIn('token', $tokens)->get();
         $result = array();
         dd($data);
         foreach ($data as $d) {
