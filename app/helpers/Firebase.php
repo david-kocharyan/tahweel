@@ -13,6 +13,11 @@ use App\Model\Notification as Notif;
 
 class Firebase
 {
+    const ANDROID = 1;
+    const IOS = 2;
+    const ANDROID_ARR = 'android';
+    const IOS_ARR = 'ios';
+
     public function __construct()
     {
         $this->messaging = app('firebase.messaging');
@@ -26,7 +31,7 @@ class Firebase
             "image" => $image,
             "title" => $title = null ? "notification" : $title,
             "body" => $notif,
-            "action" => $event,
+            "click_action" => "click",
             'type' => $type,
             'link' => $link,
         );
@@ -34,7 +39,6 @@ class Firebase
             ->withData($data)
             ->withNotification(Notification::create($notif));
         $firebase->saveNotification($notif, $tokens, $type, $title, $link);
-
         if (is_array($tokens)) {
             $firebase->sendMulti($message, $tokens);
         } else {

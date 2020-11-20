@@ -69,12 +69,23 @@ class SendNotificationController extends Controller
         }
 
         $arr = array_values(array_unique($arr));
-        $tokens = User::with('tokensForAll')->whereIn('id', $arr)->has('tokensForAll')->get()->pluck('tokensForAll.token')->toArray();
+        $data = User::with('tokensForAll')->whereIn('id', $arr)->has('tokensForAll')->get()->pluck('tokensForAll.token', 'tokensForAll.os')->toArray();
+
+//        $result = array();
+//        foreach ($data as $d) {
+//            if ($d->os == Firebase::ANDROID && !empty($d->token)) {
+//                $result[Firebase::ANDROID_ARR][] = $d->token;
+//            } elseif ($d->os == Firebase::IOS && !empty($d->token)) {
+//                $result[Firebase::IOS_ARR][] = $d->token;
+//            }
+//        }
+//
+//        dd($result);
 
         if ($request->link != null) {
-            Firebase::send($tokens, $request->message, null, null, null, Notification::ADMIN_LINK_TYPE, $request->title, $request->link);
+            Firebase::send($result, $request->message, null, null, null, Notification::ADMIN_LINK_TYPE, $request->title, $request->link);
         } else {
-            Firebase::send($tokens, $request->message, null, null, null, Notification::ADMIN_TYPE, $request->title);
+            Firebase::send($result, $request->message, null, null, null, Notification::ADMIN_TYPE, $request->title);
         }
 
         return redirect(self::ROUTE);

@@ -230,6 +230,7 @@ class AuthController extends Controller
         $validator = Validator::make($data ?? [],
             [
                 'token' => 'required',
+                'os' => 'required|numeric',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
@@ -238,6 +239,7 @@ class AuthController extends Controller
         $fcmToken = new FcmToken();
         $fcmToken->user_id = $user->id;
         $fcmToken->token = $data["token"];
+        $fcmToken->token = $data["os"];
         $saved = $fcmToken->save();
 
         if (!$saved) return ResponseHelper::fail("Something Went Wrong, Please try again later", 500);
