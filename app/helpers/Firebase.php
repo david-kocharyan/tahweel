@@ -39,6 +39,10 @@ class Firebase
 
         $result = $firebase->getType($tokens);
 
+        dd($result[self::ANDROID_ARR], $result[self::ANDROID_ARR][0]);
+
+
+
         //for ios
         $config_ios = ApnsConfig::fromArray([
             'headers' => [
@@ -75,7 +79,6 @@ class Firebase
             $message = CloudMessage::new()->withData($data);
             $firebase->sendMulti($message, $tokens);
         } elseif (isset($result[self::ANDROID_ARR]) && count($result[self::ANDROID_ARR]) == 1) {
-            dd($result[self::ANDROID_ARR][0]);
             $message = CloudMessage::withTarget('token', $result[self::ANDROID_ARR][0])->withData($data);
             $firebase->sendSpecific($message, $tokens);
         }
