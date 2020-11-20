@@ -83,9 +83,9 @@ class SendNotificationController extends Controller
 //        dd($result);
 
         if ($request->link != null) {
-            Firebase::send($result, $request->message, null, null, null, Notification::ADMIN_LINK_TYPE, $request->title, $request->link);
+            Firebase::send($data, $request->message, null, null, null, Notification::ADMIN_LINK_TYPE, $request->title, $request->link);
         } else {
-            Firebase::send($result, $request->message, null, null, null, Notification::ADMIN_TYPE, $request->title);
+            Firebase::send($data, $request->message, null, null, null, Notification::ADMIN_TYPE, $request->title);
         }
 
         return redirect(self::ROUTE);
