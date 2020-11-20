@@ -36,8 +36,9 @@ class Firebase
             'link' => $link,
         );
 
-        $data = FcmToken::whereIn('token', $tokens)->get()->pluck('tokensForAll.token', 'tokensForAll.os')->toArray();
+        $data = FcmToken::whereIn('token', $tokens)->get()->pluck('tokensForAll.token', 'tokensForAll.os');
         $result = array();
+        dd($data);
         foreach ($data as $d) {
             if ($d->os == Firebase::ANDROID && !empty($d->token)) {
                 $result[Firebase::ANDROID_ARR][] = $d->token;
