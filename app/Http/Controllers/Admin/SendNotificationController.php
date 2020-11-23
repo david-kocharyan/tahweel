@@ -54,7 +54,7 @@ class SendNotificationController extends Controller
             $inspector = User::where('role', User::ROLES['inspector'])->get()->pluck('id')->toArray();
             $arr = array_merge($arr, $inspector);
         } elseif (isset($request->inspector) AND $request->inspector[0] != 0) {
-            foreach ($request->plumber as $key => $val) {
+            foreach ($request->inspector as $key => $val) {
                 $arr[] = intval($val);
             }
         }
