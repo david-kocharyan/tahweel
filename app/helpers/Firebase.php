@@ -39,6 +39,7 @@ class Firebase
 
         $result = $firebase->getType($tokens);
 
+        dd($result);
         //for ios
         $config_ios = ApnsConfig::fromArray([
             'headers' => [
