@@ -39,7 +39,6 @@ class Firebase
 
         $result = $firebase->getType($tokens);
 
-        dd($result);
         //for ios
         $config_ios = ApnsConfig::fromArray([
             'headers' => [
@@ -101,7 +100,7 @@ class Firebase
             $message->withTarget("token", $token);
             $this->messaging->send($message);
         } catch (\Exception $exception) {
-            dd($exception);
+            dd(1, $exception);
         }
     }
 
