@@ -36,7 +36,7 @@
                                 @enderror
                                 <select name="city" id="city" class="form-control">
                                     @foreach($city as $key=>$val)
-                                        <option value="{{$val->id}}" @if($val->id == $data->city_id) selected @endif>{{$val->name}}</option>
+                                        <option value="{{$val->id}}" @if($val->id == $data->city_id) selected @endif>{{$val->en}}</option>
                                     @endforeach
                                 </select>
                             </div>
