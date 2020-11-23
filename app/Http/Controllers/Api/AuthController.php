@@ -61,7 +61,7 @@ class AuthController extends Controller
         $user->qr = $img;
         $user->save();
 
-        Phone::where("phone", $request->phone)->update(["user_id" => $user->id]);
+        Phone::where("phone", $request->phone)->update(["user_id" => $user->id, 'status' => 1]);
 
         $user->createToken('Personal Access Token')->accessToken;
         $tokens = $this->get_token($request->username, $request->password);
@@ -356,10 +356,16 @@ class AuthController extends Controller
         $data = json_decode($request->getContent(), true);
         $validator = Validator::make($data ?? [],
             [
-                'phone' => 'required|max:191|unique:phones,phone',
+                'phone' => 'required|max:191',
             ]);
+
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
+        }
+
+        $phone_old = Phone::where("phone", $data["phone"])->where('status', '1')->first();
+        if($phone_old != null){
+            return ResponseHelper::fail("Phone Number Must Be Unique!", ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
         }
 
         $rnd = $this->generateRandomNumber();

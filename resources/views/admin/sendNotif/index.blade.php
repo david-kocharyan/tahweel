@@ -44,7 +44,7 @@
                                 <select class="form-control city" name="city[]" multiple="multiple">
                                     <option value="0">Select All</option>
                                     @foreach($city as $key=>$val)
-                                        <option value="{{$val->id}}">{{$val->name}}</option>
+                                        <option value="{{$val->id}}">{{$val->en}}</option>
                                     @endforeach
                                 </select>
                             </div>
