@@ -158,7 +158,7 @@ class PlumberController extends Controller
         $phone->phone = $request->phone;
         $phone->save();
 
-        if ($request->password) {
+        if ($request->password AND $request->email) {
             $details = [
                 'title' => 'Your password in Tahweel Application',
                 'body' => "Hello dear $request->full_name. Your password is` $request->password",
