@@ -47,7 +47,7 @@ class Firebase
             'payload' => [
                 'aps' => [
                     'alert' => [
-                        'title' => $title = null ? "notification" : $title,
+                        'title' => "notification",
                         'body' => $notif,
                     ],
                     "category" => "link",
