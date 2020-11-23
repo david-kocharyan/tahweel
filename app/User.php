@@ -21,6 +21,7 @@ class User extends Authenticatable
 
     const ENGLISH = 1;
     const ARABIC = 2;
+    const URDU = 3;
 
     use HasApiTokens, Notifiable;
 

@@ -39,6 +39,7 @@ class AuthController extends Controller
                 'role' => 'required|integer|min:1|max:2',
                 'password' => 'required|max:25',
                 'confirm_password' => 'required|same:password',
+                'lng' => 'required|numeric',
             ]);
         if ($validator->fails()) {
             return ResponseHelper::fail($validator->errors()->first(), ResponseHelper::UNPROCESSABLE_ENTITY_EXPLAINED);
@@ -52,7 +53,7 @@ class AuthController extends Controller
         $user->role = intval($request->role);
         $user->approved = 0;
         $user->password = bcrypt($request->password);
-        $user->lng = User::ENGLISH;
+        $user->lng = $request->lng;
         $user->save();
 
         $img = QrGenerator::generate(uniqid()."_".$user->id,  $user->full_name, $request->phone);
