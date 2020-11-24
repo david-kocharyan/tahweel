@@ -331,7 +331,7 @@ class CityTableSeeder extends Seeder
             $city[$i]['country_id'] = 1;
             $city[$i]['en'] = $city_en[$i];
             $city[$i]['ar'] = $city_ar[$i];
-//            $city[$i]['ur'] = $city_ur[$i];
+            $city[$i]['ur'] = $city_ar[$i];
         }
 
         \App\Model\City::insert($city);
