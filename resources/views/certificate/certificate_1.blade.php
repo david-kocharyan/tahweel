@@ -8,7 +8,6 @@
 
         @page {
             size: a4 landscape;
-            margin: 72px 76px;
         }
 
         .certificate {
