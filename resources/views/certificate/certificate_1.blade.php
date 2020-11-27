@@ -116,7 +116,7 @@
 
     </style>
 </head>
-<body>
+<body style="overflow: hidden;">
 
     <div class="certificate">
         <div class="text-1"></div>
