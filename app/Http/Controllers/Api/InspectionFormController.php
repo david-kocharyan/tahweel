@@ -18,6 +18,7 @@ use App\Model\Phase;
 use App\Model\PlumberPoint;
 use App\Model\PointCoeficient;
 use App\User;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
 use Illuminate\Support\Facades\Auth;
@@ -116,7 +117,7 @@ class InspectionFormController extends Controller
             $kitchen = PointCoeficient::where('code', 'KI')->first()->point;
             $service = PointCoeficient::where('code', 'SC')->first()->point;
 
-            $plumber_point = ($form->bathrooms_inspected*$bathroom) + ($form->kitchen_inspected * $kitchen) + ($form->service_counters_inspected * $service);
+            $plumber_point = ($form->bathrooms_inspected * $bathroom) + ($form->kitchen_inspected * $kitchen) + ($form->service_counters_inspected * $service);
 
             $plumberPoint = new PlumberPoint();
             $plumberPoint->inspection_id = $request->inspection_id;
@@ -174,6 +175,9 @@ class InspectionFormController extends Controller
         $customer = Customer::where('inspection_id', $inspection_id)->first();
 
 
-        return view('certificate.certificate_'.$warranty);
+//        return view('certificate.certificate_' . $warranty);
+
+        $pdf = PDF::loadView('certificate.certificate_' . $warranty);
+        return $pdf->download('warranty' + $warranty + '.pdf');
     }
 }
