@@ -12,7 +12,7 @@
             height: 1240px;
             background-image: url("{{asset('assets/certificate/2.jpg')}}");
             background-repeat: no-repeat;
-            background-size: 103% 100%;
+            background-size: 100% 99%;
         }
 
         .text-1, .text-2, .text-3 {
