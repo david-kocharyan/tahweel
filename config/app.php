@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Kreait\Laravel\Firebase\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -230,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'QrCode' => SimpleSoftwareIO\QrCode::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

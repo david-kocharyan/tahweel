@@ -172,19 +172,8 @@ class InspectionFormController extends Controller
         $form->save();
 
         $customer = Customer::where('inspection_id', $inspection_id)->first();
-        $file = Certificate::where('type', $warranty)->first()->file;
 
-        $text = $customer->full_name;
-        $img = Image::make(public_path("uploads/$file"));
-        $img->rotate(-90);
-        $img->text($text, 1370, 656, function($font) {
-            $font->file(public_path('assets/css/Tajawal-Regular.ttf'));
-            $font->size(60);
-        });
 
-        $img->save(public_path("uploads/certificates/warranty_$customer->id.jpg"));
-        $file= "certificates/warranty_$customer->id.jpg";
-
-        return view('admin.warranty', compact('file'));
+        return view('certificate.certificate_'.$warranty);
     }
 }

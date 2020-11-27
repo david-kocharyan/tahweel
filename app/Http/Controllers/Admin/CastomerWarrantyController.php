@@ -120,6 +120,10 @@ class CastomerWarrantyController extends Controller
         $file = Certificate::where('type', $data->warranty_type)->first()->file;
 
 
+
+
+
+
         $text = $customer->full_name;
 
         $img = Image::make(public_path("uploads/$file"));

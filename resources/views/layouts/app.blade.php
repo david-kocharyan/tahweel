@@ -132,11 +132,11 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="/admin/certificates" class="waves-effect"><i class="mdi mdi-certificate fa-fw"></i> <span
-                            class="hide-menu">Certificates</span>
-                    </a>
-                </li>
+{{--                <li>--}}
+{{--                    <a href="/admin/certificates" class="waves-effect"><i class="mdi mdi-certificate fa-fw"></i> <span--}}
+{{--                            class="hide-menu">Certificates</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
                 <li>
                     <a href="/admin/warranty" class="waves-effect"><i class="mdi mdi-wunderlist fa-fw"></i> <span
