@@ -178,6 +178,6 @@ class InspectionFormController extends Controller
 //        return view('certificate.certificate_' . $warranty);
 
         $pdf = PDF::loadView('certificate.certificate_' . $warranty);
-        return $pdf->download('warranty' + $warranty + '.pdf');
+        return $pdf->download('warranty.pdf');
     }
 }
