@@ -7,7 +7,7 @@
     <style>
         .certificate {
             width: 1000px;
-            height: 900px;
+            height: 700px;
             background-image: url("{{asset('assets/certificate/1.jpg')}}");
             background-repeat: no-repeat;
             background-size: 100% 99%;
