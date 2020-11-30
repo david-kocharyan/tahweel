@@ -6,7 +6,8 @@
     <title>Certificate 1</title>
     <style>
         .certificate {
-            position: fixed;
+            width: 100%;
+            height: 700px;
             background-image: url("{{asset('assets/certificate/1.jpg')}}");
             background-repeat: no-repeat;
             background-position: top left;
