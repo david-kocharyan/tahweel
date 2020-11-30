@@ -29,6 +29,7 @@
             align-items: center;
             font-size: 2rem;
             color: #696d70;
+            border: 1px solid red;
         }
 
         .text-1 {
@@ -37,17 +38,22 @@
 
         .text-2 {
             top: 29.5%;
+            left: 52%;
+            width: 450px;
         }
 
         .text-3 {
             top: 33%;
+            left: 57%;
+            width: 432px;
         }
 
-        .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10, .text-11 {
+        .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10, .text-11, .text-id-1, .text-id-2{
             font-size: 1.85rem;
             display: flex;
             justify-content: center;
             color: #696d70;
+            border: 1px solid red;
         }
 
         .text-4 {
@@ -71,7 +77,7 @@
             width: 40px;
             height: 35px;
             top: 45%;
-            right: 23.2%;
+            right: 40.2%;
         }
 
         .text-7 {
@@ -79,7 +85,7 @@
             width: 40px;
             height: 35px;
             top: 45%;
-            right: 25.9%;
+            right: 42.9%;
         }
 
         .text-8 {
@@ -87,7 +93,7 @@
             width: 40px;
             height: 35px;
             top: 45%;
-            right: 40.35%;
+            right: 45.35%;
         }
 
         .text-9 {
@@ -95,7 +101,7 @@
             width: 40px;
             height: 35px;
             top: 45%;
-            right: 46%;
+            right: 72%;
         }
 
         .text-10 {
@@ -103,7 +109,7 @@
             width: 40px;
             height: 35px;
             top: 45%;
-            right: 48.6%;
+            right: 74.6%;
         }
 
         .text-11 {
@@ -111,7 +117,23 @@
             width: 40px;
             height: 35px;
             top: 45%;
-            right: 51.15%;
+            right: 77.55%;
+        }
+
+        .text-id-1 {
+            position: absolute;
+            width: 170px;
+            height: 35px;
+            top: 45%;
+            right: 59.55%;
+        }
+
+        .text-id-2 {
+            position: absolute;
+            width: 170px;
+            height: 35px;
+            top: 45%;
+            right: 25.55%;
         }
 
     </style>
@@ -119,17 +141,19 @@
 <body style="overflow: hidden;">
 
     <div class="certificate">
-        <div class="text-1"></div>
+{{--        <div class="text-1"></div>--}}
         <div class="text-2"></div>
         <div class="text-3"></div>
-        <div class="text-4"></div>
-        <div class="text-5"></div>
+{{--        <div class="text-4"></div>--}}
+{{--        <div class="text-5"></div>--}}
         <div class="text-6"></div>
         <div class="text-7"></div>
         <div class="text-8"></div>
         <div class="text-9"></div>
         <div class="text-10"></div>
         <div class="text-11"></div>
+        <div class="text-id-1"></div>
+        <div class="text-id-2"></div>
     </div>
 
 </body>

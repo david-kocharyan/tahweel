@@ -47,3 +47,5 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('cities', 'CityController');
     Route::resource('points', 'PointCoeficientController');
 });
+
+Route::get('certificate-get', 'Admin\CastomerWarrantyController@downloadCertificate');

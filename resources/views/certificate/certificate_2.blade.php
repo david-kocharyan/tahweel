@@ -26,6 +26,7 @@
             align-items: center;
             font-size: 2rem;
             color: #696d70;
+            border: 1px solid red;
         }
 
         .text-1 {
@@ -33,11 +34,12 @@
         }
 
         .text-2 {
-            top: 36.5%;
+            top: 33%;
+            right: 22%;
         }
 
         .text-3 {
-            top: 40%;
+            top: 36.5%;
         }
 
         .text-4 {
@@ -45,12 +47,13 @@
             width: 425px;
             height: 38px;
             right: 37.5%;
-            bottom: 25%;
+            bottom: 28%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 2rem;
             color: #696d70;
+            border: 1px solid red;
         }
 
         .text-5, .text-6, .text-7, .text-8, .text-9, .text-10, .text-11, .text-12 {
@@ -58,70 +61,72 @@
             display: flex;
             justify-content: center;
             color: #696d70;
+            border: 1px solid red;
+
         }
 
         .text-5 {
             position: absolute;
-            width: 45px;
+            width: 165px;
             height: 35px;
-            top: 51%;
-            right: 15%;
+            top: 48%;
+            right: 16%;
         }
 
         .text-6 {
             position: absolute;
             width: 45px;
             height: 35px;
-            top: 51%;
-            right: 21.5%;
+            top: 48%;
+            right: 31%;
         }
 
         .text-7 {
             position: absolute;
             width: 45px;
             height: 35px;
-            top: 51%;
-            right: 24%;
+            top: 48%;
+            right: 35%;
         }
 
         .text-8 {
             position: absolute;
             width: 45px;
             height: 35px;
-            top: 51%;
-            right: 26.5%;
+            top: 48%;
+            right: 39%;
         }
 
         .text-9 {
             position: absolute;
-            width: 45px;
+            width: 165px;
             height: 35px;
-            top: 51%;
-            right: 41.65%;
+            top: 48%;
+            right: 55%;
         }
 
         .text-10 {
             position: absolute;
             width: 45px;
             height: 35px;
-            top: 51%;
-            right: 48%;
+            top: 48%;
+            right: 70%;
         }
 
         .text-11 {
             position: absolute;
             width: 45px;
             height: 35px;
-            top: 51%;
-            right: 50.4%;
+            top: 48%;
+            right: 74%;
         }
 
         .text-12 {
             position: absolute;
             width: 45px;
             height: 35px;
-            top: 51%;
-            right: 52.7%;
+            top: 48%;
+            right: 78%;
         }
 
     </style>
@@ -129,7 +134,7 @@
 <body>
 
     <div class="certificate">
-        <div class="text-1"></div>
+{{--        <div class="text-1"></div>--}}
         <div class="text-2"></div>
         <div class="text-3"></div>
         <div class="text-4"></div>
