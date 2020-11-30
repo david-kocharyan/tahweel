@@ -173,11 +173,11 @@ class InspectionFormController extends Controller
         $form->save();
 
         $customer = Customer::where('inspection_id', $inspection_id)->first();
+        $inspection = Inspection::find($inspection_id);
+        $phase_one = Phase::where('inspection_id', $inspection_id)->where('phase', 1)->where('status', 2)->first();
+        $phase_two = Phase::where('inspection_id', $inspection_id)->where('phase', 2)->where('status', 2)->first();
 
-
-//        return view('certificate.certificate_' . $warranty);
-
-        $pdf = PDF::loadView('certificate.certificate_' . $warranty)->setPaper('a4', 'landscape')->setWarnings(false);
+        $pdf = PDF::loadView('certificate.certificate_' . $warranty, compact('customer', 'inspection', 'data', 'phase_one', 'phase_two'))->setPaper('a4', 'landscape')->setWarnings(false);
         return $pdf->download('warranty.pdf');
     }
 }
