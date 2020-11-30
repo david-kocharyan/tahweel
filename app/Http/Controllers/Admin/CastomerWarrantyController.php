@@ -121,6 +121,7 @@ class CastomerWarrantyController extends Controller
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
         $inspection = Inspection::find($data->inspection_id);
 
+        dd($data, $customer, $inspection);
         return view('certificate.certificate_'.$data->warranty_type , compact('customer', 'inspection', 'data'));
 
 //
