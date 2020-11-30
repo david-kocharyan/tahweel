@@ -44,7 +44,7 @@
             position: absolute;
             width: 40px;
             height: 35px;
-            top: 45%;
+            top: 47%;
             right: 40.2%;
         }
 
@@ -60,21 +60,23 @@
             position: absolute;
             width: 40px;
             height: 35px;
-            top: 45%;
+            top: 47%;
             right: 45.35%;
         }
 
         .text-9 {
+            position: absolute;
             width: 40px;
             height: 35px;
-            margin: 18% 25%;
+            top: 47%;
+            right: 55%;
         }
 
         .text-10 {
             position: absolute;
             width: 40px;
             height: 35px;
-            top: 45%;
+            top: 47%;
             right: 74.6%;
         }
 
@@ -82,7 +84,7 @@
             position: absolute;
             width: 40px;
             height: 35px;
-            top: 45%;
+            top: 47%;
             right: 77.55%;
         }
 
@@ -90,7 +92,7 @@
             position: absolute;
             width: 170px;
             height: 35px;
-            top: 45%;
+            top: 47%;
             right: 59.55%;
         }
 
@@ -98,7 +100,7 @@
             position: absolute;
             width: 170px;
             height: 35px;
-            top: 45%;
+            top: 47%;
             right: 25.55%;
         }
 
