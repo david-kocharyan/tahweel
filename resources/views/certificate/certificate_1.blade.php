@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate 1</title>
     <style>
-
-        @page {
-            size: a4 landscape;
-        }
-
         .certificate {
             position: relative;
             width: 100%;
@@ -138,28 +133,29 @@
     </style>
 </head>
 <body style="overflow: hidden;">
-
 <div class="certificate">
-    {{--        <div class="text-1"></div>--}}
-    <div class="text-2">{{$customer->full_name}}</div>
-    <div class="text-3">{{$inspection->address}}</div>
-    {{--        <div class="text-4"></div>--}}
-    {{--        <div class="text-5"></div>--}}
-    @if($phase_two != null)
-        <div class="text-6">{{$phase_two->created_at->format('y')}}</div>
-        <div class="text-7">{{$phase_two->created_at->format('M')}}</div>
-        <div class="text-8">{{$phase_two->created_at->format('d')}}</div>
-        <div class="text-id-2">{{$phase_two->id}}</div>
-    @endif
 
-    @if($phase_one != null)
-        <div class="text-9">{{$phase_one->created_at->format('y')}}</div>
-        <div class="text-10">{{$phase_one->created_at->format('M')}}</div>
-        <div class="text-11">{{$phase_one->created_at->format('d')}}</div>
-        <div class="text-id-1">{{$phase_one->id}}</div>
-    @endif
 
 </div>
+
+{{--        <div class="text-1"></div>--}}
+<div class="text-2">{{$customer->full_name}}</div>
+<div class="text-3">{{$inspection->address}}</div>
+{{--        <div class="text-4"></div>--}}
+{{--        <div class="text-5"></div>--}}
+@if($phase_two != null)
+    <div class="text-6">{{$phase_two->created_at->format('y')}}</div>
+    <div class="text-7">{{$phase_two->created_at->format('M')}}</div>
+    <div class="text-8">{{$phase_two->created_at->format('d')}}</div>
+    <div class="text-id-2">{{$phase_two->id}}</div>
+@endif
+
+@if($phase_one != null)
+    <div class="text-9">{{$phase_one->created_at->format('y')}}</div>
+    <div class="text-10">{{$phase_one->created_at->format('M')}}</div>
+    <div class="text-11">{{$phase_one->created_at->format('d')}}</div>
+    <div class="text-id-1">{{$phase_one->id}}</div>
+@endif
 
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
