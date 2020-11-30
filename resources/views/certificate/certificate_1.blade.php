@@ -6,7 +6,6 @@
     <title>Certificate 1</title>
     <style>
         .certificate {
-            position: relative;
             width: 100%;
             height: 100vh;
             background-image: url("{{asset('assets/certificate/1.jpg')}}");
@@ -14,56 +13,31 @@
             background-size: 100% 99%;
         }
 
-        .text-1, .text-2, .text-3 {
+        .text-2, .text-3 {
             position: relative;
             width: 390px;
             height: 38px;
             right: 19%;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
             font-size: 19px;
+            text-align: center;
             color: #696d70;
         }
 
-        .text-1 {
-            top: 26%;
-        }
-
         .text-2 {
-            top: 29.5%;
+            top: 30.5%;
             left: 52%;
             width: 450px;
         }
 
         .text-3 {
-            top: 33%;
+            top: 31%;
             left: 57%;
             width: 500px;
         }
 
-        .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10, .text-11, .text-id-1, .text-id-2 {
+        .text-6, .text-7, .text-8, .text-9, .text-10, .text-11, .text-id-1, .text-id-2 {
             font-size: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
             color: #696d70;
-        }
-
-        .text-4 {
-            position: absolute;
-            width: 45px;
-            height: 35px;
-            top: 45%;
-            right: 13.7%;
-        }
-
-        .text-5 {
-            position: absolute;
-            width: 40px;
-            height: 35px;
-            top: 45%;
-            right: 20.5%;
         }
 
         .text-6 {
@@ -91,11 +65,9 @@
         }
 
         .text-9 {
-            position: absolute;
             width: 40px;
             height: 35px;
-            top: 45%;
-            right: 72%;
+            margin: 18% 25%;
         }
 
         .text-10 {
