@@ -11,7 +11,7 @@
         }
 
         .certificate {
-            position: absolute;
+            position: relative;
             width: 100%;
             height: 100vh;
             background-image: url("{{asset('assets/certificate/1.jpg')}}");
@@ -20,7 +20,7 @@
         }
 
         .text-1, .text-2, .text-3 {
-            position: absolute;
+            position: relative;
             width: 390px;
             height: 38px;
             right: 19%;
