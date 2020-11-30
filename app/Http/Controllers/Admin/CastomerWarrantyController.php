@@ -9,6 +9,7 @@ use App\Model\Certificate;
 use App\Model\Customer;
 use App\Model\Inspection;
 use App\Model\InspectionForm;
+use App\Model\Phase;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -120,8 +121,11 @@ class CastomerWarrantyController extends Controller
         $data = CastomerWarrantySave::where('id', $id)->first();
         $customer = Customer::where('inspection_id', $data->inspection_id)->first();
         $inspection = Inspection::find($data->inspection_id);
+        $phase_one = Phase::where('inspection_id', $data->inspection_id)->where('phase', 1)->where('status', 2)->first();
+        $phase_two = Phase::where('inspection_id', $data->inspection_id)->where('phase', 2)->where('status', 2)->first();
 
-        dd($data, $customer, $inspection);
+
+        dd($data, $customer, $inspection, $phase_one, $phase_two);
         return view('certificate.certificate_'.$data->warranty_type , compact('customer', 'inspection', 'data'));
 
 //

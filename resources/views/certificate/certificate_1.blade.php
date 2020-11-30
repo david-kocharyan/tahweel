@@ -142,8 +142,8 @@
 
     <div class="certificate">
 {{--        <div class="text-1"></div>--}}
-        <div class="text-2"></div>
-        <div class="text-3"></div>
+        <div class="text-2">{{$customer->full_name}}</div>
+        <div class="text-3">{{$inspection->address}}</div>
 {{--        <div class="text-4"></div>--}}
 {{--        <div class="text-5"></div>--}}
         <div class="text-6"></div>
