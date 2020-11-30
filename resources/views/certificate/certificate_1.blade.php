@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate 1</title>
     <style>
-        @page { margin: 100px; }
         .certificate {
             position: fixed;
             /*width: 100%;*/
