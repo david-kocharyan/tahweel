@@ -178,11 +178,11 @@ class InspectionFormController extends Controller
         $phase_two = Phase::where('inspection_id', $inspection_id)->where('phase', 2)->where('status', 2)->first();
 
 
-        return view('certificate.certificate_' . $warranty,compact('customer', 'inspection', 'phase_one', 'phase_two'));
+//        return view('certificate.certificate_' . $warranty,compact('customer', 'inspection', 'phase_one', 'phase_two'));
 
-//
-//        $pdf = PDF::loadView('certificate.certificate_' . $warranty, compact('customer', 'inspection', 'phase_one', 'phase_two'))
-//            ->setPaper('a4', 'landscape')->setWarnings(false);
-//        return $pdf->download('warranty.pdf');
+
+        $pdf = PDF::loadView('certificate.certificate_' . $warranty, compact('customer', 'inspection', 'phase_one', 'phase_two'))
+            ->setPaper('a4', 'landscape')->setWarnings(false);
+        return $pdf->download('warranty.pdf');
     }
 }
