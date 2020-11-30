@@ -26,7 +26,6 @@
             align-items: center;
             font-size: 2rem;
             color: #696d70;
-            border: 1px solid red;
         }
 
         .text-1 {
@@ -53,7 +52,6 @@
             align-items: center;
             font-size: 2rem;
             color: #696d70;
-            border: 1px solid red;
         }
 
         .text-5, .text-6, .text-7, .text-8, .text-9, .text-10, .text-11, .text-12 {
@@ -61,8 +59,6 @@
             display: flex;
             justify-content: center;
             color: #696d70;
-            border: 1px solid red;
-
         }
 
         .text-5 {

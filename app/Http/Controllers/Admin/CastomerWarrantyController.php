@@ -124,7 +124,7 @@ class CastomerWarrantyController extends Controller
         $phase_one = Phase::where('inspection_id', $data->inspection_id)->where('phase', 1)->where('status', 2)->first();
         $phase_two = Phase::where('inspection_id', $data->inspection_id)->where('phase', 2)->where('status', 2)->first();
 
-        $pdf = PDF::loadView('certificate.certificate_' . $data->warranty_type, compact('customer', 'inspection', 'data', 'phase_one', 'phase_two'))->setPaper('a4', 'landscape')->setWarnings(false);
+        $pdf = PDF::loadView('certificate.certificate_' . $data->warranty_type, compact('customer', 'inspection', 'phase_one', 'phase_two'))->setPaper('a4', 'landscape')->setWarnings(false);
         return $pdf->download('warranty.pdf');
     }
 
