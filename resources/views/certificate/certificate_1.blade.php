@@ -48,7 +48,7 @@
             width: 432px;
         }
 
-        .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10, .text-11, .text-id-1, .text-id-2{
+        .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10, .text-11, .text-id-1, .text-id-2 {
             font-size: 1.85rem;
             display: flex;
             justify-content: center;
@@ -140,21 +140,27 @@
 </head>
 <body style="overflow: hidden;">
 
-    <div class="certificate">
-{{--        <div class="text-1"></div>--}}
-        <div class="text-2">{{$customer->full_name}}</div>
-        <div class="text-3">{{$inspection->address}}</div>
-{{--        <div class="text-4"></div>--}}
-{{--        <div class="text-5"></div>--}}
-        <div class="text-6"></div>
-        <div class="text-7"></div>
-        <div class="text-8"></div>
-        <div class="text-9"></div>
-        <div class="text-10"></div>
-        <div class="text-11"></div>
-        <div class="text-id-1"></div>
-        <div class="text-id-2"></div>
-    </div>
+<div class="certificate">
+    {{--        <div class="text-1"></div>--}}
+    <div class="text-2">{{$customer->full_name}}</div>
+    <div class="text-3">{{$inspection->address}}</div>
+    {{--        <div class="text-4"></div>--}}
+    {{--        <div class="text-5"></div>--}}
+    @if($phase_two != null)
+        <div class="text-6">{{$phase_two->created_at->format('y')}}</div>
+        <div class="text-7">{{$phase_two->created_at->format('M')}}</div>
+        <div class="text-8">{{$phase_two->created_at->format('d')}}</div>
+        <div class="text-id-2">{{$phase_two->id}}</div>
+    @endif
+
+    @if($phase_one != null)
+        <div class="text-9">{{$phase_one->created_at->format('y')}}</div>
+        <div class="text-10">{{$phase_one->created_at->format('M')}}</div>
+        <div class="text-11">{{$phase_one->created_at->format('d')}}</div>
+        <div class="text-id-1">{{$phase_one->id}}</div>
+    @endif
+
+</div>
 
 </body>
 </html>
