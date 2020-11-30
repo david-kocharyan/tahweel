@@ -5,12 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate 1</title>
     <style>
+        @page { margin: 100px; }
         .certificate {
-            width: 100%;
-            height: 700px;
+            position: fixed;
+            /*width: 100%;*/
+            /*height: 700px;*/
             background-image: url("{{asset('assets/certificate/1.jpg')}}");
             background-repeat: no-repeat;
-            background-size: 100% 99%;
+            background-position: top left;
+            background-size: 100%;
+            top: -50px;
+            right: -50px;
+            bottom: -50px;
+            left: -50px;
         }
 
         .text-1, .text-2, .text-3 {
