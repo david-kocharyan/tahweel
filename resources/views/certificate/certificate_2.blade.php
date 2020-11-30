@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate 2</title>
     <style>
+        @page {
+            size: a4 landscape;
+        }
 
         .certificate {
             position: relative;
-            width: 1754px;
-            height: 1240px;
+            width: 100%;
+            height: 100vh;
             background-image: url("{{asset('assets/certificate/2.jpg')}}");
             background-repeat: no-repeat;
             background-size: 100% 99%;
@@ -127,7 +130,7 @@
 
     </style>
 </head>
-<body>
+<body style="overflow: hidden;">
 
 <div class="certificate">
     {{--        <div class="text-1"></div>--}}
