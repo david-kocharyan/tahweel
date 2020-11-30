@@ -26,8 +26,8 @@
             right: 19%;
             display: flex;
             justify-content: center;
-            align-items: center;
-            font-size: 2rem;
+            align-items: flex-end;
+            font-size: 19px;
             color: #696d70;
         }
 
@@ -48,9 +48,10 @@
         }
 
         .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10, .text-11, .text-id-1, .text-id-2 {
-            font-size: 1.85rem;
+            font-size: 20px;
             display: flex;
             justify-content: center;
+            align-items: flex-end;
             color: #696d70;
         }
 
