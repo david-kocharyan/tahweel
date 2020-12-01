@@ -49,9 +49,9 @@
                                             </a>
                                         </form>
                                     @endif
-                                        <button data-toggle="tooltip" data-id="{{$val->id}}"
+                                        <a data-toggle="tooltip" href="{{$route."/send/".$val->id}}"
                                                 data-placement="top" title="Download"
-                                                class="btn btn-success btn-circle tooltip-success load"><i class="fas fa-download"></i></button>
+                                                class="btn btn-success btn-circle tooltip-success load"><i class="fas fa-download"></i></a>
                                 </td>
                             </tr>
                         @endforeach

@@ -35,7 +35,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::resource('notifications', 'NotificationController');
     Route::resource('redeems', 'RedeemsController');
     Route::resource('warranty', 'CastomerWarrantyController');
-    Route::post('warranty/send', 'CastomerWarrantyController@downloadCertificate');
+    Route::post('warranty/send/{id}', 'CastomerWarrantyController@downloadCertificate');
 
     Route::get('send-notification', 'SendNotificationController@index');
     Route::post('send-notification/send', 'SendNotificationController@send');
