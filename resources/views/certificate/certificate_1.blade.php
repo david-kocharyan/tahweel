@@ -20,7 +20,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2rem;
+            font-size: 15px;
             color: #696d70;
         }
 
@@ -102,35 +102,39 @@
 </head>
 <body>
 
-    <div class="certificate" id="certificate">
-        <div class="text-1">{{$customer->full_name}}</div>
-        <div class="text-2">{{$inspection->address}}</div>
-        <div class="text-3">10</div>
-        <div class="text-4">10</div>
-        <div class="text-5">10</div>
-        <div class="text-6">10</div>
-        <div class="text-7">10</div>
-        <div class="text-8">10</div>
-        <div class="text-9">10</div>
-        <div class="text-10">10</div>
-    </div>
+<div class="certificate" id="certificate">
+    <div class="text-1">{{$customer->full_name}}</div>
+    <div class="text-2">{{$inspection->address}}</div>
+    @if($phase_two != null)
+        <div class="text-3">{{$phase_two->created_at->format('d')}}</div>
+        <div class="text-4">{{$phase_two->created_at->format('N')}}</div>
+        <div class="text-5">{{$phase_two->created_at->format('y')}}</div>
+        <div class="text-6">{{$phase_two->id}}</div>
+    @endif
+    @if($phase_one != null)
+        <div class="text-7">{{$phase_one->created_at->format('d')}}</div>
+        <div class="text-8">{{$phase_one->created_at->format('N')}}</div>
+        <div class="text-9">{{$phase_one->created_at->format('y')}}</div>
+        <div class="text-10">{{$phase_one->id}}</div>
+    @endif
 
+</div>
 
-    <script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
-    <script>
-        window.onload = function() {
+<script>
+    window.onload = function () {
 
-            var pdf = new jsPDF('s', 'pt', 'a4');
-            pdf.addHTML(document.getElementById("certificate"), function() {
+        var pdf = new jsPDF('s', 'pt', 'a4');
+        pdf.addHTML(document.getElementById("certificate"), function () {
 
-                ps_filename = "certificate-01";
-                pdf.save(ps_filename+'.pdf');
+            ps_filename = "certificate-01";
+            pdf.save(ps_filename + '.pdf');
 
-            });
-        }
-    </script>
+        });
+    }
+</script>
 </body>
 </html>
