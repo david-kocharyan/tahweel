@@ -132,6 +132,7 @@
             ps_filename = "certificate-01";
             pdf.save(ps_filename + '.pdf');
 
+            window.close()
         });
     }
 </script>

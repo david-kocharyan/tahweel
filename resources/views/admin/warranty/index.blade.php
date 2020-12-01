@@ -49,7 +49,7 @@
                                             </a>
                                         </form>
                                     @endif
-                                        <a data-toggle="tooltip" href="{{$route."/send/".$val->id}}"
+                                        <a data-toggle="tooltip" href="{{$route."/send/".$val->id}}" target="_blank"
                                                 data-placement="top" title="Download"
                                                 class="btn btn-success btn-circle tooltip-success load"><i class="fas fa-download"></i></a>
                                 </td>
