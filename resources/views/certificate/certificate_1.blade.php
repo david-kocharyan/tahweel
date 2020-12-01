@@ -20,7 +20,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 15px;
+            font-size: 18px;
             color: #696d70;
         }
 
@@ -46,7 +46,7 @@
         }
 
         .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10 {
-            font-size: 1.85rem;
+            font-size: 1.65rem;
         }
 
         .text-4 {
