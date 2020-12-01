@@ -109,12 +109,12 @@
                     url: '{{ url('/admin/warranty/send') }}',
                     data: {id},
                     success: function (res) {
-                        var a = document.createElement('a');
-                        a.href = res.file;
-                        a.download = 'warranty.jpg';
-                        document.body.append(a);
-                        a.click();
-                        a.remove();
+                        // var a = document.createElement('a');
+                        // a.href = res.file;
+                        // a.download = 'warranty.jpg';
+                        // document.body.append(a);
+                        // a.click();
+                        // a.remove();
                     }
                 });
             })
