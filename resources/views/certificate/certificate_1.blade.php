@@ -106,18 +106,17 @@
     <div class="text-1">{{$customer->full_name}}</div>
     <div class="text-2">{{$inspection->address}}</div>
     @if($phase_two != null)
-        <div class="text-3">{{$phase_two->created_at->format('d')}}</div>
-        <div class="text-4">{{$phase_two->created_at->format('M')}}</div>
-        <div class="text-5">{{$phase_two->created_at->format('Y')}}</div>
-        <div class="text-6">{{$phase_two->id}}</div>
+        <div class="text-3">{{$phase_two->id}}</div>
+        <div class="text-4">{{$phase_two->created_at->format('d')}}</div>
+        <div class="text-5">{{$phase_two->created_at->format('M')}}</div>
+        <div class="text-6">{{$phase_two->created_at->format('Y')}}</div>
     @endif
     @if($phase_one != null)
-        <div class="text-7">{{$phase_one->created_at->format('d')}}</div>
-        <div class="text-8">{{$phase_one->created_at->format('M')}}</div>
-        <div class="text-9">{{$phase_one->created_at->format('Y')}}</div>
-        <div class="text-10">{{$phase_one->id}}</div>
+        <div class="text-7">{{$phase_one->id}}</div>
+        <div class="text-8">{{$phase_one->created_at->format('d')}}</div>
+        <div class="text-9">{{$phase_one->created_at->format('M')}}</div>
+        <div class="text-10">{{$phase_one->created_at->format('Y')}}</div>
     @endif
-
 </div>
 
 <script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
