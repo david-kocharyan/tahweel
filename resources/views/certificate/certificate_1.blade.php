@@ -103,8 +103,8 @@
 <body>
 
     <div class="certificate" id="certificate">
-        <div class="text-1">10</div>
-        <div class="text-2">10</div>
+        <div class="text-1">{{$customer->full_name}}</div>
+        <div class="text-2">{{$inspection->address}}</div>
         <div class="text-3">10</div>
         <div class="text-4">10</div>
         <div class="text-5">10</div>
@@ -121,16 +121,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
     <script>
-        // window.onload = function() {
-        //
-        //     var pdf = new jsPDF('s', 'pt', 'a4');
-        //     pdf.addHTML(document.getElementById("certificate"), function() {
-        //
-        //         ps_filename = "certificate-01";
-        //         pdf.save(ps_filename+'.pdf');
-        //
-        //     });
-        // }
+        window.onload = function() {
+
+            var pdf = new jsPDF('s', 'pt', 'a4');
+            pdf.addHTML(document.getElementById("certificate"), function() {
+
+                ps_filename = "certificate-01";
+                pdf.save(ps_filename+'.pdf');
+
+            });
+        }
     </script>
 </body>
 </html>
