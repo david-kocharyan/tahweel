@@ -10,7 +10,7 @@
             position: relative;
             width: 1754px;
             height: 1240px;
-            background-image: url('./img/1.jpg');
+            background-image: url("{{asset('assets/certificate/1.jpg')}}");
             background-repeat: no-repeat;
             background-size: 103% 100%;
         }
@@ -103,16 +103,16 @@
 <body>
 
     <div class="certificate" id="certificate">
-        <div class="text-1"></div>
-        <div class="text-2"></div>
-        <div class="text-3"></div>
-        <div class="text-4"></div>
-        <div class="text-5"></div>
-        <div class="text-6"></div>
-        <div class="text-7"></div>
-        <div class="text-8"></div>
-        <div class="text-9"></div>
-        <div class="text-10"></div>
+        <div class="text-1">10</div>
+        <div class="text-2">10</div>
+        <div class="text-3">10</div>
+        <div class="text-4">10</div>
+        <div class="text-5">10</div>
+        <div class="text-6">10</div>
+        <div class="text-7">10</div>
+        <div class="text-8">10</div>
+        <div class="text-9">10</div>
+        <div class="text-10">10</div>
     </div>
 
 
