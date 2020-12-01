@@ -101,7 +101,7 @@
     </style>
 </head>
 <body>
-    
+
     <div class="certificate" id="certificate">
         <div class="text-1"></div>
         <div class="text-2"></div>
@@ -121,16 +121,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
     <script>
-        window.onload = function() {
-
-            var pdf = new jsPDF('s', 'pt', 'a4');
-            pdf.addHTML(document.getElementById("certificate"), function() {
-
-                ps_filename = "certificate-01";
-                pdf.save(ps_filename+'.pdf');
-
-            });
-        }
+        // window.onload = function() {
+        //
+        //     var pdf = new jsPDF('s', 'pt', 'a4');
+        //     pdf.addHTML(document.getElementById("certificate"), function() {
+        //
+        //         ps_filename = "certificate-01";
+        //         pdf.save(ps_filename+'.pdf');
+        //
+        //     });
+        // }
     </script>
 </body>
 </html>
