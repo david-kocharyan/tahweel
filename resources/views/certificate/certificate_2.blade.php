@@ -10,7 +10,7 @@
             position: relative;
             width: 1754px;
             height: 1240px;
-            background-image: url("{{asset('assets/certificate/1.jpg')}}");
+            background-image: url("{{asset('assets/certificate/2.jpg')}}");
             background-repeat: no-repeat;
             background-size: 103% 100%;
         }
