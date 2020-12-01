@@ -143,7 +143,6 @@
                 ps_filename = "certificate-02";
                 pdf.save(ps_filename+'.pdf');
 
-                window.close()
             });
         }
     </script>
