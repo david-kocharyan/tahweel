@@ -5,158 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate 1</title>
     <style>
+
         .certificate {
-            width: 100%;
-            height: 700px;
-            background-image: url("{{asset('assets/certificate/1.jpg')}}");
+            position: relative;
+            width: 1754px;
+            height: 1240px;
+            background-image: url('./img/1.jpg');
             background-repeat: no-repeat;
-            background-position: top left;
-            background-size: 100%;
-            top: -50px;
-            right: -50px;
-            bottom: -50px;
-            left: -50px;
+            background-size: 103% 100%;
         }
 
-        .text-1, .text-2, .text-3 {
-            position: relative;
-            width: 390px;
-            height: 38px;
-            right: 19%;
+        .text-1, .text-2, .text-3, .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10 {
+            position: absolute;
             display: flex;
             justify-content: center;
-            align-items: flex-end;
-            font-size: 19px;
+            align-items: center;
+            font-size: 2rem;
             color: #696d70;
         }
 
         .text-1 {
-            top: 26%;
+            width: 425px;
+            height: 38px;
+            top: 31%;
+            right: 22.5%;
         }
 
         .text-2 {
-            top: 29.5%;
-            left: 52%;
-            width: 450px;
+            width: 425px;
+            height: 38px;
+            top: 34.5%;
+            right: 17.5%;
         }
 
         .text-3 {
-            top: 33%;
-            left: 57%;
-            width: 500px;
+            top: 46.5%;
+            right: 23.5%;
+            width: 175px;
+            height: 40px;
         }
 
-        .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10, .text-11, .text-id-1, .text-id-2 {
-            font-size: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            color: #696d70;
+        .text-4, .text-5, .text-6, .text-7, .text-8, .text-9, .text-10 {
+            font-size: 1.85rem;
         }
 
         .text-4 {
-            position: absolute;
-            width: 45px;
-            height: 35px;
-            top: 45%;
-            right: 13.7%;
+            top: 46.5%;
+            right: 38%;
+            width: 38px;
+            height: 40px;
         }
 
         .text-5 {
-            position: absolute;
-            width: 40px;
-            height: 35px;
-            top: 45%;
-            right: 20.5%;
+            top: 46.5%;
+            right: 40.8%;
+            width: 38px;
+            height: 40px;
         }
 
         .text-6 {
-            position: absolute;
-            width: 40px;
-            height: 35px;
-            top: 45%;
-            right: 40.2%;
+            top: 46.5%;
+            right: 43.5%;
+            width: 38px;
+            height: 40px;
         }
 
         .text-7 {
-            position: absolute;
-            width: 40px;
-            height: 35px;
-            top: 45%;
-            right: 42.9%;
+            top: 46.5%;
+            right: 58.5%;
+            width: 167px;
+            height: 40px;
         }
 
         .text-8 {
-            position: absolute;
-            width: 40px;
-            height: 35px;
-            top: 45%;
-            right: 45.35%;
+            top: 46.5%;
+            right: 71.5%;
+            width: 38px;
+            height: 40px;
         }
 
         .text-9 {
-            position: absolute;
-            width: 40px;
-            height: 35px;
-            top: 45%;
-            right: 72%;
+            top: 46.5%;
+            right: 74.2%;
+            width: 38px;
+            height: 40px;
         }
 
         .text-10 {
-            position: absolute;
-            width: 40px;
-            height: 35px;
-            top: 45%;
-            right: 74.6%;
-        }
-
-        .text-11 {
-            position: absolute;
-            width: 40px;
-            height: 35px;
-            top: 45%;
-            right: 77.55%;
-        }
-
-        .text-id-1 {
-            position: absolute;
-            width: 170px;
-            height: 35px;
-            top: 45%;
-            right: 59.55%;
-        }
-
-        .text-id-2 {
-            position: absolute;
-            width: 170px;
-            height: 35px;
-            top: 45%;
-            right: 25.55%;
+            top: 46.5%;
+            right: 76.65%;
+            width: 38px;
+            height: 40px;
         }
 
     </style>
 </head>
-<body style="overflow: hidden;">
-<div class="certificate">
-    <div class="text-2">{{$customer->full_name}}</div>
-    <div class="text-3">{{$inspection->address}}</div>
-    @if($phase_two != null)
-        <div class="text-6">{{$phase_two->created_at->format('y')}}</div>
-        <div class="text-7">{{$phase_two->created_at->format('M')}}</div>
-        <div class="text-8">{{$phase_two->created_at->format('d')}}</div>
-        <div class="text-id-2">{{$phase_two->id}}</div>
-    @endif
+<body>
+    
+    <div class="certificate" id="certificate">
+        <div class="text-1"></div>
+        <div class="text-2"></div>
+        <div class="text-3"></div>
+        <div class="text-4"></div>
+        <div class="text-5"></div>
+        <div class="text-6"></div>
+        <div class="text-7"></div>
+        <div class="text-8"></div>
+        <div class="text-9"></div>
+        <div class="text-10"></div>
+    </div>
 
-    @if($phase_one != null)
-        <div class="text-9">{{$phase_one->created_at->format('y')}}</div>
-        <div class="text-10">{{$phase_one->created_at->format('M')}}</div>
-        <div class="text-11">{{$phase_one->created_at->format('d')}}</div>
-        <div class="text-id-1">{{$phase_one->id}}</div>
-    @endif
 
-</div>
+    <script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
+    <script>
+        window.onload = function() {
+
+            var pdf = new jsPDF('s', 'pt', 'a4');
+            pdf.addHTML(document.getElementById("certificate"), function() {
+
+                ps_filename = "certificate-01";
+                pdf.save(ps_filename+'.pdf');
+
+            });
+        }
+    </script>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 </html>
