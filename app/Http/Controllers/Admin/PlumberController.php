@@ -81,11 +81,14 @@ class PlumberController extends Controller
 
         if ($plumber->id) {
 
-            $phone = new Phone;
-            $phone->user_id = $plumber->id;
-            $phone->verification = 1;
-            $phone->phone = $request->phone;
-            $phone->save();
+            $checkPhone = Phone::where('phone', $request->phone)->first();
+            if ($checkPhone == null){
+                $phone = new Phone;
+                $phone->user_id = $plumber->id;
+                $phone->verification = 1;
+                $phone->phone = $request->phone;
+                $phone->save();
+            }
 
             $details = [
                 'title' => 'Your password in Tahweel Application',
@@ -154,9 +157,17 @@ class PlumberController extends Controller
         if ($request->password) $plumber->password = Hash::make($request->password);
         $plumber->save();
 
-        $phone = Phone::where('user_id', $plumber->id)->first();
-        $phone->phone = $request->phone;
-        $phone->save();
+        $checkPhone = Phone::where('phone', $request->phone)->first();
+        if ($checkPhone == null){
+            $phone = Phone::where('user_id', $plumber->id)->first();
+            $phone->phone = $request->phone;
+            $phone->save();
+        }
+        elseif ($checkPhone->user_id == $plumber->id){
+            $phone = Phone::where('user_id', $inspector->id)->first();
+            $phone->phone = $request->phone;
+            $phone->save();
+        }
 
         if ($request->password AND $request->email) {
             $details = [

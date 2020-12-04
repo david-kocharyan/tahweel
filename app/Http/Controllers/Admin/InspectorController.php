@@ -71,11 +71,14 @@ class InspectorController extends Controller
 
         if ($inspector->id) {
 
-            $phone = new Phone;
-            $phone->user_id = $inspector->id;
-            $phone->verification = 1;
-            $phone->phone = $request->phone;
-            $phone->save();
+            $checkPhone = Phone::where('phone', $request->phone)->first();
+            if ($checkPhone == null){
+                $phone = new Phone;
+                $phone->user_id = $inspector->id;
+                $phone->verification = 1;
+                $phone->phone = $request->phone;
+                $phone->save();
+            }
 
             if ($request->email) {
                 $details = [
@@ -142,9 +145,17 @@ class InspectorController extends Controller
         if ($request->password) $inspector->password = Hash::make($request->password);
         $inspector->save();
 
-        $phone = Phone::where('user_id', $inspector->id)->first();
-        $phone->phone = $request->phone;
-        $phone->save();
+        $checkPhone = Phone::where('phone', $request->phone)->first();
+        if ($checkPhone == null){
+            $phone = Phone::where('user_id', $inspector->id)->first();
+            $phone->phone = $request->phone;
+            $phone->save();
+        }
+        elseif ($checkPhone->user_id == $inspector->id){
+            $phone = Phone::where('user_id', $inspector->id)->first();
+            $phone->phone = $request->phone;
+            $phone->save();
+        }
 
         if ($request->password AND $request->email) {
             $details = [
