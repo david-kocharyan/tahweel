@@ -164,7 +164,7 @@ class PlumberController extends Controller
             $phone->save();
         }
         elseif ($checkPhone->user_id == $plumber->id){
-            $phone = Phone::where('user_id', $inspector->id)->first();
+            $phone = Phone::where('user_id', $plumber->id)->first();
             $phone->phone = $request->phone;
             $phone->save();
         }
