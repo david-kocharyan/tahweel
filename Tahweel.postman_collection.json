@@ -1,0 +1,1497 @@
+{
+	"info": {
+		"_postman_id": "eef6072e-afaa-41f3-979d-3ef9a1145d8d",
+		"name": "Tahweel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "em@m.ru",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/login",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "David Kocharyan",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "david@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+37499099248",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "Dev",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/register",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "refresh_token",
+									"value": "def50200ad49141cc9ef083bf23471e7387e4a402066a81f9d6473eefff5fbde3e3c44c7e1b5b311567b7c8d0573127c1db1498478d8be5fd397f28bfa900fd55ca3f9893058eee21d3f278728d7237462c6f8d94f3f1c7954518ba48ca3f978f74381fee81b4ed0d4a1dd340f27ebc539b5154f1c616d2ee7f5667e8446aebf6fd3c79e0ee9b08aaf9f23a25e001ee34e271b450f5191572cef8e83932a434bb0caacf5806e66ec12e13e86dcf420d05b51d278453d2bf1363707798cdde95196114cc7626730113118c7ed10a8729da5fe2e93461bef3287780e9634f12b4dcbde2a9dadd506e7e8ff4ac3a4c2ace0abde58a623a1cd10ef47c507af49145f801c0a56389f0ce4240a05f5ad13d532e7940fd2afd0420c48688cef40884bec4d452c09d5c0d4d556b5647e50a20a7c546ff5a1c1e266273311697d20fcad235d94f3dd17de629708b93399442d3ab5d8d0ccbc533d7b60236f698d0f3eb190e2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/refresh-token",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiMjg1OTBmNmJiNjFjYzliYjA3YmNjMzc0N2E1Yzc0YWFkMWQyMGQxZDVkYzYwYTUyNGIzMmQyY2NjNTk1ODkzODU3NGZmM2IwOTgzNjFhMmUiLCJpYXQiOjE1OTA1NjM4OTQsIm5iZiI6MTU5MDU2Mzg5NCwiZXhwIjoxNjIyMDk5ODk0LCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.QQJerTxQApcgbV5KWGD2Ex-K85CM-hTNaJzXTh8tCyudKhfAoxs7YHtXfoEWLxeLPNH9PAeZzT3BOQZfPqsTqvgel81XGN_POsnTUg5YM5AUzNK5yHuCy6gaiJPTQvgQ3JJjokeX3oLx1xRu02mVEL9D2BDUFgCffXFrLSPrK7QrWoIHUYIHxsL7si7gPmdrfoDr7hObjq2no8ZJrDH4wYQwyb9de4CqOOu9fK4bUjZ6JTE2VIcw0p_yq1oA5eFYlH738STvpzF0YaSXWXJ89SDfjN-fexjNcp8UcpmuPtF4QPwYVAFbk3pcZ0YjpJgJDlaYSq4LAbhkhhdtA379RpXzaRsrX9drE1ZdHdpEZ6tDfGt07AIX90RyuHYqHRMxkzexEHRjBpJOyq6_6HWZH_dXSSNJRR5-_P87oBT504pbnnT9mJBBHTZwk96TqeeW2OhRZtZan7uXn6RIdtitIjGaLPM8Gx94yckb3gJepEk01VNrXzpCN8gOc0cGAqmoexoB1el4EXY3hyn5kFFJlQPcC6UBbkLOFPH6_bj85scOO0jaRdwj3--46MnxBWGDcrNr_j4zQ_9WfUX4aZGZQAV2OHmsYyZYFCPWbTE762oupLyAtxL4rcox9gBMSBaolUK-ty4enDG_KbkGSw15OGq3zcgcSdH-TlQ6z2kbesM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"full_name\": \"ful name\",\n    \"email\": \"em@m.ruaa11223\"\n}"
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/edit-user",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"edit-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiMjg1OTBmNmJiNjFjYzliYjA3YmNjMzc0N2E1Yzc0YWFkMWQyMGQxZDVkYzYwYTUyNGIzMmQyY2NjNTk1ODkzODU3NGZmM2IwOTgzNjFhMmUiLCJpYXQiOjE1OTA1NjM4OTQsIm5iZiI6MTU5MDU2Mzg5NCwiZXhwIjoxNjIyMDk5ODk0LCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.QQJerTxQApcgbV5KWGD2Ex-K85CM-hTNaJzXTh8tCyudKhfAoxs7YHtXfoEWLxeLPNH9PAeZzT3BOQZfPqsTqvgel81XGN_POsnTUg5YM5AUzNK5yHuCy6gaiJPTQvgQ3JJjokeX3oLx1xRu02mVEL9D2BDUFgCffXFrLSPrK7QrWoIHUYIHxsL7si7gPmdrfoDr7hObjq2no8ZJrDH4wYQwyb9de4CqOOu9fK4bUjZ6JTE2VIcw0p_yq1oA5eFYlH738STvpzF0YaSXWXJ89SDfjN-fexjNcp8UcpmuPtF4QPwYVAFbk3pcZ0YjpJgJDlaYSq4LAbhkhhdtA379RpXzaRsrX9drE1ZdHdpEZ6tDfGt07AIX90RyuHYqHRMxkzexEHRjBpJOyq6_6HWZH_dXSSNJRR5-_P87oBT504pbnnT9mJBBHTZwk96TqeeW2OhRZtZan7uXn6RIdtitIjGaLPM8Gx94yckb3gJepEk01VNrXzpCN8gOc0cGAqmoexoB1el4EXY3hyn5kFFJlQPcC6UBbkLOFPH6_bj85scOO0jaRdwj3--46MnxBWGDcrNr_j4zQ_9WfUX4aZGZQAV2OHmsYyZYFCPWbTE762oupLyAtxL4rcox9gBMSBaolUK-ty4enDG_KbkGSw15OGq3zcgcSdH-TlQ6z2kbesM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"old_password\": \"12345\",\n    \"new_password\": \"123456\",\n    \"confirm_password\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "http://tahweel.local/api/v1/user/change-password",
+							"protocol": "http",
+							"host": [
+								"tahweel",
+								"local"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiYjdmY2E5NGJjMGNlNTAwMGJjMjI0NjlkYWZkNTAxMDcyNTQzNTU4OTdkNmFkNjdiOThkZmNhNTkyYmNjMDUxODcxN2VkZWMxMTk4NGQ0YWUiLCJpYXQiOjE1ODYxODY4OTcsIm5iZiI6MTU4NjE4Njg5NywiZXhwIjoxNjE3NzIyODk3LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.i3KeTvESkMKCATJJH5ZcOqqzzwrDw98wypYCc8M6B0e9cPX3aTaNIJxjdvnC7PkpLd9nC9CFxEZRHWSkreGLu7jFHjSDjXNiM-o6LS-tg4oMhuNgIN9bDO0y0AX6IXpSvkR9eRx7foGZjjU-KkHrj8PNkyZd4wS5MLsoBJL280pieZNCC-7JfReYFMWzZnbOSB5rZ3WXD9I8gHXWIizTzO7c4Wl8uCPb5YfVutsQGl8ZxgR9zk6nEXoB8nmUE9F5MWD1bxOrAfapVz0x8R03FsXOW-DsTTUd5CX6dWyUURrgJOFCciPRLXronDnOa2GVoATcV3KDF6W3cFMV_VDGJEYkAHtMje_E7uRtsXODy-Cb7lx4qi3JIo32Xo7slO6qL3ozxzm9LGw6N_jFEiYYGtNDM3EAdue1qirqJ0cosUzol1zgE4KoZt_FLtXfRFunC0Rs1GZY7QEaadnkmLt7tBwTVcn6sOyTFHnaurIwCX8znlGKsf0D5DDzgOUuSU0dhkKresiQlNtIdQjdkDTRD3hhFNQOavTc0KX4G6e_Gnlez9NRQis_EYCcoTM3ZERi4nk1z7-YJw-1QpWK7zwJQbumIaNbxAPAEakjuzbubWJIODknevBiEMTu1yG4S4v4J0GU9tGT-SiVLxejZCPb2MHtiwcizOQMEuHMj6oGZ3M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/logout",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recover Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "email@email.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/reset-password",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fcm Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzIs1NiJ9.eyJhdWQiOiIyIiwianRpIjoiYmE2ZDVkMmMxNDE5YzlhMjE3MmZkNTViMWM0ZTJlNzVkMDVjMDkxMTU5OTBkYzYwMzcyNzcyNjhmNGUzNDQ5M2YwOTcyMjBkOGI5NDYwM2IiLCJpYXQiOjE1ODY5MzQxMDEsIm5iZiI6MTU4NjkzNDEwMSwiZXhwIjoxNjE4NDcwMTAxLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.mxjoOGH40WMl7e4AnQntxYSecMWS_SrJ3re3iCfy1X4OUCwXOvDfSdsvNTtGaliyV28s85LJEjDhGRe74w-GilMWAt9MdsZjrEGt0QARpo38s8xSEW92O_3WlgpayoOVVRlEdJpNh9F7RnbzkX7uiV3Gcc7Ssoo7qbetA7ag9JECzMHCmQkPniUvMg8cYjFXaF9Ek5IKSJ8QmYNvvlgqMO4vPEcp-6jjnd0NDKh_8BTg5odIaS48YJi8Qhl5LuNKx0cjWonnReT0OSjWRNkJ6I4x4zzrkjvwLNiBsCrilVaaV9ovzaI8JkJj6lLWgvFHQjTmjgzvdzHtp30a2j30SQJP-SJG76eLiblLiH_S8v4zBMRLpQyGI-rMNkmnxH51H3gTdJr-734l2rI83FOK1CraEFMlFxTrM66O7Ss5vE8qArL_hjr44IALOLea-BDCLAwH1JanvawWejIZzT07DSoLrxHtQVhpq0aFKzu8zx5FVS6OOioEQMNWqVNLf3faGx0uvBtaLibI7CKzSTvF0_hBJA_BpN1o5VSIeKdjfHhFZILtqJslrGeZAmjUiHsG1UNxTE_O3AyDIZ_Lm-Albkwq3AEdef4iJOsX9A8fV4zaZI1c5jESPGwIP4VCJ-zLNa-z-RQi9kM7CPFtEQI9kvJvG1RvnI-jRy__3USXzJI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"token\": \"a\",\n \"os\":\"1\"\n}"
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/fcm-token",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"fcm-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiMTg0NTEwOTQ0M2I2ZDk2YjJiMzgxZDg1NzcyYmU2MDRmNTAwZDU4MjNmZDE5MWVjNjlhM2JiOGZhNmM0YTk2NzgyZjM4ZTM5ZTI4NjA5ODIiLCJpYXQiOjE1OTA1NjQ4MjcsIm5iZiI6MTU5MDU2NDgyNywiZXhwIjoxNjIyMTAwODI3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.qMSxR2JiXFBYKsEG2y0bjIt02UzWw1IEVJ1k7q9CCJbk6-O-a45L7ihfZbsUlJlUmltSee1iEF8X5NdccatyYTwZ_jZzvEnRWcIRROHiKwZh7CgWMxX73wA_OwEwheoaRPtN9emVa232nhj8JqNJfz1a7ezNJGXnb4vf71VvIVtVsKr67sU0gd0SbwGloLGxezopQ2mRscrxr4XS3F9hh_IUS8u8h3txHVZ_WTiev1JRCqd0PpL0t72mOrgItBprAZUyT96Ptj9SPQDDayAV837tBvzHdPokRL-sj8t3IGwvDTDI0Jm3bwdlYd2Hnvs952CdwMwrYvNHkwaWulJbAeTNpmZ1MvXjjTjjyML1nu1IXLPWaZVQXereJox7MfAb7d5bT5cgy16thCwvRPkKurv70zkj_FarXgtOnmof7Io2ydlu5Zv1rKlJW7TacbsURFCYpcA-GolKjbBohPWr8aSwPWED4HEe7MadKPc_3oRXwFoK--YmH781uD2vP9veI8NoPJjwfMRk--jzklWw1k1F5X-fa9KGcMfAezkFgGJEbhUtU8iRecolxBGpgiMNwm8UOr0hFPgwYjjcCrMqBnXbNFR0Kcpf4SFi3lwxJQnqwaN9kfQU0ZFPF4rEr4xQhRBuCsKi2b4DpQ9xOzFMsuZsdlDEkM_qkwzz5iuLFCE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/get-user",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"get-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Points",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiMTg0NTEwOTQ0M2I2ZDk2YjJiMzgxZDg1NzcyYmU2MDRmNTAwZDU4MjNmZDE5MWVjNjlhM2JiOGZhNmM0YTk2NzgyZjM4ZTM5ZTI4NjA5ODIiLCJpYXQiOjE1OTA1NjQ4MjcsIm5iZiI6MTU5MDU2NDgyNywiZXhwIjoxNjIyMTAwODI3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.qMSxR2JiXFBYKsEG2y0bjIt02UzWw1IEVJ1k7q9CCJbk6-O-a45L7ihfZbsUlJlUmltSee1iEF8X5NdccatyYTwZ_jZzvEnRWcIRROHiKwZh7CgWMxX73wA_OwEwheoaRPtN9emVa232nhj8JqNJfz1a7ezNJGXnb4vf71VvIVtVsKr67sU0gd0SbwGloLGxezopQ2mRscrxr4XS3F9hh_IUS8u8h3txHVZ_WTiev1JRCqd0PpL0t72mOrgItBprAZUyT96Ptj9SPQDDayAV837tBvzHdPokRL-sj8t3IGwvDTDI0Jm3bwdlYd2Hnvs952CdwMwrYvNHkwaWulJbAeTNpmZ1MvXjjTjjyML1nu1IXLPWaZVQXereJox7MfAb7d5bT5cgy16thCwvRPkKurv70zkj_FarXgtOnmof7Io2ydlu5Zv1rKlJW7TacbsURFCYpcA-GolKjbBohPWr8aSwPWED4HEe7MadKPc_3oRXwFoK--YmH781uD2vP9veI8NoPJjwfMRk--jzklWw1k1F5X-fa9KGcMfAezkFgGJEbhUtU8iRecolxBGpgiMNwm8UOr0hFPgwYjjcCrMqBnXbNFR0Kcpf4SFi3lwxJQnqwaN9kfQU0ZFPF4rEr4xQhRBuCsKi2b4DpQ9xOzFMsuZsdlDEkM_qkwzz5iuLFCE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/get-points",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"get-points"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Verification Code",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\": \"+37433939399\"\n}"
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/send-verification-code",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"send-verification-code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Account",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"verification\": \"13024\"\n}"
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/user/verify-account",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"verify-account"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Issues",
+			"item": [
+				{
+					"name": "Get Issues",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiYTZmN2UyNDYyMGZiOTA2NDlkNTNhNWU1OTMxYzA0MDVhOTA1YzAyODExYWMzMTdkY2Y2NjVkZThlYjQ3MDdiMjYxYmYxYmJlZDA2NWNhZjkiLCJpYXQiOjE1ODcwMzgwNjIsIm5iZiI6MTU4NzAzODA2MiwiZXhwIjoxNjE4NTc0MDYyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.qW4A9gJv_Mhw_mX_Av8QoDDv9cCJ9fDU2e_CI8NftXmFGDQn0nA8cNYHe3EdjQ6kQiaCjvs6x7kDAbupd_jIvlEyuLsG91IyUzSmw6CWqXb6ZibuWlrqUbOQgqRb-Wp71-jRdQUR6KCtq9AROXstKztEJVnrDqRTLUbp6LClFAwC-uX34N_Fw7VjXjIx-RrEw5NCYF-3HEEDi8HbFJxQLv5CVzvB5MV0V7Gbkcvy7zfBuKqEax6E6v4bK86p3kmAM3DT4ljdhEbcRxRSrSkogmbxAy5QvMHcjpYt7DuHjBMocKkZwqTOkgsZsGePEKmbKRihvDvikm7SJsFbJcwFtD_ojIOtDdqsgK0tXyHjgFYZJ-xG9nXldZDnUTI9NvSbFPKYC7hyucDCJPp-r5NL3MhNZ7VU6xjwoK8QhqUumf1KioGnz9kOgARM7LLCsjB40xw77egn4od7U7Ds6jLQpK6GKwap-CrRfx3S7TafaDvBp02beSiEyLqWqaR4vK1_93Jxf1B_0lLU2JkR0wlnrLtNt_-UFZLXZQBWl3JPbA2kPp1L02TSbY_ACLZemO2bC2OIW6TRZuQNgE3nA21taNNAWvE09J8kYPCh2vEwR_HGp2DS6iTL8q6ps0mse7e4SutMA_XFdeR55TopN2vn3aSCwPWGlLewQ4EX8lrajzA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/issues/get-issues",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"issues",
+								"get-issues"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Inspections",
+			"item": [
+				{
+					"name": "Inspection Request ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiMmNmYjE2M2ZiY2ZkMmIxMWFjMjkzOTkyNWYzOGIyN2I4MmVkNDBkY2NhYTM0ZGE3YzllNGZkMzFlNzQ2NThjMTNjYTI1ZWY1ODI5MTIzOWUiLCJpYXQiOjE1ODc3MDg1ODAsIm5iZiI6MTU4NzcwODU4MCwiZXhwIjoxNjE5MjQ0NTgwLCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.QRyR6EMHKViaYWxcUVqJE-QXTf3dZceufPlvhSLJtKW5h1gcVgwupeKARaPoHKs5a3TCLfHhW_-oflQoLj5CZK6xPMHNk3c2Wxr5yrdQDu6b_T4xcRNOv6FQ4nfoFQUPn6nb8BTzzG-fs2vCWgeX7K7nlPeQ25IwzkqA09II8yRt5eBaKlW6vlzccEB2CtHwkUq2esAFMLZcQvQA5XHoLCUhZLPI1iJJiDs6A7r-f8U4DnSwJ9zbxOVXeWZTCf2XZ30Gn4E2M2USiEJMXburvtvgWaCG06PMKNmJY3z8UgU0nfhmMLlIghZIOv20AwRr8KUvWkFX57uH3q8pHp6JCZnwkANzvbjHzTqB5Ylm3fPpSRKORrH0jflMVeGIILBuXzEgAo_8UyBasyMbB706GjZzMrUM8WEuSbX-MnMrFK624zmLP0cv8ztB0EX7gatgAVE7WX7ImDcckuHSYnqj19CLKY2YREPH41vS791-lwXYJBdpjV8N42Toyk6B5VMAGNmZyVCk5TtTpg9mi61Y4ERdhCsp8AZJDqcIrREA7lYBFAD0VxQOrM8vSb49pw6OX-GDBqJPginV-5sM_5rqNSIWLW_QRyPTWNOxI-UxDsgFgqdXyAi0syBHTOvOOjzhspwwRk5JoWXW420OUn7Aoz84jV1yB6jMX_rFsjELYWA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\": \"asd\",\n\t\"latitude\": \"0.5456\", \n\t\"longitude\": \"5.6545\", \n\t\"floor\": \"15\", \n\t\"apartment\": \"asd\", \n\t\"building_type\": \"1\", \n\t\"project\": \"asd\", \n\t\"comment\": \"adsas\" \n}"
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/inspections/request-inspection",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"request-inspection"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inspections",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiNWJkNmMzOTEwNGNjMjk3MTE5M2E3ZTcyMTY3ZDc3ZDM3MzhmODZhM2MwMGJjNDZmNzNjZDRhNzc0MjI2OGQ3OTVhMDBlOWQwMGZmYWYxMGMiLCJpYXQiOjE1ODc3MjMzOTAsIm5iZiI6MTU4NzcyMzM5MCwiZXhwIjoxNjE5MjU5MzkwLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.VN93lb-efZlg5c3-gC6BadhuSuyRJA2_DTBU0pO2pYM1hkJwIXdWK3r51uZ9AiJVgibB4zxAwHRyj40m6iMGGBE0zAsPKSgvefax8yWXK17T77PeWu29PI3rGZLHU2mrgST_qcunKgaRnAIbc57pfYnQ3kKcYsHQmXOkY4TcMg9rVxUmWqlw1bhztnYKfkKkmw-D2zuisnUgXC4EhzSTAZboXKMnX57mymoWfpvjggtWwxh5h0Qas-7PBPBCh63I-6OCeocufveJm_iTQzW15Yn6fw6eR-Jz0AI0iqB01UHq3Oa84CaHy8993gnxGGeD60cV8F9Ly9vz_stKXoAD2Id-tcvi8czvQ-0b7sL_jvXdfhuVgxQpi0b2WI8gZP6hvStyU71UY9aYjpcY9kef_wV8Bqs-W3mShOmcHXbUwPYCB_E2WMr-4YKBx9NGXm2zRtUnKlN9NRUcBaNQmchXqDWCko9Lz0xoUKe69r_8q_9qX0dPJFG3yoe7O30eupelEF1FyIxXapKE1ihVbEoaL3eCBdTQMjgonObZlmfFzDlYB6IGGFinEbaM2vY8Pv7Bhw5d-Dt9nVwmdBPUkEHklspjiTGCcSj92dGLnc3RpXe4j56JGn5lwFmKfeuoRc--pDtTy0E7KDYc1DxpQq8Il-qzE7rRJy5-a83ZQ6fM6SQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"aper\": \"a\"\n}"
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/inspections/get-inspection?role=1&status1=1&status2=6&phase=1",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"get-inspection"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "1"
+								},
+								{
+									"key": "status1",
+									"value": "1"
+								},
+								{
+									"key": "status2",
+									"value": "6"
+								},
+								{
+									"key": "phase",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inspection Detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiMzMxZDczZGEwMzliMDQwZDM3Mjc3ZWQzODRlOGU5YjdjYWVjYTQ5MTJlMjA5MmYxZjQwMDFjZTVkYThkYTQxNThhNWM2MDUzNDE5ZjVlNDciLCJpYXQiOjE1ODcxMTEwNDYsIm5iZiI6MTU4NzExMTA0NiwiZXhwIjoxNjE4NjQ3MDQ2LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.cXKulq4RH848FqmWiRUpvt1WEGV4_9YpAdAefJDhzT_P42hAwNExGAzQNGf1AkdQoxWrCca7ldf2R_NcSKlmnGrzuh7-_xd0R4ifYUYWhjCOwvqKsF3AyXR9iYi-Vt7dIkCIHyFnjj8sfdme4jytPiEIZ0dlBKHZA7Gm5gOSN_EvTeYU08abdax3bTpZ8OikA84C0qYZ6j2sCKKyG_jJ0v7lHOk1qNvFCe4qEnS32eGu6Zg-w2oWFth8rK0tFBQFaJsDZvQr3-w4pPnXAIeY5NfI1Pri74yaptWECGnLp-VphLtckfz9nAznhMvWbba88ZATsLY1dH-AqASSRxwO4Ud1ttssklKFtHPcgWMA_KvVbkgHFmF5ah_tjONxaDEPVQ3PPo7UTKYfhnwQ2346HSRPaeEFsIenL-b2T5qyP63joCewodgt1tcD-ixRNAndAPuwA6TnBBA63Faf-ov6lIcIJGZBE1Oj0u7Hy06lxoYoz5Z812AlCDCcU8LenDIFgcsTJoTmPykdH1CcyOdYKskwpE5vG4KBgDbSLiFzc49LKb8YNfz6fgOF_M2bkHpGSL695YFMXQ3amDBE6AwelpCJcwSc0ZK0jw3zjCPxjXFutHCbgAVEuhXz335Cgr04lR-lm4ymv00eosJZKYP_rb2F9l10N0rYo_EI2QfmPH0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/inspections/get-inspection/3",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"get-inspection",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Request",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiNWJkNmMzOTEwNGNjMjk3MTE5M2E3ZTcyMTY3ZDc3ZDM3MzhmODZhM2MwMGJjNDZmNzNjZDRhNzc0MjI2OGQ3OTVhMDBlOWQwMGZmYWYxMGMiLCJpYXQiOjE1ODc3MjMzOTAsIm5iZiI6MTU4NzcyMzM5MCwiZXhwIjoxNjE5MjU5MzkwLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.VN93lb-efZlg5c3-gC6BadhuSuyRJA2_DTBU0pO2pYM1hkJwIXdWK3r51uZ9AiJVgibB4zxAwHRyj40m6iMGGBE0zAsPKSgvefax8yWXK17T77PeWu29PI3rGZLHU2mrgST_qcunKgaRnAIbc57pfYnQ3kKcYsHQmXOkY4TcMg9rVxUmWqlw1bhztnYKfkKkmw-D2zuisnUgXC4EhzSTAZboXKMnX57mymoWfpvjggtWwxh5h0Qas-7PBPBCh63I-6OCeocufveJm_iTQzW15Yn6fw6eR-Jz0AI0iqB01UHq3Oa84CaHy8993gnxGGeD60cV8F9Ly9vz_stKXoAD2Id-tcvi8czvQ-0b7sL_jvXdfhuVgxQpi0b2WI8gZP6hvStyU71UY9aYjpcY9kef_wV8Bqs-W3mShOmcHXbUwPYCB_E2WMr-4YKBx9NGXm2zRtUnKlN9NRUcBaNQmchXqDWCko9Lz0xoUKe69r_8q_9qX0dPJFG3yoe7O30eupelEF1FyIxXapKE1ihVbEoaL3eCBdTQMjgonObZlmfFzDlYB6IGGFinEbaM2vY8Pv7Bhw5d-Dt9nVwmdBPUkEHklspjiTGCcSj92dGLnc3RpXe4j56JGn5lwFmKfeuoRc--pDtTy0E7KDYc1DxpQq8Il-qzE7rRJy5-a83ZQ6fM6SQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"inspection_id\": 1,\n\t\"full_name\": \"Pargev\",\n\t\"email\": \"p@m.ru2\",\n\t\"phone\": \"asd\",\n\t\"shop\": \"shop\"\n}"
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/inspections/customer",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inspection Big Form Post",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiNWJkNmMzOTEwNGNjMjk3MTE5M2E3ZTcyMTY3ZDc3ZDM3MzhmODZhM2MwMGJjNDZmNzNjZDRhNzc0MjI2OGQ3OTVhMDBlOWQwMGZmYWYxMGMiLCJpYXQiOjE1ODc3MjMzOTAsIm5iZiI6MTU4NzcyMzM5MCwiZXhwIjoxNjE5MjU5MzkwLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.VN93lb-efZlg5c3-gC6BadhuSuyRJA2_DTBU0pO2pYM1hkJwIXdWK3r51uZ9AiJVgibB4zxAwHRyj40m6iMGGBE0zAsPKSgvefax8yWXK17T77PeWu29PI3rGZLHU2mrgST_qcunKgaRnAIbc57pfYnQ3kKcYsHQmXOkY4TcMg9rVxUmWqlw1bhztnYKfkKkmw-D2zuisnUgXC4EhzSTAZboXKMnX57mymoWfpvjggtWwxh5h0Qas-7PBPBCh63I-6OCeocufveJm_iTQzW15Yn6fw6eR-Jz0AI0iqB01UHq3Oa84CaHy8993gnxGGeD60cV8F9Ly9vz_stKXoAD2Id-tcvi8czvQ-0b7sL_jvXdfhuVgxQpi0b2WI8gZP6hvStyU71UY9aYjpcY9kef_wV8Bqs-W3mShOmcHXbUwPYCB_E2WMr-4YKBx9NGXm2zRtUnKlN9NRUcBaNQmchXqDWCko9Lz0xoUKe69r_8q_9qX0dPJFG3yoe7O30eupelEF1FyIxXapKE1ihVbEoaL3eCBdTQMjgonObZlmfFzDlYB6IGGFinEbaM2vY8Pv7Bhw5d-Dt9nVwmdBPUkEHklspjiTGCcSj92dGLnc3RpXe4j56JGn5lwFmKfeuoRc--pDtTy0E7KDYc1DxpQq8Il-qzE7rRJy5-a83ZQ6fM6SQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "inspection_id",
+									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "pre_plaster",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "before_tiles_installer",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "final_after_finishing",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "bathrooms_inspected",
+									"value": "1\n",
+									"type": "text"
+								},
+								{
+									"key": "kitchen_inspected",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "service_counters_inspected",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "bathroom_other_tahweel_materials",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "bathroom_other_technical_issue",
+									"value": "dasd sfs dasd",
+									"type": "text"
+								},
+								{
+									"key": "roof_other_tahweel_materials",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "roof_other_tahweel_valve",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "roof_other_technical_issue",
+									"value": "asdsads  sadasd",
+									"type": "text"
+								},
+								{
+									"key": "manifold_other_tahweel_materials",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "manifold_other_tahweel_valve",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "manifold_sunlight",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "manifold_insulated",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "signature",
+									"type": "file",
+									"src": "/C:/Users/pargev/Downloads/Screenshot (23).png"
+								},
+								{
+									"key": "approved",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "Valve Disfunction",
+									"type": "text"
+								},
+								{
+									"key": "warranty",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/inspections/form",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"form"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inspection Big Form Get",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiNWJkNmMzOTEwNGNjMjk3MTE5M2E3ZTcyMTY3ZDc3ZDM3MzhmODZhM2MwMGJjNDZmNzNjZDRhNzc0MjI2OGQ3OTVhMDBlOWQwMGZmYWYxMGMiLCJpYXQiOjE1ODc3MjMzOTAsIm5iZiI6MTU4NzcyMzM5MCwiZXhwIjoxNjE5MjU5MzkwLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.VN93lb-efZlg5c3-gC6BadhuSuyRJA2_DTBU0pO2pYM1hkJwIXdWK3r51uZ9AiJVgibB4zxAwHRyj40m6iMGGBE0zAsPKSgvefax8yWXK17T77PeWu29PI3rGZLHU2mrgST_qcunKgaRnAIbc57pfYnQ3kKcYsHQmXOkY4TcMg9rVxUmWqlw1bhztnYKfkKkmw-D2zuisnUgXC4EhzSTAZboXKMnX57mymoWfpvjggtWwxh5h0Qas-7PBPBCh63I-6OCeocufveJm_iTQzW15Yn6fw6eR-Jz0AI0iqB01UHq3Oa84CaHy8993gnxGGeD60cV8F9Ly9vz_stKXoAD2Id-tcvi8czvQ-0b7sL_jvXdfhuVgxQpi0b2WI8gZP6hvStyU71UY9aYjpcY9kef_wV8Bqs-W3mShOmcHXbUwPYCB_E2WMr-4YKBx9NGXm2zRtUnKlN9NRUcBaNQmchXqDWCko9Lz0xoUKe69r_8q_9qX0dPJFG3yoe7O30eupelEF1FyIxXapKE1ihVbEoaL3eCBdTQMjgonObZlmfFzDlYB6IGGFinEbaM2vY8Pv7Bhw5d-Dt9nVwmdBPUkEHklspjiTGCcSj92dGLnc3RpXe4j56JGn5lwFmKfeuoRc--pDtTy0E7KDYc1DxpQq8Il-qzE7rRJy5-a83ZQ6fM6SQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/inspections/form?inspection=9",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"form"
+							],
+							"query": [
+								{
+									"key": "inspection",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ask For Inspection",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiNWJkNmMzOTEwNGNjMjk3MTE5M2E3ZTcyMTY3ZDc3ZDM3MzhmODZhM2MwMGJjNDZmNzNjZDRhNzc0MjI2OGQ3OTVhMDBlOWQwMGZmYWYxMGMiLCJpYXQiOjE1ODc3MjMzOTAsIm5iZiI6MTU4NzcyMzM5MCwiZXhwIjoxNjE5MjU5MzkwLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.VN93lb-efZlg5c3-gC6BadhuSuyRJA2_DTBU0pO2pYM1hkJwIXdWK3r51uZ9AiJVgibB4zxAwHRyj40m6iMGGBE0zAsPKSgvefax8yWXK17T77PeWu29PI3rGZLHU2mrgST_qcunKgaRnAIbc57pfYnQ3kKcYsHQmXOkY4TcMg9rVxUmWqlw1bhztnYKfkKkmw-D2zuisnUgXC4EhzSTAZboXKMnX57mymoWfpvjggtWwxh5h0Qas-7PBPBCh63I-6OCeocufveJm_iTQzW15Yn6fw6eR-Jz0AI0iqB01UHq3Oa84CaHy8993gnxGGeD60cV8F9Ly9vz_stKXoAD2Id-tcvi8czvQ-0b7sL_jvXdfhuVgxQpi0b2WI8gZP6hvStyU71UY9aYjpcY9kef_wV8Bqs-W3mShOmcHXbUwPYCB_E2WMr-4YKBx9NGXm2zRtUnKlN9NRUcBaNQmchXqDWCko9Lz0xoUKe69r_8q_9qX0dPJFG3yoe7O30eupelEF1FyIxXapKE1ihVbEoaL3eCBdTQMjgonObZlmfFzDlYB6IGGFinEbaM2vY8Pv7Bhw5d-Dt9nVwmdBPUkEHklspjiTGCcSj92dGLnc3RpXe4j56JGn5lwFmKfeuoRc--pDtTy0E7KDYc1DxpQq8Il-qzE7rRJy5-a83ZQ6fM6SQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/inspections/ask-for-inspection?inspection=15",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"ask-for-inspection"
+							],
+							"query": [
+								{
+									"key": "inspection",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Phases Totals",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiMGIwMmUxZTE4ODhmY2IzYWYwZmQ2YWE1Mjc0YzVkOTE3NzYwNjg5YWUxZmY3MjMyNWM1NTY2MzUxMDMxMzM3Y2ZjMjRlNjcxZTYzMTE2NzIiLCJpYXQiOjE1ODgyMzY5NjksIm5iZiI6MTU4ODIzNjk2OSwiZXhwIjoxNjE5NzcyOTY5LCJzdWIiOiI3Iiwic2NvcGVzIjpbXX0.nO6s5ip1pkfoX_rwKRNdZ-pR2f9fQ61z9C5bgXSly9jygp6H-02HTAOUHK6W7darSgOLJ9ISVkVrb_ICPDYK52r9jBPrBg1-wXCxeVaf0bA2CAdfVZmQQbNCqFDNzQFv9Msh-ZWaCewEEU1LpJamUylygppjVkpIYuhKg14-EbeH1iDl8UzV1hGwKrx2xCTWRX2AdKfiXmm0aO0QZl8N7vEEKlIo1D0x8hP3vzMfF4fG3se7simpcyLB1yomWJYx5nwa9GnNB6dWnFwNR3xWhOy9kO6ptyjAJTUHzooQDB_-Rs-4GbUIs_mBkNJAuwUdryeCPShwYxfFw0sPs5agzYzGBMyOLQMThveXmR1_VZhoviN8GCeOazKDXPc_X7GLEH3k95dScila1bJgzFSFbsFPEEtVDn2fNSCFyBQrMEoUdXVq1pFQV_N4Mq7pSp23gw24Se1z9YtggRJM_CKk8Zr_7xlEsWec1XHCnX4DTL3-pCXo_LTKMKbxi58JMxfjFJ_JvZkqKmAzbZukynepjDj8_VY7QG_tzz0AvDwBc2_OJV7FruXl_NJl9vyciuOF2tbrFb-SYi2ei23ZMZ0zzqt6ucHGhCkaiUYG5mtGiOUjWXpqIbvRSv8z4HxYoyYyQrnhcRmK0ZgXb8CsbJTEvBlzbH6v6CQ0_PdEZqTHF8w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/inspections/get-phases-totals",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"get-phases-totals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer Info",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiNTA5NmRmZDI2YjY4MGI3MDQ3NzFkMzMxZTc3ZDMwZGUwYmJhNTk3NjA0NzRkZTRkODg2MGYyNzA1NTEwMTU5ODE5ZjhjYmQyOTQ4ZDFiMjQiLCJpYXQiOjE1OTExODQ2ODQsIm5iZiI6MTU5MTE4NDY4NCwiZXhwIjoxNjIyNzIwNjg0LCJzdWIiOiIzMCIsInNjb3BlcyI6W119.bNsjRB-_HivXsofTjO43dbOMbcoH9IMWnE7ggV7Ro6IEzSXzlneBD5m15rI0ShSJHeFWXlXlfvHQr8VpaXq9hfMorJmGchLbnZxC7PYAxX-zh-jwB-SSlITNj0LnIE-34eSHIxYCEm2tkyb6wSK1tPJLblNpTCOEl-xN1MxBOIQN23p-mHGcn5yyZxWt55rojNQSWH9BDUtZkBJp2dlZlioOcnJPSDXogDcqLaECGqs7vGgfhS_m0VwlBmW_Bl9Y4Fcze5IWr2LnFejNKrO96WyDbIgvcTAJwepC9QxuHGfJvUAUJfiXc-JwAyr101nso_T6d_pcL_UdMaksiztjeaE4kAjlOcpSUmkVWWJkRegrFizX12zJF806ngBaCcdFaNgsJ9YuQH2BvxuYBxfkJeeOvMZE9oSvtsY2xyw8a2YLx0fsBIx1avDzJMzBgnJsnRckUpq4jUuzRwH61Mh_4GowxbYV7R0pgTRoBDPN2yPsZYgjnWw6lD4dx_sioiPACMHASy0RvluwXMiP3V7dV_jnE6KZWY1S7p5nmiwJUC-9NpL6FHE8iiKoYHnAqcA21YunaAw_E4Xg21EZMpluqMHX_SKVxX_8UuTUY3N7jw6B13yu7SBhL0wkF9u3b_07VuE6hiIbkykXwzOLSyfsLn0K3IImVLphB3KrsWEJJOc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/inspections/customer?inspection=9",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"inspections",
+								"customer"
+							],
+							"query": [
+								{
+									"key": "inspection",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Products",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiOGQwZDBjOWE2NmUxMTU1MjEzNDFiYmFhNjBhMjk1NWFhY2I2NDc3ZTMzOTA1OGMzZmI1MDFiODQ3NGQyMmU1NTU1YjNkZmFhOGQwZDc2ZWUiLCJpYXQiOjE1OTExNjYwMjYsIm5iZiI6MTU5MTE2NjAyNiwiZXhwIjoxNjIyNzAyMDI2LCJzdWIiOiI0Iiwic2NvcGVzIjpbXX0.r-2FEiB2_Huo-baBN_fX4-fgek5LV4KXiVFPAsBofvBnAgUT5g1svg3oXl6MgsoPcnD_51s9A3kYFYyqjQHMvodh_7t69Uy4uPZ8eDqJxr_4xcq6xtXSZJ11PsWtCcTqRssoC3LkTsQrwZmSHYYCBv8Kj52ruQwvK6yZSGXbxaK1ZycMZWZN1X2LAbGuLqF-M5mLzlgzYcXfCMBUDr0FVRU5BmVvPXPT1rvggF3J-738fuX2h7FN-gQ8dTVxnxa20BYUxm0YRr4DXnayYzUq1sfeFyE7BK4I1FsyCX-YF-vSQh9OTNZ5E8VRz34vXWYndHdYNdHg9fNRQEiYjwJSRJwwaieuUb0zBEC6LI5DtlQWlkWBHD-cFvofVcg0fV2Q6qACxk1F-O250uLFsSp78cQwtQNtB0GI86JRTsGUBRrtf69e4BYoyXW7fCjxr5TpLo3AR3YibT4sWR_c6GsJD9FAlLPiIh5ekAk8GRbBiROzqaq7uQwgO51Jk85Gf5vJ6Ydrp9T2adLn-4U5NurjTzn-hfnrlx0PTHZPiEFRwW-a8JSv74EMVRSRgq8qLxZFOWQXK7-o4OZ2FX-OkDh2TGVoCvHLLv4QhDFcln1bQMAb187NvL5UrhFO1eEJ_YT4TnTtw0-ePEcGdBkzGUSxFf4WJXF5HA-Z_Zd7-guaug8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/products/get-products",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"get-products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Redeems",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiOGQwZDBjOWE2NmUxMTU1MjEzNDFiYmFhNjBhMjk1NWFhY2I2NDc3ZTMzOTA1OGMzZmI1MDFiODQ3NGQyMmU1NTU1YjNkZmFhOGQwZDc2ZWUiLCJpYXQiOjE1OTExNjYwMjYsIm5iZiI6MTU5MTE2NjAyNiwiZXhwIjoxNjIyNzAyMDI2LCJzdWIiOiI0Iiwic2NvcGVzIjpbXX0.r-2FEiB2_Huo-baBN_fX4-fgek5LV4KXiVFPAsBofvBnAgUT5g1svg3oXl6MgsoPcnD_51s9A3kYFYyqjQHMvodh_7t69Uy4uPZ8eDqJxr_4xcq6xtXSZJ11PsWtCcTqRssoC3LkTsQrwZmSHYYCBv8Kj52ruQwvK6yZSGXbxaK1ZycMZWZN1X2LAbGuLqF-M5mLzlgzYcXfCMBUDr0FVRU5BmVvPXPT1rvggF3J-738fuX2h7FN-gQ8dTVxnxa20BYUxm0YRr4DXnayYzUq1sfeFyE7BK4I1FsyCX-YF-vSQh9OTNZ5E8VRz34vXWYndHdYNdHg9fNRQEiYjwJSRJwwaieuUb0zBEC6LI5DtlQWlkWBHD-cFvofVcg0fV2Q6qACxk1F-O250uLFsSp78cQwtQNtB0GI86JRTsGUBRrtf69e4BYoyXW7fCjxr5TpLo3AR3YibT4sWR_c6GsJD9FAlLPiIh5ekAk8GRbBiROzqaq7uQwgO51Jk85Gf5vJ6Ydrp9T2adLn-4U5NurjTzn-hfnrlx0PTHZPiEFRwW-a8JSv74EMVRSRgq8qLxZFOWQXK7-o4OZ2FX-OkDh2TGVoCvHLLv4QhDFcln1bQMAb187NvL5UrhFO1eEJ_YT4TnTtw0-ePEcGdBkzGUSxFf4WJXF5HA-Z_Zd7-guaug8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/products/get-redeems",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"get-redeems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buy Product",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiOGQwZDBjOWE2NmUxMTU1MjEzNDFiYmFhNjBhMjk1NWFhY2I2NDc3ZTMzOTA1OGMzZmI1MDFiODQ3NGQyMmU1NTU1YjNkZmFhOGQwZDc2ZWUiLCJpYXQiOjE1OTExNjYwMjYsIm5iZiI6MTU5MTE2NjAyNiwiZXhwIjoxNjIyNzAyMDI2LCJzdWIiOiI0Iiwic2NvcGVzIjpbXX0.r-2FEiB2_Huo-baBN_fX4-fgek5LV4KXiVFPAsBofvBnAgUT5g1svg3oXl6MgsoPcnD_51s9A3kYFYyqjQHMvodh_7t69Uy4uPZ8eDqJxr_4xcq6xtXSZJ11PsWtCcTqRssoC3LkTsQrwZmSHYYCBv8Kj52ruQwvK6yZSGXbxaK1ZycMZWZN1X2LAbGuLqF-M5mLzlgzYcXfCMBUDr0FVRU5BmVvPXPT1rvggF3J-738fuX2h7FN-gQ8dTVxnxa20BYUxm0YRr4DXnayYzUq1sfeFyE7BK4I1FsyCX-YF-vSQh9OTNZ5E8VRz34vXWYndHdYNdHg9fNRQEiYjwJSRJwwaieuUb0zBEC6LI5DtlQWlkWBHD-cFvofVcg0fV2Q6qACxk1F-O250uLFsSp78cQwtQNtB0GI86JRTsGUBRrtf69e4BYoyXW7fCjxr5TpLo3AR3YibT4sWR_c6GsJD9FAlLPiIh5ekAk8GRbBiROzqaq7uQwgO51Jk85Gf5vJ6Ydrp9T2adLn-4U5NurjTzn-hfnrlx0PTHZPiEFRwW-a8JSv74EMVRSRgq8qLxZFOWQXK7-o4OZ2FX-OkDh2TGVoCvHLLv4QhDFcln1bQMAb187NvL5UrhFO1eEJ_YT4TnTtw0-ePEcGdBkzGUSxFf4WJXF5HA-Z_Zd7-guaug8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"2\"\n}"
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/products/buy-product",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"buy-product"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Get Notifications",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiY2ZkZjJhNTQwYmI5Yjk1NzI4ZGFhY2I4NGRiNjNlMDJhYTkxMGRkZTE3ZWRmMTc0ZGIzZThjMTA4OTY0YTU5MDVhM2NlOGYwMTM2NGY5OGQiLCJpYXQiOjE1OTEyNzYzMjQsIm5iZiI6MTU5MTI3NjMyNCwiZXhwIjoxNjIyODEyMzI0LCJzdWIiOiIzNCIsInNjb3BlcyI6W119.pIotTPIIxRQmJoSFliqiNNTgaA8NJi4RrioWMLEnqeCIrxrKj8BK4wDVzZnWyHHYN28e_9aKU7Se7oG0J97MBnoD4_tH-jff1dnwvBvdOcc6U1kpwLQsB9gG8Lbzb4Bs11yIjuxnxYhhywcuFek8vkZz-wcRtBO761PbBaYmhDTXxZtx9rehtKBEnVur46_G_EJx-StyLsGCX5z9oNGzDGD8p7ykish4nTIRe7sTr4wIfuxDd-xto-_YhOQKdqwI0YpiQdNz5XkJPla-f-_OWvzC-WVR9ENlpvvPoHtlUWKYEFDk7yvkGSnEWYXxt-yMREfZhyHxzToPPSxIGcRATVkcVJzyTBPwXS8VtRvBTtvxKxrfyqEF3EpXb4c62LbBa1CNKwT8Hwu7zLzlf5mZbEFQd9l0KHYAnVDdItfhLZRxVrqXF2X7vNc4nsIZ8uj8xCd8DebQ-GF79lLcyqZy3z73ZVfko_88zR6O1W2tmLiTYRQp86_sOSaXW1TZE5an-sKrHl7YeyqTPEPYnBQcxO7zcRpOU42-iE1tqVCUjMWgxzNthQ7kd0sk1wGax7kkQYDNXRU1wmRYRFsuP3o-nyPDWOQcTuo8rreF4VAp8eMSQIaGpjQVgx1CGJwkgyorI2P4zXz3TCxHQXRYF4-cnrmyFT7xoO-BK0r4spe3O08",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/notifications/get-notifications",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notifications",
+								"get-notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Notification",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiY2ZkZjJhNTQwYmI5Yjk1NzI4ZGFhY2I4NGRiNjNlMDJhYTkxMGRkZTE3ZWRmMTc0ZGIzZThjMTA4OTY0YTU5MDVhM2NlOGYwMTM2NGY5OGQiLCJpYXQiOjE1OTEyNzYzMjQsIm5iZiI6MTU5MTI3NjMyNCwiZXhwIjoxNjIyODEyMzI0LCJzdWIiOiIzNCIsInNjb3BlcyI6W119.pIotTPIIxRQmJoSFliqiNNTgaA8NJi4RrioWMLEnqeCIrxrKj8BK4wDVzZnWyHHYN28e_9aKU7Se7oG0J97MBnoD4_tH-jff1dnwvBvdOcc6U1kpwLQsB9gG8Lbzb4Bs11yIjuxnxYhhywcuFek8vkZz-wcRtBO761PbBaYmhDTXxZtx9rehtKBEnVur46_G_EJx-StyLsGCX5z9oNGzDGD8p7ykish4nTIRe7sTr4wIfuxDd-xto-_YhOQKdqwI0YpiQdNz5XkJPla-f-_OWvzC-WVR9ENlpvvPoHtlUWKYEFDk7yvkGSnEWYXxt-yMREfZhyHxzToPPSxIGcRATVkcVJzyTBPwXS8VtRvBTtvxKxrfyqEF3EpXb4c62LbBa1CNKwT8Hwu7zLzlf5mZbEFQd9l0KHYAnVDdItfhLZRxVrqXF2X7vNc4nsIZ8uj8xCd8DebQ-GF79lLcyqZy3z73ZVfko_88zR6O1W2tmLiTYRQp86_sOSaXW1TZE5an-sKrHl7YeyqTPEPYnBQcxO7zcRpOU42-iE1tqVCUjMWgxzNthQ7kd0sk1wGax7kkQYDNXRU1wmRYRFsuP3o-nyPDWOQcTuo8rreF4VAp8eMSQIaGpjQVgx1CGJwkgyorI2P4zXz3TCxHQXRYF4-cnrmyFT7xoO-BK0r4spe3O08",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": [1,2,3]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://tahweel.aimtech.am/api/v1/notifications/delete-notification",
+							"protocol": "https",
+							"host": [
+								"tahweel",
+								"aimtech",
+								"am"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notifications",
+								"delete-notification"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Notification",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": [1,2,3]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://tahweel.aimtech.am/api/v1/notifications/delete-notification",
+									"protocol": "https",
+									"host": [
+										"tahweel",
+										"aimtech",
+										"am"
+									],
+									"path": [
+										"api",
+										"v1",
+										"notifications",
+										"delete-notification"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 11 Jun 2020 12:38:12 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.39 (Win64) OpenSSL/1.1.1c PHP/7.3.8"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.8"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Content-Length",
+									"value": "38"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"\",\n    \"data\": [],\n    \"status\": true\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Country",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/v1/get-country",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"get-country"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get City",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/v1/get-city?country_id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"get-city"
+					],
+					"query": [
+						{
+							"key": "country_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
